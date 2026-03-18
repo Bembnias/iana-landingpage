@@ -1,0 +1,228 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.svg";
+
+/**
+ * Navbar — reużywalny komponent paska nawigacyjnego.
+ * Fixed na górze, semi-transparent dark green background.
+ * BEM: .navbar, .navbar__left, .navbar__right, .navbar__link, .navbar__cta
+ */
+
+interface Props {
+  currentPath?: string;
+  fixed?: boolean;
+}
+
+const { currentPath = "/", fixed = false } = Astro.props;
+
+const navLinks = [
+  { label: "Produkty", href: "/#" },
+  { label: "Blog", href: "/#blog-section" },
+  { label: "FAQ", href: "/#faq-section" },
+  { label: "Kontakt", href: "/#stopka" },
+];
+---
+
+<header class={`navbar${fixed ? " navbar--fixed" : ""}`} id="main-navbar">
+  <nav class="navbar__inner" aria-label="Nawigacja główna">
+    <div class="navbar__left">
+      <button
+        class="navbar__hamburger"
+        type="button"
+        aria-label="Otwórz menu"
+        aria-expanded="false"
+        id="hamburger-btn"
+      >
+        <svg
+          class="navbar__hamburger-icon"
+          width="36"
+          height="36"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <line
+            x1="3"
+            y1="6"
+            x2="21"
+            y2="6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></line>
+          <line
+            x1="3"
+            y1="12"
+            x2="21"
+            y2="12"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></line>
+          <line
+            x1="3"
+            y1="18"
+            x2="21"
+            y2="18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></line>
+        </svg>
+      </button>
+
+      <a class="navbar__logo" href="/" aria-label="IANA — strona główna">
+        <Image
+          src={logo}
+          alt="iana logo"
+          class="navbar__logo-img"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </a>
+    </div>
+
+    <div class="navbar__right">
+      <ul class="navbar__links">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                class={`navbar__link ${currentPath === link.href ? "navbar__link--active" : ""}`}
+                href={link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a class="navbar__cta" href="/#"> DOŁĄCZ I PRZETESTUJ </a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .navbar {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: rgba(1, 101, 67, 0.9);
+    height: var(--navbar-height);
+  }
+
+  .navbar--fixed {
+    position: fixed;
+    top: 0;
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1545px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .navbar__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-white);
+    padding: 8px;
+    border: 1px solid var(--color-white);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+
+  .navbar__hamburger:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar__logo-img {
+    height: 38px;
+    width: auto;
+  }
+
+  .navbar__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+  }
+
+  .navbar__link {
+    display: inline-block;
+    padding: 8px 16px;
+    color: var(--color-white);
+    font-size: 1.25rem;
+    font-weight: 400;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+
+  .navbar__link:hover,
+  .navbar__link--active {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .navbar__cta {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 50px;
+    margin-left: 8px;
+    transition:
+      background-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .navbar__cta:hover {
+    background-color: #23900a;
+    transform: translateY(-1px);
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 1545px) {
+    .navbar__inner {
+      padding: 0 24px;
+    }
+  }
+
+  @media screen and (max-width: 1020px) {
+    .navbar__links {
+      display: none;
+    }
+
+    .navbar__cta {
+      font-size: 0.75rem;
+      padding: 8px 14px;
+    }
+  }
+</style>

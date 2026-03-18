@@ -1,0 +1,241 @@
+---
+/**
+ * NeedsSection
+ * Sekcja "Czego potrzebujesz?" z trzema kolumnami
+ */
+
+import { Image } from "astro:assets";
+import listIndicator from "../assets/list-indicator.svg";
+import chevronDown from "../assets/chevron-down.svg";
+import imgElastycznosc from "../assets/elastycznosc-i-energia.png";
+import imgKomfort from "../assets/komfort-i-odpoczynek.png";
+import imgMobilnosc from "../assets/mobilnosc-i-spokoj.png";
+
+const columns = [
+  {
+    titleHTML:
+      "<span style='color: var(--color-light-green);'>ELASTYCZNOŚĆ</span><br />I ENERGIA",
+    items: [
+      "Dyskomfort w stawach",
+      "Trudności w codziennych czynnościach",
+      "<strong>Brak energii fizycznej i psychicznej</strong>",
+    ],
+    image: imgElastycznosc,
+    alt: "Zestaw Elastyczność i Energia",
+  },
+  {
+    titleHTML:
+      "<span style='color: var(--color-light-green);'>KOMFORT</span><br />I ODPOCZYNEK",
+    items: [
+      "Dyskomfort w okolicy mięśni i stawów",
+      "Napięcie mięśniowe",
+      "<strong>Pogorszenie jakości snu</strong>",
+    ],
+    image: imgKomfort,
+    alt: "Zestaw Komfort i Odpoczynek",
+  },
+  {
+    titleHTML:
+      "<span style='color: var(--color-light-green);'>MOBILNOŚĆ</span><br />I SPOKÓJ",
+    items: [
+      "Dyskomfort w okolicy stawów",
+      "Ograniczoną mobilność",
+      "<strong>Brak motywacji do ruchu i brak równowagi emocjonalnej</strong>",
+    ],
+    image: imgMobilnosc,
+    alt: "Zestaw Mobilność i Spokój",
+  },
+];
+---
+
+<section class="needs" id="needs-section">
+  <div class="needs__container">
+    <h2 class="needs__heading">
+      Czego <span class="needs__heading-highlight">potrzebujesz?</span>
+    </h2>
+
+    <div class="needs__grid">
+      {
+        columns.map((col) => (
+          <article class="needs__column">
+            <div class="needs__col-header" set:html={col.titleHTML} />
+
+            <p class="needs__col-subtitle">Jeśli odczuwasz:</p>
+
+            <ul class="needs__col-list">
+              {col.items.map((item) => (
+                <li>
+                  <Image
+                    src={listIndicator}
+                    alt="list indicator"
+                    role="listitem"
+                    aria-hidden="true"
+                    class="needs__list-icon"
+                  />
+                  <span set:html={item} />
+                </li>
+              ))}
+            </ul>
+
+            <Image
+              src={chevronDown}
+              alt=""
+              aria-hidden="true"
+              class="needs__chevron"
+            />
+
+            <div class="needs__col-image-wrapper">
+              <Image src={col.image} alt={col.alt} class="needs__col-image" />
+            </div>
+
+            <a href="#" class="needs__btn">
+              ODKRYJ
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .needs {
+    background-color: var(--color-white);
+    padding: 64px 24px 0 0;
+  }
+
+  .needs__container {
+    max-width: 1545px;
+    margin: 0 auto;
+  }
+
+  .needs__heading {
+    text-align: center;
+    color: var(--color-dark-green);
+    font-size: var(--text-large);
+    font-weight: 400;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .needs__heading-highlight {
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    padding: 4px 16px;
+    border-radius: 30px;
+  }
+
+  .needs__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .needs__column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .needs__col-header {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-ultra-light-green);
+    border-radius: 120px;
+    padding: 18px 36px;
+    text-align: center;
+    font-size: var(--text-large);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    line-height: 1.3;
+    min-width: 320px;
+    margin-bottom: 32px;
+  }
+
+  .needs__col-subtitle {
+    color: var(--color-dark-green);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: var(--text-medium);
+  }
+
+  .needs__col-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .needs__col-list li {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--color-dark-green);
+    line-height: 1.4;
+  }
+
+  .needs__list-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 12px;
+  }
+
+  .needs__chevron {
+    width: 48px;
+    height: auto;
+    margin-bottom: 24px;
+    margin-top: auto; /* pushes everything below to bottom if lists are uneven */
+  }
+
+  .needs__col-image-wrapper {
+    width: 320px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .needs__col-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .needs__btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 48px;
+    font-size: 1.5rem;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-dark-green);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    border-radius: 70px;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .needs__btn:hover {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 900px) {
+    .needs__grid {
+      grid-template-columns: 1fr;
+      gap: 64px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+</style>

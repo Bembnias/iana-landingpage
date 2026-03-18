@@ -1,0 +1,165 @@
+---
+/**
+ * StatsSection
+ * Sekcja statystyk
+ */
+---
+
+<section class="stats" id="stats-section">
+  <div class="stats__container">
+    <div class="stats__grid">
+      <div class="stats__column">
+        <h3 class="stats__percent">98%</h3>
+        <p class="stats__desc">
+          SKŁADNIKÓW POCHODZENIA NATURALNEGO<sup>1</sup>
+        </p>
+      </div>
+
+      <div class="stats__column">
+        <h3 class="stats__percent">
+          <small class="stats__small-text">wg</small> 71%
+        </h3>
+        <p class="stats__desc">
+          RESPONDENTÓW PRODUKTY <strong>IANA STAWY</strong> DZIAŁAJĄ KOJĄCO I WSPIERAJĄ
+          KOMFORT STAWÓW<sup>2</sup>
+        </p>
+      </div>
+
+      <div class="stats__column">
+        <h3 class="stats__percent">85%</h3>
+        <p class="stats__desc">
+          BADANYCH DEKLARUJE POPRAWĘ JAKOŚCI ŻYCIA<sup>3</sup>
+        </p>
+      </div>
+    </div>
+
+    <hr class="stats__divider" />
+
+    <div class="stats__footnotes">
+      <p>
+        <sup>1</sup>Każdy produkt do stosowania miejscowego IANA zawiera co
+        najmniej 98% składników pochodzenia naturalnego. Zgodnie z badaniami
+        klinicznymi przeprowadzonymi w warunkach rzeczywistych. Wyniki poprawy
+        jakości życia uzyskane według osób, których dotyczy deklarowany efekt
+        (co najmniej 20 osób), po 28 dniach stosowania, dwa razy dziennie.
+        Produkty testowano pod nadzorem dermatologa, reumatologa i
+        fizjoterapeuty.
+      </p>
+      <p>
+        <sup>2</sup>Badania kliniczne produktów do stosowania miejscowego
+        przeprowadzono na grupie 39–42 osób w wieku od 45 do 86 lat, w
+        samoocenie po 28 dniach stosowania, dwa razy dziennie. Wewnętrzne
+        badania satysfakcji przeprowadzone w 2024 roku na suplementach diety, na
+        grupie 104–128 osób powyżej 45 roku życia, z wykorzystaniem
+        internetowego kwestionariusza satysfakcji, po 30 dniach, 2 tabletki
+        dziennie.
+      </p>
+      <p>
+        <sup>3</sup>Zgodnie z badaniami klinicznymi przeprowadzonymi w warunkach
+        rzeczywistych. Wyniki poprawy jakości życia uzyskane według osób,
+        których dotyczy deklarowany efekt (co najmniej 20 osób), po 28 dniach
+        stosowania, dwa razy dziennie. Produkty testowano pod nadzorem
+        dermatologa, reumatologa i fizjoterapeuty.
+      </p>
+    </div>
+
+    <hr class="stats__divider" />
+  </div>
+</section>
+
+<style>
+  .stats {
+    background-color: var(--color-background-green);
+    color: var(--color-dark-green);
+    padding: 64px 24px 42px 24px;
+    margin-top: 64px;
+  }
+
+  .stats__container {
+    max-width: var(--max-width, 1545px); /* From style-guide update */
+    margin: 0 auto;
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 64px;
+  }
+
+  .stats__column {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats__percent {
+    font-size: clamp(4rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .stats__small-text {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 400;
+  }
+
+  .stats__desc {
+    font-size: var(--text-medium, 1.75rem);
+    line-height: 1.3;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .stats__desc strong {
+    font-weight: 700;
+  }
+
+  .stats__desc sup {
+    font-size: 0.6em;
+  }
+
+  .stats__divider {
+    border: none;
+    height: 1px;
+    background-color: var(--color-dark-green);
+    margin: 32px 0;
+  }
+
+  .stats__footnotes {
+    font-size: 0.75rem; /* text-xs equivalent */
+    line-height: 1.5;
+    color: var(--color-dark-green);
+    opacity: 0.8;
+  }
+
+  .stats__footnotes p {
+    margin-bottom: 12px;
+  }
+
+  .stats__footnotes p:last-child {
+    margin-bottom: 0;
+  }
+
+  .stats__footnotes sup {
+    margin-right: 4px;
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 900px) {
+    .stats__grid {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+
+    .stats__desc {
+      font-size: 1.25rem;
+    }
+  }
+</style>

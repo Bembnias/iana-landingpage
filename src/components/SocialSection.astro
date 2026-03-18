@@ -1,0 +1,125 @@
+---
+/**
+ * SocialSection
+ * Sekcja z odnośnikami do social mediów
+ */
+import { Image } from "astro:assets";
+import fbIcon from "../assets/facebook-icon.svg";
+import igIcon from "../assets/instagram-icon.svg";
+import ytIcon from "../assets/youtube-icon.svg";
+
+const socialLinks = [
+  { icon: fbIcon, alt: "Facebook", href: "https://www.facebook.com" },
+  { icon: igIcon, alt: "Instagram", href: "https://www.instagram.com" },
+  { icon: ytIcon, alt: "YouTube", href: "https://www.youtube.com/@IanaPolska" },
+];
+---
+
+<section class="social" id="social-section">
+  <div class="social__container">
+    <h2 class="social__heading">Zostań częścią naszej społeczności!</h2>
+    <p class="social__text">
+      Twórzmy razem przestrzeń, w której dojrzałość to siła, ruch i świadome
+      wybory.<br />
+      Śledź inspiracje, wiedzę i rozmowy o mobilności, energii i życiu w zgodzie ze
+      sobą
+    </p>
+
+    <div class="social__icons">
+      {
+        socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            class="social__icon-link"
+            aria-label={link.alt}
+          >
+            <Image src={link.icon} alt={link.alt} class="social__icon-img" />
+          </a>
+        ))
+      }
+    </div>
+
+    <a href="https://www.iana-bynature.pl" class="social__website"
+      >www.iana-bynature.pl</a
+    >
+  </div>
+</section>
+
+<style>
+  .social {
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    padding: 64px 24px;
+    text-align: center;
+  }
+
+  .social__container {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social__heading {
+    font-size: var(--text-large, 1.875rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .social__text {
+    font-size: var(
+      --text-small,
+      1rem
+    ); /* Może wydawać się nieco większy w designie, dam base font */
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .social__icons {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .social__icon-link {
+    display: inline-flex;
+    transition: transform 0.2s ease;
+  }
+
+  .social__icon-link:hover {
+    transform: scale(1.05);
+  }
+
+  .social__icon-img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .social__website {
+    font-size: var(--text-large, 1.875rem);
+    font-weight: 700;
+    color: var(--color-dark-green);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .social__website:hover {
+    color: var(--color-light-green);
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 768px) {
+    .social__heading,
+    .social__website {
+      font-size: var(--text-medium, 1.5rem);
+    }
+    .social__text {
+      font-size: 1rem;
+    }
+  }
+</style>

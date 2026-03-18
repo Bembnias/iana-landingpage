@@ -1,0 +1,71 @@
+/* ===========================
+   IANA — Global Styles
+   =========================== */
+
+/* --- CSS Variables --- */
+:root {
+  /* Colors */
+  --color-dark-green: #016543;
+  --color-light-green: #52a625;
+  --color-ultra-light-green: #c0d6cc;
+  --color-white: #ffffff;
+  --color-red: #e30616;
+  --color-blue: #005aa7;
+  --color-light-blue: #4495d1;
+  --color-purple: #553384;
+  --color-orange: #e65306;
+  --color-yellowish: #f39325;
+  --color-background-green: #ecf4f1;
+
+  /* Typography */
+  --font-primary: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+  /* Font Sizes */
+  --text-small: 0.875rem;
+  --text-medium: 1.75rem;
+  --text-large: 1.875rem;
+  --text-extra-large: 2.5rem;
+
+  /* Navbar */
+  --navbar-height: 89px;
+}
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Base --- */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-dark-green);
+  background-color: var(--color-white);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}

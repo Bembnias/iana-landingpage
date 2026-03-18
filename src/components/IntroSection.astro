@@ -1,0 +1,67 @@
+---
+/**
+ * IntroSection
+ * Sekcja z tekstem wstępnym oraz prostym dividerem
+ */
+---
+
+<section class="intro" id="intro-section">
+  <div class="intro__container">
+    <p class="intro__text">
+      <strong
+        >WIERZYMY, ŻE DOJRZAŁOŚĆ TO MOMENT WIĘKSZEJ ŚWIADOMOŚCI - NIE
+        OGRANICZEŃ.</strong
+      > Po 40. roku życia ciało zaczyna mówić innym językiem. Zmienia się energia,
+      regeneracja, elastyczność, rytm dnia. I to jest naturalne. Wiemy, że te zmiany
+      potrafią zaskakiwać. Czasem spowalniają. Czasem wymagają nowego podejścia. Wspieramy
+      wellbeing po 40, łącząc wiedzę, starannie dobrane składniki i realne <strong
+        >zrozumienie tego, przez co przechodzi Twoje ciało. Poczuj się dobrze w
+        swoim wieku!</strong
+      >
+    </p>
+    <hr class="intro__divider" />
+  </div>
+</section>
+
+<style>
+  .intro {
+    background-color: var(--color-white);
+    padding: 64px 24px 0 24px;
+  }
+
+  .intro__container {
+    max-width: 1545px;
+    margin: 0 auto;
+  }
+
+  .intro__text {
+    color: var(--color-dark-green);
+    font-size: 1.75rem;
+    line-height: 1.6;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .intro__text strong {
+    font-weight: 700;
+  }
+
+  .intro__divider {
+    border: none;
+    height: 1px;
+    background-color: var(--color-dark-green);
+    margin: 0;
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 768px) {
+    .intro {
+      padding-top: 48px;
+    }
+
+    .intro__text {
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+  }
+</style>

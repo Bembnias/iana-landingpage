@@ -1,0 +1,238 @@
+---
+/**
+ * BlogSection
+ * Sekcja z postami z bloga pobieranymi z Sanity.io
+ */
+import Image from "astro/components/Image.astro";
+import { loadQuery } from "../sanity/lib/load-query";
+
+// Pobieranie wpisów na bloga
+// Zakładamy, że najnowsze posty będą jako pierwsze
+const { data: posts } = await loadQuery<any[]>({
+  query: `*[_type == "post"] | order(publishedAt desc)[0...3] {
+    title,
+    slug,
+    teaser,
+    "thumbnailUrl": thumbnail.asset->url,
+    "thumbnailAlt": thumbnail.alt
+  }`,
+});
+---
+
+<section class="blog" id="blog-section">
+  <div class="blog__container">
+    <div class="blog__header">
+      <div class="blog__pill">Blog</div>
+      <p class="blog__intro">
+        Zmiany po 40. roku życia to nie ograniczenie, lecz zaproszenie do
+        większej uważności. Na naszym blogu dzielimy się wiedzą o mobilności,
+        regeneracji, metabolizmie i świadomym <span class="blog__highlight"
+          >dbaniu o siebie.</span
+        >
+      </p>
+    </div>
+
+    <div class="blog__grid">
+      {
+        posts &&
+          posts.map((post) => (
+            <article class="blog__card">
+              {post.thumbnailUrl && (
+                <a
+                  href={`/blog/${post.slug.current}`}
+                  class="blog__image-link"
+                  aria-label={`Czytaj więcej: ${post.title}`}
+                >
+                  <Image
+                    src={post.thumbnailUrl}
+                    alt={post.thumbnailAlt || ""}
+                    class="blog__image"
+                    inferSize={true}
+                  />
+                </a>
+              )}
+
+              <div class="blog__content-wrapper">
+                <h3 class="blog__title">
+                  <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+                </h3>
+
+                <hr class="blog__divider" />
+
+                <p class="blog__teaser">{post.teaser}</p>
+
+                <a href={`/blog/${post.slug.current}`} class="blog__btn">
+                  CZYTAJ
+                </a>
+              </div>
+            </article>
+          ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog {
+    background-color: var(--color-white);
+    padding: 8px 24px 80px 24px;
+    color: var(--color-dark-green);
+  }
+
+  .blog__container {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .blog__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .blog__pill {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    border: 1px solid var(--color-dark-green);
+    padding: 6px 24px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .blog__intro {
+    font-size: var(--text-small, 1rem);
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+
+  .blog__highlight {
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 400;
+  }
+
+  .blog__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 96px;
+    width: 100%;
+  }
+
+  .blog__card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog__image-link {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 24px;
+    border-radius: 32px;
+    overflow: hidden;
+  }
+
+  .blog__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .blog__image-link:hover .blog__image {
+    transform: scale(1.05);
+  }
+
+  .blog__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .blog__title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .blog__title a {
+    color: var(--color-dark-green);
+    text-decoration: none;
+  }
+
+  .blog__title a:hover {
+    color: var(--color-light-green);
+  }
+
+  .blog__divider {
+    border: none;
+    height: 1px;
+    background-color: var(--color-dark-green);
+    opacity: 0.3;
+    margin: 0 0 24px 0;
+  }
+
+  .blog__teaser {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    text-align: left;
+    margin-bottom: 16px;
+    flex: 1; /* Pcha przycisk w dół, jeśli teasery są różnej długości */
+  }
+
+  .blog__btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    border: 1px solid var(--color-dark-green);
+    border-radius: 50px;
+    padding: 14px 24px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .blog__btn:hover {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 900px) {
+    .blog__grid {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+
+    .blog__teaser {
+      margin-bottom: 24px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .blog__intro {
+      font-size: 1rem;
+    }
+  }
+</style>
