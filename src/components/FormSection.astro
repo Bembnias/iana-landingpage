@@ -1,0 +1,48 @@
+---
+/**
+ * FormSection
+ * Sekcja formularza zgłoszeniowego z wyborem zestawów testowych.
+ * Renderowana jako Astro Island z Reactem (client:visible).
+ *
+ * Images are pre-optimized via getImage() so the React island
+ * receives final URLs with proper width/height/format attributes.
+ */
+
+import { getImage } from "astro:assets";
+import FormSectionIsland from "./FormSectionIsland";
+
+import womanImg from "../assets/test-program-woman.png";
+import leafSeparator from "../assets/leaf-separator.svg";
+import chevronDown from "../assets/chevron-down.svg";
+import chevronDownThick from "../assets/chevron-down-thick.svg";
+import supElastycznosc from "../assets/sup-elastycznosc.png";
+import kremRozgrzewajacy from "../assets/krem-rozgrzewajacy.png";
+import supMobilnosc from "../assets/sup-mobilnosc.png";
+import zelChlodzacy from "../assets/zel-chlodzacy.png";
+import supOdpornosc from "../assets/sup-odpornosc.png";
+import balsamKojacy from "../assets/balsam-kojacy.png";
+
+/* Optimize raster images via Astro's image pipeline */
+const optimizedWoman = await getImage({ src: womanImg, width: 600, format: "webp" });
+const optimizedSupElastycznosc = await getImage({ src: supElastycznosc, width: 80, format: "webp" });
+const optimizedKremRozgrzewajacy = await getImage({ src: kremRozgrzewajacy, width: 80, format: "webp" });
+const optimizedSupMobilnosc = await getImage({ src: supMobilnosc, width: 80, format: "webp" });
+const optimizedZelChlodzacy = await getImage({ src: zelChlodzacy, width: 80, format: "webp" });
+const optimizedSupOdpornosc = await getImage({ src: supOdpornosc, width: 80, format: "webp" });
+const optimizedBalsamKojacy = await getImage({ src: balsamKojacy, width: 80, format: "webp" });
+
+const images = {
+  woman: { src: optimizedWoman.src, width: optimizedWoman.attributes.width, height: optimizedWoman.attributes.height },
+  leafSeparator: { src: leafSeparator.src, width: leafSeparator.width, height: leafSeparator.height },
+  chevronDown: { src: chevronDown.src, width: chevronDown.width, height: chevronDown.height },
+  chevronDownThick: { src: chevronDownThick.src, width: chevronDownThick.width, height: chevronDownThick.height },
+  supElastycznosc: { src: optimizedSupElastycznosc.src, width: optimizedSupElastycznosc.attributes.width, height: optimizedSupElastycznosc.attributes.height },
+  kremRozgrzewajacy: { src: optimizedKremRozgrzewajacy.src, width: optimizedKremRozgrzewajacy.attributes.width, height: optimizedKremRozgrzewajacy.attributes.height },
+  supMobilnosc: { src: optimizedSupMobilnosc.src, width: optimizedSupMobilnosc.attributes.width, height: optimizedSupMobilnosc.attributes.height },
+  zelChlodzacy: { src: optimizedZelChlodzacy.src, width: optimizedZelChlodzacy.attributes.width, height: optimizedZelChlodzacy.attributes.height },
+  supOdpornosc: { src: optimizedSupOdpornosc.src, width: optimizedSupOdpornosc.attributes.width, height: optimizedSupOdpornosc.attributes.height },
+  balsamKojacy: { src: optimizedBalsamKojacy.src, width: optimizedBalsamKojacy.attributes.width, height: optimizedBalsamKojacy.attributes.height },
+};
+---
+
+<FormSectionIsland client:visible images={images} />

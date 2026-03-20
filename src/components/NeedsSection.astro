@@ -22,6 +22,7 @@ const columns = [
     ],
     image: imgElastycznosc,
     alt: "Zestaw Elastyczność i Energia",
+    href: "/rutyna/elastycznosc-i-energia",
   },
   {
     titleHTML:
@@ -33,6 +34,7 @@ const columns = [
     ],
     image: imgKomfort,
     alt: "Zestaw Komfort i Odpoczynek",
+    href: "/rutyna/komfort-i-odpoczynek",
   },
   {
     titleHTML:
@@ -44,6 +46,7 @@ const columns = [
     ],
     image: imgMobilnosc,
     alt: "Zestaw Mobilność i Spokój",
+    href: "/rutyna/mobilnosc-i-spokoj",
   },
 ];
 ---
@@ -77,20 +80,35 @@ const columns = [
               ))}
             </ul>
 
-            <Image
-              src={chevronDown}
-              alt=""
-              aria-hidden="true"
-              class="needs__chevron"
-            />
+            <button
+              type="button"
+              class="needs__chevron-btn"
+              aria-expanded="false"
+              aria-label="Pokaż więcej"
+            >
+              <Image
+                src={chevronDown}
+                alt=""
+                aria-hidden="true"
+                class="needs__chevron"
+              />
+            </button>
 
-            <div class="needs__col-image-wrapper">
-              <Image src={col.image} alt={col.alt} class="needs__col-image" />
+            <div class="needs__hidden-content">
+              <div class="needs__hidden-content-inner">
+                <div class="needs__col-image-wrapper">
+                  <Image
+                    src={col.image}
+                    alt={col.alt}
+                    class="needs__col-image"
+                  />
+                </div>
+
+                <a href={col.href} class="needs__btn">
+                  ODKRYJ
+                </a>
+              </div>
             </div>
-
-            <a href="#" class="needs__btn">
-              ODKRYJ
-            </a>
           </article>
         ))
       }
@@ -105,14 +123,14 @@ const columns = [
   }
 
   .needs__container {
-    max-width: 1545px;
+    max-width: var(--max-width);
     margin: 0 auto;
   }
 
   .needs__heading {
     text-align: center;
     color: var(--color-dark-green);
-    font-size: var(--text-large);
+    font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 64px;
     display: flex;
@@ -133,21 +151,23 @@ const columns = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
+    align-items: flex-start;
   }
 
   .needs__column {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
   }
 
   .needs__col-header {
     background-color: var(--color-white);
     border: 2px solid var(--color-ultra-light-green);
     border-radius: 120px;
-    padding: 18px 36px;
+    padding: 12px 24px;
     text-align: center;
-    font-size: var(--text-large);
+    font-size: 1.5rem;
     color: var(--color-dark-green);
     font-weight: 700;
     line-height: 1.3;
@@ -160,7 +180,7 @@ const columns = [
     font-weight: 700;
     text-align: center;
     margin-bottom: 24px;
-    font-size: var(--text-medium);
+    font-size: 1.25rem;
   }
 
   .needs__col-list {
@@ -173,7 +193,7 @@ const columns = [
   }
 
   .needs__col-list li {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -188,11 +208,42 @@ const columns = [
     margin-top: 12px;
   }
 
+  .needs__chevron-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+
   .needs__chevron {
     width: 48px;
     height: auto;
-    margin-bottom: 24px;
-    margin-top: auto; /* pushes everything below to bottom if lists are uneven */
+    display: block;
+  }
+
+  .needs__hidden-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows 0.4s ease-in-out,
+      opacity 0.4s ease-in-out;
+    opacity: 0;
+    width: 100%;
+  }
+
+  .needs__hidden-content.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .needs__hidden-content-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   .needs__col-image-wrapper {
@@ -212,8 +263,8 @@ const columns = [
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 48px;
-    font-size: 1.5rem;
+    padding: 8px 24px;
+    font-size: 1.25rem;
     background-color: var(--color-white);
     border: 2px solid var(--color-dark-green);
     color: var(--color-dark-green);
@@ -239,3 +290,29 @@ const columns = [
     }
   }
 </style>
+
+<script>
+  function setupChevrons() {
+    const chevrons = document.querySelectorAll<HTMLButtonElement>(
+      ".needs__chevron-btn",
+    );
+    chevrons.forEach((btn) => {
+      // Przypisanie do onclick zapobiega duplikacji event listenerów przy view transitions
+      btn.onclick = () => {
+        const column = btn.closest(".needs__column");
+        if (!column) return;
+
+        const content = column.querySelector(".needs__hidden-content");
+        if (content) {
+          content.classList.toggle("is-open");
+
+          const isExpanded = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", (!isExpanded).toString());
+        }
+      };
+    });
+  }
+
+  setupChevrons();
+  document.addEventListener("astro:page-load", setupChevrons);
+</script>

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
+import NavbarPopover from "./NavbarPopover.astro";
 
 /**
  * Navbar — reużywalny komponent paska nawigacyjnego.
@@ -96,7 +97,8 @@ const navLinks = [
         }
       </ul>
 
-      <a class="navbar__cta" href="/#"> DOŁĄCZ I PRZETESTUJ </a>
+      <button class="navbar__cta" id="popover-trigger" aria-expanded="false" aria-controls="navbar-popover"> DOŁĄCZ I PRZETESTUJ </button>
+      <NavbarPopover />
     </div>
   </nav>
 </header>
@@ -122,7 +124,7 @@ const navLinks = [
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    max-width: 1545px;
+    max-width: var(--max-width);
     margin: 0 auto;
     padding: 0;
   }
@@ -165,6 +167,7 @@ const navLinks = [
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
   }
 
   .navbar__links {
@@ -198,6 +201,8 @@ const navLinks = [
     letter-spacing: 0.04em;
     border-radius: 50px;
     margin-left: 8px;
+    border: none;
+    cursor: pointer;
     transition:
       background-color 0.2s ease,
       transform 0.15s ease;
@@ -226,3 +231,34 @@ const navLinks = [
     }
   }
 </style>
+
+<script>
+  const trigger = document.getElementById('popover-trigger');
+  const popover = document.getElementById('navbar-popover');
+  
+  if (trigger && popover) {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!isExpanded));
+      popover.classList.toggle('is-open');
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!popover.contains(e.target as Node) && !trigger.contains(e.target as Node)) {
+        popover.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popover.classList.contains('is-open')) {
+        popover.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      }
+    });
+  }
+</script>

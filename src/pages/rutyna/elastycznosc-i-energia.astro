@@ -1,0 +1,95 @@
+---
+import RoutineTemplate from "../../components/RoutineTemplate.astro";
+
+// Obrazki główne Sekcji A
+import lifestyleElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+
+// Obrazki cross-sell (gotowe assety wg designu)
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const crossSells = [
+  {
+    title: "Mobilność i spokój",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title: "Komfort i odpoczynek",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
+];
+---
+
+<RoutineTemplate
+  title="Elastyczność i energia"
+  heroLifestyleImage={lifestyleElastycznosc}
+  showMorning={true}
+  showEvening={true}
+  crossSells={crossSells}
+  routineIndex={0}
+>
+  <Fragment slot="intro"> Rutyna na dobry początek dnia! </Fragment>
+
+  <Fragment slot="usage-short">
+    <p style="margin-bottom: 8px;">
+      Suplement diety <strong>iana Stawy</strong> Elastyczność i Energia - 2 tabletki,
+      popijając dużą ilością wody.
+    </p>
+    <p>
+      <strong>iana Stawy</strong> Relaksujący krem rozgrzewający - delikatnie wmasuj,
+      wykonując okrężne ruchy, aż do całkowitego wchłonięcia.
+    </p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Zadbaj o swoje stawy kompleksowo – od zewnątrz i od wewnątrz. Rutyna
+      ELASTYCZNOŚĆ I ENERGIA łączy działanie <strong>iana Stawy</strong> Relaksującego
+      kremu rozgrzewającego oraz Suplementu diety <strong>iana Stawy</strong> Elastyczność
+      i Energia, tworząc spójne wsparcie dla Twojego ciała każdego dnia.
+    </p>
+    <p>
+      To połączenie pielęgnacji i suplementacji zostało opracowane z myślą o
+      osobach, które chcą świadomie wspierać swoje ciało w codziennym
+      funkcjonowaniu – szczególnie wtedy, gdy pojawia się dyskomfort, sztywność
+      czy spadek energii.
+    </p>
+  </Fragment>
+
+  <Fragment slot="benefits-list">
+    <li>większego poczucia komfortu w obrębie stawów</li>
+    <li>lekkości i swobody ruchu na co dzień</li>
+    <li>utrzymania elastyczności i mobilności</li>
+    <li>większej gotowości do podejmowania codziennych aktywności</li>
+    <li>równowagi między ciałem a energią</li>
+  </Fragment>
+
+  <Fragment slot="usage-full">
+    <p style="color: var(--color-light-green); font-weight: 700;">Rano:</p>
+    <p>
+      Stosuj <strong>iana Stawy</strong> Relaksujący krem rozgrzewający i Suplement
+      diety <strong>iana Stawy</strong> Elastyczność i Energia.
+    </p>
+
+    <p style="color: var(--color-light-green); font-weight: 700;">Wieczorem:</p>
+    <p>
+      Stosuj <strong>iana Stawy</strong> Relaksujący krem rozgrzewający. Lekka formuła
+      o działaniu rozgrzewającym do 80 minut. Rozluźnia, łagodzi napięcie i poprawia
+      ruchomość stawów. Zawiera m.in. organiczną schisandrę, pieprz cayenne, lawendę
+      i olejek z imbiru.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips-list">
+    <li>
+      Aby rozluźnić stawy przed rozpoczęciem dnia, delikatnie poruszaj nimi od
+      przodu do tyłu 5–10 razy z rzędu.
+    </li>
+    <li>
+      Zapewnij organizmowi energię niezbędną do prawidłowego funkcjonowania,
+      stosując zróżnicowaną i zbilansowaną dietę.
+    </li>
+  </Fragment>
+</RoutineTemplate>

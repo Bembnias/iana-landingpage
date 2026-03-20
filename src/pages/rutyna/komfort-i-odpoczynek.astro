@@ -1,0 +1,107 @@
+---
+import RoutineTemplate from "../../components/RoutineTemplate.astro";
+
+// Obrazek główny
+import lifestyleKomfort from "../../assets/lifestyle-komfort.png";
+
+// Obrazki cross-sell
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+
+const crossSells = [
+  {
+    title: "Mobilność i spokój",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title: "Elastyczność i energia",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+];
+---
+
+<RoutineTemplate
+  title="Komfort i odpoczynek"
+  heroLifestyleImage={lifestyleKomfort}
+  showMorning={true}
+  showEvening={true}
+  crossSells={crossSells}
+  routineIndex={2}
+>
+  <Fragment slot="intro">
+    Skuteczne wyciszenie ciała i umysłu, aby wspierać regenerację po aktywnym
+    dniu.
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p style="margin-bottom: 8px;">
+      <strong>iana Stawy</strong> Kojący balsam do masażu – rano i/lub wieczorem dla
+      odprężenia mięśni oraz wsparcia komfortu stawów.
+    </p>
+    <p>
+      Suplement diety <strong>iana Stawy</strong> Odporność chrząstki i zdrowy sen
+      – wieczorem przed snem, by lepiej przygotować organizm do nocnej regeneracji.
+    </p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Zadbaj o swoje ciało kompleksowo – od zewnątrz i od wewnątrz. Rutyna
+      KOMFORT I ODPOCZYNEK łączy działanie <strong>iana Stawy</strong> Kojącego balsamu
+      do masażu oraz Suplementu diety <strong>iana Stawy</strong> Odporność Chrząstki
+      i Zdrowy Sen, tworząc spójne wsparcie dla Twojego ciała i regeneracji każdego
+      dnia.
+    </p>
+    <p>
+      To połączenie pielęgnacji i suplementacji zostało opracowane z myślą o
+      osobach, które chcą świadomie zadbać o komfort ciała i jakość odpoczynku –
+      szczególnie wtedy, gdy pojawia się napięcie mięśniowe, dyskomfort w
+      okolicy stawów i mięśni czy pogorszenie jakości snu.
+    </p>
+  </Fragment>
+
+  <Fragment slot="benefits-list">
+    <li>rozluźnienia stawów i mięśni</li>
+    <li>odciążenia ciała po codziennym wysiłku</li>
+    <li>wspierania regeneracji i odpoczynku</li>
+    <li>poprawy jakości snu</li>
+  </Fragment>
+
+  <Fragment slot="usage-full">
+    <p style="color: var(--color-light-green); font-weight: 700;">
+      Rano i wieczorem:
+    </p>
+    <p>
+      <strong>iana Stawy</strong> Kojący balsam do masażu. Poprawia komfort stawów
+      i trwale łagodzi napięcie w okolicy stawów.
+    </p>
+
+    <p
+      style="color: var(--color-light-green); font-weight: 700; margin-top: 16px;"
+    >
+      Wieczorem:
+    </p>
+    <p>
+      Suplement diety <strong>iana Stawy</strong> Odporność chrząstki i zdrowy sen.
+      Wspomaga elastyczność chrząstki stawowej i zdrowy sen dzięki zawartości skrzypu
+      polnego i passiflory.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips-list">
+    <li>
+      Wykonaj kojący masaż samodzielny rano, aby przygotować się do codziennych
+      czynności, i/lub wieczorem, aby zrelaksować się po całym dniu.
+    </li>
+    <li>
+      Wieczorem wybieraj spokojne zajęcia, takie jak relaksacja, aby zaznaczyć
+      przejście do innego rytmu niż ten, który Ci towarzyszył w ciągu dnia.
+    </li>
+    <li>
+      Po położeniu się do łóżka przyjmij wygodną pozycję, śpiąc na plecach i
+      podkładając poduszki pod stawy.
+    </li>
+  </Fragment>
+</RoutineTemplate>

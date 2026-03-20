@@ -1,0 +1,112 @@
+---
+import RoutineTemplate from "../../components/RoutineTemplate.astro";
+
+// Obrazek główny
+import lifestyleMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+
+// Obrazki cross-sell (używamy obrazków formatu lifestyle-*.png według preferencji użytkownika)
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const crossSells = [
+  {
+    title: "Elastyczność i energia",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+  {
+    title: "Komfort i odpoczynek",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
+];
+---
+
+<RoutineTemplate
+  title="Mobilność i spokój"
+  heroLifestyleImage={lifestyleMobilnosc}
+  showMorning={true}
+  showEvening={true}
+  crossSells={crossSells}
+  routineIndex={1}
+>
+  <Fragment slot="intro">
+    Wsparcie dla Twojej mobilności i wewnętrznego dobrostanu każdego dnia.
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p style="margin-bottom: 8px;">
+      <strong>iana Stawy</strong> Intensywnie chłodzący żel - 2 razy dziennie w rozłożeniu
+      na rano i wieczór, delikatnie wmasowując w wybrane partie ciała.
+    </p>
+    <p>
+      Suplement diety <strong>iana Stawy</strong> Zdrowe Stawy i Pozytywny Nastrój
+      - 2 kapsułki w ciągu dnia, popijając dużą ilością wody.
+    </p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Zadbaj o swoje stawy kompleksowo – od zewnątrz i od wewnątrz. Rutyna
+      MOBILNOŚĆ I RÓWNOWAGA łączy działanie <strong>iana Stawy</strong> Intensywnie
+      chłodzącego żelu oraz Suplementu diety <strong>iana Stawy</strong> Zdrowe Stawy
+      i Pozytywny Nastrój, tworząc spójne wsparcie dla Twojego ciała i samopoczucia
+      każdego dnia.
+    </p>
+    <p>
+      To połączenie pielęgnacji i suplementacji zostało opracowane z myślą o
+      osobach, które chcą świadomie wspierać swoją mobilność oraz dobrostan –
+      szczególnie wtedy, gdy pojawia się dyskomfort w okolicy stawów,
+      ograniczenia ruchowe czy wpływ napięcia na codzienne funkcjonowanie i
+      nastrój.
+    </p>
+  </Fragment>
+
+  <Fragment slot="benefits-list">
+    <li>poprawy ruchomości</li>
+    <li>odzyskiwania możliwości ruchu</li>
+    <li>większej swobody w codziennych czynnościach</li>
+    <li>wsparcia równowagi emocjonalnej</li>
+  </Fragment>
+
+  <Fragment slot="usage-full">
+    <p style="color: var(--color-light-green); font-weight: 700;">
+      Rano i wieczorem:
+    </p>
+    <p>
+      <strong>iana Stawy</strong> Intensywnie chłodzący żel - poprawia ruchomość stawów
+      i skutecznie łagodzi napięcie w ich okolicy.
+    </p>
+
+    <p
+      style="color: var(--color-light-green); font-weight: 700; margin-top: 16px;"
+    >
+      W ciągu dnia:
+    </p>
+    <p>
+      Suplement diety <strong>iana Stawy</strong> Zdrowe Stawy i Pozytywny Nastrój
+      - wspomaga zdrowie stawów dzięki zawartości czarnej porzeczki, zawartość witaminy
+      C przyczynia się do prawidłowego tworzenia kolagenu, zapewniającego normalne
+      funkcjonowanie chrząstki stawowej, pomaga zachować równowagę emocjonalną, wspomagając
+      utrzymanie pozytywnego nastroju dzięki zawartości szafranu.
+    </p>
+  </Fragment>
+
+  <Fragment slot="tips-list">
+    <li>
+      Dostosuj ilość produktu do obszaru stosowania i intensywności pożądanego
+      efektu chłodzącego.
+    </li>
+    <li>
+      Ćwiczenia fizyczne są bardzo korzystne dla zdrowia ciała i umysłu: należy
+      wykonywać umiarkowaną aktywność fizyczną przez co najmniej 2,5 godziny
+      tygodniowo.
+    </li>
+    <li>
+      Aby poprawić swoją równowagę emocjonalną, należy zadbać o zdrowy tryb
+      życia (odżywianie, sen itp.) oraz uprawiać aktywności sprzyjające
+      relaksacji i dobremu samopoczuciu (twórcze, artystyczne, joga, medytacja
+      itp.).
+    </li>
+  </Fragment>
+</RoutineTemplate>

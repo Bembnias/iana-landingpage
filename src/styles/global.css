@@ -28,6 +28,9 @@
 
   /* Navbar */
   --navbar-height: 89px;
+
+  /* Max width */
+  --max-width: 1280px;
 }
 
 /* --- Reset --- */
@@ -45,6 +48,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -52,6 +56,7 @@ body {
   color: var(--color-dark-green);
   background-color: var(--color-white);
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 img {

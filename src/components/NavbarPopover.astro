@@ -1,0 +1,338 @@
+---
+import { Image } from "astro:assets";
+import supElastycznosc from "../assets/sup-elastycznosc.png";
+import kremRozgrzewajacy from "../assets/krem-rozgrzewajacy.png";
+import supMobilnosc from "../assets/sup-mobilnosc.png";
+import zelChlodzacy from "../assets/zel-chlodzacy.png";
+import supOdpornosc from "../assets/sup-odpornosc.png";
+import balsamKojacy from "../assets/balsam-kojacy.png";
+---
+
+<div
+  class="navbar-popover"
+  id="navbar-popover"
+  aria-hidden="true"
+  role="dialog"
+  aria-label="Wybierz zestaw produktów"
+>
+  <div class="navbar-popover__inner">
+    {/* Karta 1 */}
+    <div class="popover-card">
+      <div class="popover-card__products">
+        <div class="popover-product">
+          <Image
+            src={supElastycznosc}
+            alt="Suplement Elastyczność"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Suplement diety</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--orange"
+              >ELASTYCZNOŚĆ + ENERGIA</span
+            >
+          </div>
+        </div>
+        <div class="popover-product">
+          <Image
+            src={kremRozgrzewajacy}
+            alt="Krem Rozgrzewający"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Relaksujący</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--orange"
+              >KREM ROZGRZEWAJĄCY</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="popover-card__action">
+        <span class="popover-card__action-text">Elastyczność i energia</span>
+        <a
+          href="/rutyna/elastycznosc-i-energia"
+          class="popover-btn"
+          aria-label="Przejdź do podstrony elastyczność i energia">WIĘCEJ</a
+        >
+      </div>
+    </div>
+
+    {/* Karta 2 */}
+    <div class="popover-card">
+      <div class="popover-card__products">
+        <div class="popover-product">
+          <Image
+            src={supMobilnosc}
+            alt="Suplement Mobilność"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Suplement diety</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--purple"
+              >ZDROWE STAWY + DOBRY NASTRÓJ</span
+            >
+          </div>
+        </div>
+        <div class="popover-product">
+          <Image
+            src={zelChlodzacy}
+            alt="Żel Chłodzący"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Intensywnie</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--blue"
+              >CHŁODZĄCY ŻEL</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="popover-card__action">
+        <span class="popover-card__action-text">Mobilność i spokój</span>
+        <a
+          href="/rutyna/mobilnosc-i-spokoj"
+          class="popover-btn"
+          aria-label="Przejdź do podstrony mobilność i spokój">WIĘCEJ</a
+        >
+      </div>
+    </div>
+
+    {/* Karta 3 (Wyróżniona) */}
+    <div class="popover-card popover-card--active">
+      <div class="popover-card__products">
+        <div class="popover-product">
+          <Image
+            src={supOdpornosc}
+            alt="Suplement Odporność"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Suplement diety</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--light-blue"
+              >ODPORNOŚĆ CHRZĄSTKI + ZDROWY SEN</span
+            >
+          </div>
+        </div>
+        <div class="popover-product">
+          <Image
+            src={balsamKojacy}
+            alt="Balsam Kojący"
+            class="popover-product__img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="popover-product__info">
+            <span class="popover-product__title">Kojący</span>
+            <span
+              class="popover-product__subtitle popover-product__subtitle--yellowish"
+              >BALSAM DO MASAŻU</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="popover-card__action">
+        <span class="popover-card__action-text">Komfort i odpoczynek</span>
+        <a
+          href="/rutyna/komfort-i-odpoczynek"
+          class="popover-btn"
+          aria-label="Przejdź do podstrony komfort i odpoczynek">WIĘCEJ</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .navbar-popover {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 680px; /* Approximate width */
+    background-color: var(--color-white);
+    border-radius: 40px 0 40px 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 24px;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* When the popover is active we add this class */
+  .navbar-popover.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navbar-popover__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .popover-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-background-green);
+    border-radius: 20px;
+    padding: 20px 24px;
+    gap: 20px;
+  }
+
+  /* Active card does not have special background according to design, 
+     but maybe the button is different */
+
+  .popover-card__products {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .popover-product {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .popover-product__img {
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .popover-product:nth-child(2) .popover-product__img {
+    margin-top: 10px;
+    margin-bottom: -10px;
+    height: 100px;
+  }
+
+  .popover-product__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popover-product__title {
+    color: var(--color-dark-green);
+    font-size: 1.125rem;
+    line-height: 1.2;
+  }
+
+  .popover-product__subtitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-top: 6px;
+  }
+
+  .popover-product__subtitle--orange {
+    color: var(--color-orange);
+  }
+  .popover-product__subtitle--purple {
+    color: var(--color-purple);
+  }
+  .popover-product__subtitle--blue {
+    color: var(--color-blue);
+  }
+  .popover-product__subtitle--light-blue {
+    color: var(--color-light-blue);
+  }
+  .popover-product__subtitle--yellowish {
+    color: var(--color-yellowish);
+  }
+
+  .popover-card__action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 170px;
+  }
+
+  .popover-card__action-text {
+    color: var(--color-dark-green);
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .popover-btn {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid var(--color-dark-green);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .popover-btn:hover {
+    background-color: var(--color-background-green);
+  }
+
+  .popover-btn--active {
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    border: none;
+  }
+
+  .popover-btn--active:hover {
+    background-color: #458e1d;
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 768px) {
+    .navbar-popover {
+      position: fixed;
+      top: 89px; /* var(--navbar-height) */
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-radius: 0 0 24px 24px;
+      padding: 16px;
+      max-height: calc(100vh - 89px);
+      overflow-y: auto;
+    }
+
+    .popover-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .popover-card__action {
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    .popover-card__action-text {
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,520 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
+import sunIcon from "../assets/sun-icon.svg";
+import moonIcon from "../assets/moon-icon.svg";
+
+export interface CrossSellItem {
+  title: string;
+  image: any;
+  href: string;
+}
+
+export interface Props {
+  title: string;
+  heroLifestyleImage: any;
+  showMorning?: boolean;
+  showEvening?: boolean;
+  crossSells: CrossSellItem[];
+  /** Index of the routine card in the form section (0, 1, or 2) */
+  routineIndex: number;
+}
+
+const {
+  title,
+  heroLifestyleImage,
+  showMorning = false,
+  showEvening = false,
+  crossSells,
+  routineIndex,
+} = Astro.props;
+---
+
+<Layout title={`IANA - Rutyna - ${title}`}>
+  <Navbar currentPath="/rutyna" fixed={true} />
+
+  <main class="routine-page">
+    {/* Sekcja A: Hero */}
+    <section class="routine-hero">
+      <div class="routine-hero__inner">
+        {/* Lewa kolumna: Karta Wizualna */}
+        <div class="hero-left">
+          <div class="visual-card">
+            <Image
+              src={heroLifestyleImage}
+              alt="Karta wizualna rutyny"
+              class="visual-card__bg"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+
+          <div class="routine-details">
+            <div class="routine-details__inner">
+              <h3 class="details-heading">OPIS:</h3>
+              <div class="details-text">
+                <slot name="description" />
+              </div>
+
+              <h3 class="details-heading-dark">
+                To Twój codzienny rytuał dla:
+              </h3>
+              <ul class="details-list">
+                <slot name="benefits-list" />
+              </ul>
+
+              <h3 class="details-heading details-heading--margin">
+                WSKAZÓWKI DOTYCZĄCE STOSOWANIA:
+              </h3>
+              <div class="details-usage-full">
+                <slot name="usage-full" />
+              </div>
+
+              <h3 class="details-heading details-heading--margin">
+                NASZE PORADY:
+              </h3>
+              <ul class="details-list">
+                <slot name="tips-list" />
+              </ul>
+
+              <p class="details-disclaimer">
+                <em>Suplement diety. Nie zastępuje zróżnicowanej diety.</em>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Prawa kolumna: Informacje i Akcja */}
+        <div class="hero-right">
+          <h2 class="hero-info__pretitle">
+            Stwórz rutynę dopasowaną do Twoich<br />potrzeb i preferencji:
+          </h2>
+          <h1 class="hero-info__title">{title}</h1>
+
+          <div class="hero-info__intro">
+            <slot name="intro" />
+          </div>
+
+          <h3 class="hero-info__usage-heading">STOSOWANIE:</h3>
+          <div class="hero-info__usage-text">
+            <slot name="usage-short" />
+          </div>
+
+          <div class="hero-info__pills">
+            {
+              showMorning && (
+                <div class="time-block">
+                  <Image
+                    src={sunIcon}
+                    alt="Rano"
+                    class="time-block__icon"
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                  <div class="time-pill">
+                    <span class="time-pill__text">RANO</span>
+                  </div>
+                </div>
+              )
+            }
+            {
+              showEvening && (
+                <div class="time-block">
+                  <Image
+                    src={moonIcon}
+                    alt="Wieczorem"
+                    class="time-block__icon"
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                  <div class="time-pill">
+                    <span class="time-pill__text">WIECZOREM</span>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          <a
+            href={`/?rutyna=${routineIndex}#form-section`}
+            class="hero-info__btn">PRZETESTUJ</a
+          >
+        </div>
+      </div>
+    </section>
+
+    {/* Sekcja C: Cross-sell */}
+    <section class="routine-cross-sell">
+      <div class="cross-sell__header">
+        <h2 class="cross-sell__title">Odkryj także</h2>
+      </div>
+
+      <div class="cross-sell__content">
+        <div class="cross-sell__inner">
+          <div class="cross-sell__grid">
+            {
+              crossSells.map((item) => (
+                <div class="cross-sell-card">
+                  <h3 class="cross-sell-card__title">{item.title}</h3>
+                  <div class="cross-sell-card__img-wrapper">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      class="cross-sell-card__img"
+                    />
+                  </div>
+                  <a href={item.href} class="cross-sell-card__btn">
+                    ODKRYJ
+                  </a>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .routine-page {
+    background-color: var(--color-white);
+    padding-top: calc(var(--navbar-height, 89px) + 60px);
+    color: var(--color-dark-green);
+  }
+
+  /* --- Sekcja A: Hero --- */
+  .routine-hero {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    padding: 0 40px;
+    margin-bottom: 60px;
+  }
+
+  .routine-hero__inner {
+    display: flex;
+    gap: 60px;
+  }
+
+  .hero-left {
+    flex: 6;
+    min-width: 0; /* Prevent overflow */
+  }
+
+  .hero-right {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: sticky;
+    top: calc(var(--navbar-height, 89px) + 60px);
+  }
+
+  .visual-card {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .visual-card__bg {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-info__pretitle {
+    color: var(--color-light-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .hero-info__title {
+    color: var(--color-dark-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .hero-info__intro {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .hero-info__usage-heading {
+    color: var(--color-dark-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-info__usage-text {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .hero-info__pills {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    margin-bottom: 48px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .time-block {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .time-block__icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .time-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-background-green);
+    padding: 8px 21px;
+    border-radius: 50px;
+  }
+
+  .time-pill__text {
+    color: var(--color-dark-green);
+    font-weight: 500;
+    font-size: 1.125rem;
+  }
+
+  .hero-info__btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding: 12px 60px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    transition:
+      background-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .hero-info__btn:hover {
+    background-color: #458e1d;
+    transform: translateY(-2px);
+  }
+
+  /* --- Sekcja B: Szczegóły (zintegrowana w lewej) --- */
+  .routine-details {
+    margin-top: 60px;
+  }
+
+  .routine-details__inner {
+    width: 100%;
+  }
+
+  .details-heading {
+    color: var(--color-light-green);
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .details-heading-dark {
+    color: var(--color-dark-green);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .details-heading--margin {
+    margin-top: 40px;
+  }
+
+  .details-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .details-text p {
+    margin-bottom: 16px;
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+  }
+
+  .details-list :global(li) {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .details-list :global(li::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background-image: url("../assets/list-indicator.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .details-usage-full {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .details-usage-full :global(p) {
+    margin-bottom: 16px;
+  }
+
+  .details-disclaimer {
+    margin-top: 40px;
+    font-size: 1.25rem;
+    color: var(--color-dark-green);
+  }
+
+  /* --- Sekcja C: Cross-sell --- */
+  .routine-cross-sell {
+    width: 100%;
+  }
+
+  .cross-sell__header {
+    background-color: var(--color-background-green);
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .cross-sell__title {
+    color: var(--color-dark-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .cross-sell__content {
+    background-color: #fafafa;
+    padding: 60px 40px;
+  }
+
+  .cross-sell__inner {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cross-sell__grid {
+    display: flex;
+    gap: 60px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .cross-sell-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(50% - 30px); /* 50% width minus half the gap */
+  }
+
+  .cross-sell-card__title {
+    color: var(--color-dark-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .cross-sell-card__img-wrapper {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .cross-sell-card__img {
+    width: 100%;
+    height: auto;
+    /* Karty na mockach mają shadow w assetach, więc image jest po prostu wyświetlany. */
+  }
+
+  .cross-sell-card__btn {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 50%;
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid var(--color-dark-green);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .cross-sell-card__btn:hover {
+    background-color: var(--color-background-green);
+  }
+
+  /* --- RWD --- */
+  @media screen and (max-width: 1024px) {
+    .routine-hero__inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .visual-card__left {
+      max-width: 200px;
+    }
+
+    .hero-info__pills {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .routine-hero {
+      padding: 0 20px;
+    }
+
+    .cross-sell__grid {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 40px;
+    }
+
+    .cross-sell-card {
+      width: 100%;
+    }
+
+    .hero-info__pills {
+      flex-direction: column;
+    }
+  }
+</style>
