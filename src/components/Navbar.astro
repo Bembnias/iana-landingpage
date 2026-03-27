@@ -1,6 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
+import fbIcon from "../assets/facebook-icon.svg";
+import igIcon from "../assets/instagram-icon.svg";
+import ytIcon from "../assets/youtube-icon.svg";
 import NavbarPopover from "./NavbarPopover.astro";
 
 /**
@@ -17,10 +20,63 @@ interface Props {
 const { currentPath = "/", fixed = false } = Astro.props;
 
 const navLinks = [
-  { label: "Produkty", href: "/#" },
+  { label: "Produkty", href: "#" },
   { label: "Blog", href: "/#blog-section" },
   { label: "FAQ", href: "/#faq-section" },
   { label: "Kontakt", href: "/#stopka" },
+];
+
+const productLinks = [
+  {
+    label: "Suplement diety",
+    title: "ELASTYCZNOŚĆ + ENERGIA",
+    color: "var(--color-orange)",
+    href: "/produkty/elastycznosc-i-energia",
+  },
+  {
+    label: "Suplement diety",
+    title: "ZDROWE STAWY + DOBRY NASTRÓJ",
+    color: "var(--color-purple)",
+    href: "/produkty/zdrowe-stawy-dobry-nastroj",
+  },
+  {
+    label: "Suplement diety",
+    title: "ODPORNOŚĆ CHRZĄSTKI + ZDROWY SEN",
+    color: "var(--color-light-blue)",
+    href: "/produkty/suplement-odpornosc",
+  },
+  {
+    label: "Relaksujący",
+    title: "KREM ROZGRZEWAJĄCY",
+    color: "var(--color-red)",
+    href: "/produkty/relaksujacy-krem-rozgrzewajacy",
+  },
+  {
+    label: "Intensywnie",
+    title: "CHŁODZĄCY ŻEL",
+    color: "var(--color-blue)",
+    href: "/produkty/intensywnie-chlodzacy-zel",
+  },
+  {
+    label: "Kojący",
+    title: "BALSAM DO MASAŻU",
+    color: "var(--color-yellowish)",
+    href: "/produkty/kojacy-balsam-do-masazu",
+  },
+];
+
+const socialLinks = [
+  {
+    icon: fbIcon,
+    alt: "Facebook",
+    href: "https://www.facebook.com/iana.polska.fb",
+  },
+  {
+    icon: igIcon,
+    alt: "Instagram",
+    href: "https://www.instagram.com/iana.polska",
+  },
+  { icon: ytIcon, alt: "YouTube", href: "https://www.youtube.com/@IanaPolska" },
 ];
 ---
 
@@ -85,20 +141,183 @@ const navLinks = [
       <ul class="navbar__links">
         {
           navLinks.map((link) => (
-            <li>
-              <a
-                class={`navbar__link ${currentPath === link.href ? "navbar__link--active" : ""}`}
-                href={link.href}
-              >
-                {link.label}
-              </a>
+            <li
+              class={
+                link.label === "Produkty" ? "navbar__item--has-dropdown" : ""
+              }
+            >
+              {link.label === "Produkty" ? (
+                <button
+                  class={`navbar__link navbar__link--btn ${currentPath.includes("/produkty/") ? "navbar__link--active" : ""}`}
+                  aria-expanded="false"
+                  aria-label="Rozwiń menu produktów"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <a
+                  class={`navbar__link ${currentPath === link.href ? "navbar__link--active" : ""}`}
+                  aria-label={link.label}
+                  href={link.href}
+                >
+                  {link.label}
+                </a>
+              )}
+              {link.label === "Produkty" && (
+                <div class="navbar__dropdown">
+                  <ul class="navbar__dropdown-list">
+                    {productLinks.map((p) => (
+                      <li>
+                        <a
+                          href={p.href}
+                          class="navbar__dropdown-link"
+                          aria-label={p.label}
+                        >
+                          <span class="navbar__dropdown-label">{p.label}</span>
+                          <span
+                            class="navbar__dropdown-title"
+                            style={{ color: p.color }}
+                          >
+                            {p.title}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </li>
           ))
         }
       </ul>
 
-      <button class="navbar__cta" id="popover-trigger" aria-expanded="false" aria-controls="navbar-popover"> DOŁĄCZ I PRZETESTUJ </button>
+      <button
+        class="navbar__cta"
+        id="popover-trigger"
+        aria-expanded="false"
+        aria-controls="navbar-popover"
+      >
+        DOŁĄCZ I PRZETESTUJ
+      </button>
       <NavbarPopover />
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div
+      class="navbar__sidebar-overlay"
+      id="navbar-sidebar-overlay"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="navbar__sidebar" id="navbar-sidebar" aria-hidden="true">
+      <div
+        class={`navbar__sidebar-header${fixed ? " navbar__sidebar-header--fixed" : ""}`}
+      >
+        <button
+          class="navbar__sidebar-close"
+          id="sidebar-close-btn"
+          aria-label="Zamknij menu"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <a
+          class="navbar__sidebar-logo"
+          href="/"
+          aria-label="IANA — strona główna"
+        >
+          <div class="navbar__sidebar-logo-mask"></div>
+        </a>
+      </div>
+
+      <nav class="navbar__sidebar-nav">
+        <ul class="navbar__sidebar-links">
+          {
+            navLinks.map((link) => (
+              <li
+                class={
+                  link.label === "Produkty"
+                    ? "navbar__sidebar-item--has-dropdown"
+                    : ""
+                }
+              >
+                {link.label === "Produkty" ? (
+                  <span
+                    class="navbar__sidebar-link navbar__sidebar-link--span"
+                  >
+                    {link.label}
+                  </span>
+                ) : (
+                  <a
+                    class="navbar__sidebar-link"
+                    href={link.href}
+                    aria-label={link.label}
+                  >
+                    {link.label}
+                  </a>
+                )}
+                {link.label === "Produkty" && (
+                  <ul class="navbar__sidebar-dropdown">
+                    {productLinks.map((p) => (
+                      <li>
+                        <a
+                          href={p.href}
+                          class="navbar__sidebar-dropdown-link"
+                          aria-label={p.label}
+                        >
+                          <span class="navbar__sidebar-dropdown-label">
+                            {p.label}
+                          </span>
+                          <span
+                            class="navbar__sidebar-dropdown-title"
+                            style={{ color: p.color }}
+                          >
+                            {p.title}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="navbar__sidebar-footer">
+        <div class="navbar__sidebar-socials">
+          {
+            socialLinks.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                class="navbar__sidebar-social-link"
+                aria-label={link.alt}
+              >
+                <Image
+                  src={link.icon}
+                  alt={link.alt}
+                  class="navbar__sidebar-social-icon"
+                />
+              </a>
+            ))
+          }
+        </div>
+      </div>
     </div>
   </nav>
 </header>
@@ -191,6 +410,87 @@ const navLinks = [
     background-color: rgba(255, 255, 255, 0.12);
   }
 
+  .navbar__link--btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* --- Desktop Dropdown --- */
+  .navbar__item--has-dropdown {
+    position: relative;
+  }
+
+  .navbar__item--has-dropdown::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+  }
+
+  .navbar__dropdown {
+    position: absolute;
+    top: calc(100% + 15px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: var(--color-background-green);
+    border: 1px solid rgba(1, 101, 67, 0.2);
+    border-radius: 12px;
+    min-width: 320px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease,
+      transform 0.2s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar__item--has-dropdown:hover .navbar__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .navbar__dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .navbar__dropdown-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+
+  .navbar__dropdown-link:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .navbar__dropdown-label {
+    color: var(--color-dark-green);
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  .navbar__dropdown-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
   .navbar__cta {
     display: inline-block;
     padding: 10px 20px;
@@ -213,6 +513,188 @@ const navLinks = [
     transform: translateY(-1px);
   }
 
+  /* --- Sidebar Overlay --- */
+  .navbar__sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 150;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0.3s ease-in-out;
+  }
+
+  .navbar__sidebar-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* --- Sidebar Menu --- */
+  .navbar__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: var(--color-background-green);
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    padding-bottom: 24px;
+    visibility: hidden;
+  }
+
+  .navbar__sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  @media screen and (min-width: 769px) {
+    .navbar__sidebar {
+      width: 500px;
+      border-right: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .navbar__sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--navbar-height);
+    background-color: rgba(1, 101, 67, 0.9);
+    margin-top: 38px;
+    position: relative;
+    padding: 0 24px;
+    margin-bottom: 48px;
+  }
+
+  .navbar__sidebar-header--fixed {
+    margin-top: 0;
+  }
+
+  .navbar__sidebar-close {
+    position: absolute;
+    left: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-white);
+    padding: 8px; /* makes click area larger */
+    margin-left: -8px;
+    display: flex;
+  }
+
+  .navbar__sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar__sidebar-logo-mask {
+    width: 100px;
+    height: 38px;
+    background-color: var(--color-white);
+    mask-image: url("../assets/logo.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("../assets/logo.svg");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+
+  .navbar__sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 24px;
+  }
+
+  .navbar__sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+  }
+
+  .navbar__sidebar-link {
+    font-size: 2rem;
+    color: var(--color-dark-green);
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .navbar__sidebar-link:hover {
+    color: var(--color-light-green);
+  }
+
+  .navbar__sidebar-link--span {
+    cursor: default;
+  }
+
+  /* --- Mobile Sidebar Dropdown --- */
+  .navbar__sidebar-dropdown {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 16px;
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-left: 2px solid rgba(1, 101, 67, 0.2);
+  }
+
+  .navbar__sidebar-dropdown-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .navbar__sidebar-dropdown-label {
+    color: var(--color-dark-green);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .navbar__sidebar-dropdown-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .navbar__sidebar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 48px;
+    padding: 0 24px;
+  }
+
+  .navbar__sidebar-socials {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .navbar__sidebar-social-icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease;
+  }
+
+  .navbar__sidebar-social-link:hover .navbar__sidebar-social-icon {
+    transform: scale(1.1);
+  }
+
   /* --- Mobile --- */
   @media screen and (max-width: 1545px) {
     .navbar__inner {
@@ -229,35 +711,101 @@ const navLinks = [
       font-size: 0.75rem;
       padding: 8px 14px;
     }
+
+    /* --- Mobile Sidebar Dropdown --- */
+    .navbar__sidebar-dropdown-label {
+      font-size: 1rem;
+    }
+
+    .navbar__sidebar-dropdown-title {
+      font-size: 0.875rem;
+    }
+
+    .navbar__sidebar-nav {
+      padding: 0 24px;
+    }
+
+    .navbar__sidebar-links {
+      gap: 18px;
+    }
+
+    .navbar__sidebar-link {
+      font-size: 1.5rem;
+    }
   }
 </style>
 
 <script>
-  const trigger = document.getElementById('popover-trigger');
-  const popover = document.getElementById('navbar-popover');
-  
+  const trigger = document.getElementById("popover-trigger");
+  const popover = document.getElementById("navbar-popover");
+
   if (trigger && popover) {
-    trigger.addEventListener('click', (e) => {
+    trigger.addEventListener("click", (e) => {
       e.stopPropagation();
-      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-      trigger.setAttribute('aria-expanded', String(!isExpanded));
-      popover.classList.toggle('is-open');
+      const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+      trigger.setAttribute("aria-expanded", String(!isExpanded));
+      popover.classList.toggle("is-open");
     });
 
     // Close on click outside
-    document.addEventListener('click', (e) => {
-      if (!popover.contains(e.target as Node) && !trigger.contains(e.target as Node)) {
-        popover.classList.remove('is-open');
-        trigger.setAttribute('aria-expanded', 'false');
+    document.addEventListener("click", (e) => {
+      if (
+        !popover.contains(e.target as Node) &&
+        !trigger.contains(e.target as Node)
+      ) {
+        popover.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
       }
     });
 
     // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && popover.classList.contains('is-open')) {
-        popover.classList.remove('is-open');
-        trigger.setAttribute('aria-expanded', 'false');
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && popover.classList.contains("is-open")) {
+        popover.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
         trigger.focus();
+      }
+    });
+  }
+
+  // Sidebar Menu Logic
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
+  const sidebar = document.getElementById("navbar-sidebar");
+  const sidebarOverlay = document.getElementById("navbar-sidebar-overlay");
+  const sidebarLinks = document.querySelectorAll(".navbar__sidebar-link");
+
+  if (hamburgerBtn && sidebarCloseBtn && sidebar && sidebarOverlay) {
+    const openSidebar = () => {
+      sidebar.classList.add("is-open");
+      sidebarOverlay.classList.add("is-open");
+      hamburgerBtn.setAttribute("aria-expanded", "true");
+      sidebar.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // Prevent background scrolling
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove("is-open");
+      sidebarOverlay.classList.remove("is-open");
+      hamburgerBtn.setAttribute("aria-expanded", "false");
+      sidebar.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+
+    hamburgerBtn.addEventListener("click", openSidebar);
+    sidebarCloseBtn.addEventListener("click", closeSidebar);
+    sidebarOverlay.addEventListener("click", closeSidebar);
+
+    // Close on link click
+    sidebarLinks.forEach((link) => {
+      link.addEventListener("click", closeSidebar);
+    });
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && sidebar.classList.contains("is-open")) {
+        closeSidebar();
+        hamburgerBtn.focus();
       }
     });
   }

@@ -1,0 +1,231 @@
+---
+import { Image } from "astro:assets";
+import chevronDown from "../assets/chevron-down.svg";
+
+export interface Ingredient {
+  bgImage: any;
+  title: string;
+  descriptionHtml: string;
+}
+
+export interface Props {
+  heading: string;
+  ingredients: Ingredient[];
+}
+
+const { heading, ingredients } = Astro.props;
+---
+
+<section class="ingredients-section">
+  <div class="ingredients-header">
+    <h2 class="ingredients-title">{heading}</h2>
+  </div>
+  <div class="ingredients-carousel-wrapper">
+    <button class="carousel-nav prev-btn" aria-label="Poprzednie">
+      <Image src={chevronDown} class="chevron-left" alt="" loading="lazy" />
+    </button>
+
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        {
+          ingredients.map((ing) => (
+            <div class="ingredient-card">
+              <div class="card-bg-wrapper">
+                <Image
+                  src={ing.bgImage}
+                  alt={ing.title}
+                  class="card-bg"
+                  loading="eager"
+                />
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">{ing.title}</h3>
+                <div class="card-desc" set:html={ing.descriptionHtml} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <button class="carousel-nav next-btn" aria-label="Następne">
+      <Image src={chevronDown} class="chevron-right" alt="" loading="eager" />
+    </button>
+  </div>
+</section>
+
+<style>
+  .ingredients-section {
+    width: 100%;
+    margin-bottom: 60px;
+  }
+  .ingredients-header {
+    background-color: var(--color-background-green);
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .ingredients-title {
+    color: var(--color-dark-green);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .ingredients-carousel-wrapper {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 40px;
+  }
+  .carousel-nav {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 12px;
+    opacity: 0.8;
+  }
+  .carousel-nav:hover {
+    opacity: 1;
+  }
+  .chevron-left {
+    transform: rotate(90deg);
+    width: 32px;
+  }
+  .chevron-right {
+    transform: rotate(-90deg);
+    width: 32px;
+  }
+
+  .carousel-viewport {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+  .ingredient-card {
+    flex: 0 0 50%;
+    padding: 0 12px;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 24px;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .card-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: -1;
+  }
+  .card-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-content {
+    padding: 280px 40px 40px;
+    border-radius: 0 0 24px 24px;
+  }
+  .card-title {
+    color: var(--color-white);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .card-desc {
+    color: var(--color-white);
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .card-desc :global(strong) {
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .ingredients-carousel-wrapper {
+      padding: 0 12px;
+      gap: 8px;
+    }
+    .ingredient-card {
+      flex: 0 0 100%;
+      padding: 0 8px;
+    }
+    .card-bg-wrapper {
+      left: 8px;
+      right: 8px;
+    }
+    .card-content {
+      padding: 60px 24px 24px;
+    }
+    .chevron-left,
+    .chevron-right {
+      width: 24px;
+    }
+  }
+</style>
+
+<script>
+  function initIngredientsCarousel() {
+    const sections = document.querySelectorAll(".ingredients-section");
+    sections.forEach((sec) => {
+      const track = sec.querySelector(".carousel-track") as HTMLElement;
+      const prev = sec.querySelector(".prev-btn") as HTMLButtonElement;
+      const next = sec.querySelector(".next-btn") as HTMLButtonElement;
+      const cards = sec.querySelectorAll(".ingredient-card");
+
+      let currentIndex = 0;
+
+      function update() {
+        const isMobile = window.innerWidth <= 768;
+        const visibleCards = isMobile ? 1 : 2;
+        const maxIndex = cards.length - visibleCards;
+
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+        if (currentIndex < 0) currentIndex = 0;
+
+        const cardWidth = track.clientWidth / visibleCards;
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        prev.disabled = currentIndex === 0;
+        next.disabled = currentIndex >= maxIndex;
+
+        prev.style.opacity = prev.disabled ? "0.3" : "1";
+        next.style.opacity = next.disabled ? "0.3" : "1";
+      }
+
+      if (prev) {
+        prev.addEventListener("click", () => {
+          currentIndex--;
+          update();
+        });
+      }
+      if (next) {
+        next.addEventListener("click", () => {
+          currentIndex++;
+          update();
+        });
+      }
+
+      window.addEventListener("resize", update);
+      update();
+    });
+  }
+  document.addEventListener("astro:page-load", initIngredientsCarousel);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initIngredientsCarousel);
+  } else {
+    initIngredientsCarousel();
+  }
+</script>

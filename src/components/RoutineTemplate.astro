@@ -207,11 +207,13 @@ const {
 
   .hero-right {
     flex: 4;
+    min-width: 0;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: sticky;
-    top: calc(var(--navbar-height, 89px) + 60px);
+    top: calc(var(--navbar-height, 89px) + 40px);
   }
 
   .visual-card {

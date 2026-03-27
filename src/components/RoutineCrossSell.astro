@@ -1,0 +1,132 @@
+---
+import { Image } from "astro:assets";
+
+export interface RoutineItem {
+  image: any;
+  href: string;
+}
+
+export interface Props {
+  heading?: string;
+  items: RoutineItem[];
+}
+
+const { heading = "Stwórz swoją codzienną rutynę na nowo:", items } =
+  Astro.props;
+---
+
+<section class="routine-cross-sell">
+  <div class="cross-sell__header">
+    <h2 class="cross-sell__title">{heading}</h2>
+  </div>
+
+  <div class="cross-sell__content">
+    <div class="cross-sell__inner">
+      <div class="cross-sell__grid">
+        {
+          items.map((item) => (
+            <div class="cross-sell-card">
+              <div class="cross-sell-card__img-wrapper">
+                <Image
+                  src={item.image}
+                  alt="Rutyna"
+                  class="cross-sell-card__img"
+                />
+              </div>
+              <a href={item.href} class="cross-sell-card__btn">
+                ODKRYJ
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .routine-cross-sell {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .cross-sell__header {
+    background-color: var(--color-background-green);
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .cross-sell__title {
+    color: var(--color-dark-green);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .cross-sell__content {
+    background-color: #fafafa;
+    padding: 60px 40px;
+  }
+
+  .cross-sell__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cross-sell__grid {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cross-sell-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .cross-sell-card__img-wrapper {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .cross-sell-card__img {
+    width: 100%;
+    height: auto;
+  }
+
+  .cross-sell-card__btn {
+    display: inline-block;
+    padding: 12px 40px;
+    min-width: 100%;
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    font-size: 1.125rem;
+    border: 1px solid var(--color-dark-green);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .cross-sell-card__btn:hover {
+    background-color: var(--color-background-green);
+  }
+
+  @media screen and (max-width: 768px) {
+    .cross-sell__grid {
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .cross-sell-card {
+      width: 100%;
+    }
+  }
+</style>

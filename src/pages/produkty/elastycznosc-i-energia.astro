@@ -1,0 +1,253 @@
+---
+import ProductTemplate from "../../components/ProductTemplate.astro";
+
+// Obrazy Galerii
+import img1 from "../../assets/banner-energia/baner_elastycznosc i energia_1.png";
+import img2 from "../../assets/banner-energia/baner_elastycznosc i energia_2.png";
+import img3 from "../../assets/banner-energia/baner_elastycznosc i energia_3.png";
+import img4 from "../../assets/banner-energia/baner_elastycznosc i energia_4.png";
+import img5 from "../../assets/banner-energia/baner_elastycznosc i energia_5.png";
+import img6 from "../../assets/banner-energia/baner_elastycznosc i energia_6.png";
+import img7 from "../../assets/banner-energia/baner_elastycznosc i energia_7.png";
+import img8 from "../../assets/banner-energia/baner_elastycznosc i energia_8.png";
+import img9 from "../../assets/banner-energia/baner_elastycznosc i energia_9.png";
+import img10 from "../../assets/banner-energia/baner_elastycznosc i energia_10.png";
+import img11 from "../../assets/banner-energia/baner_elastycznosc i energia_11.png";
+import img12 from "../../assets/banner-energia/baner_elastycznosc i energia_12.png";
+import img13 from "../../assets/banner-energia/baner_elastycznosc i energia_13.png";
+
+const galleryImages = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+];
+
+// SVG
+import iconPodwojneDzialanie from "../../assets/stawy-podwojne-dzialanie.svg";
+
+// Lower section components
+import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
+import LifestyleBanner from "../../components/LifestyleBanner.astro";
+import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+
+// Lower section images
+import czarciPazur from "../../assets/czarci_pazur_tlo.png";
+import zenszen from "../../assets/zenszen_tlo.png";
+import bambus from "../../assets/bambus_tlo.png";
+import czarnaPorzeczka from "../../assets/czarna_porzeczka_tlo.png";
+import lifestyleBanner from "../../assets/energia-lifestyle-banner.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
+
+const ingredients = [
+  {
+    bgImage: czarciPazur,
+    title: "CZARCI PAZUR",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano suchy ekstrakt z korzenia czarciego pazura (Harpagophytum procumbens) standaryzowany na 2% harpagozydu*. <strong>Czarci pazur (Harpagophytum procumbens)</strong> jest rośliną wykorzystywaną w fitoterapii w celu wspierania prawidłowego funkcjonowania stawów¹. Korzeń tej rośliny zawiera naturalne związki bioaktywne, w tym harpagozyd, harpagochinon oraz kwas cynamonowy. Badania wskazują, że wyciąg z korzenia czarciego pazura <strong>może wspierać komfort stawów, m.in. poprzez wpływ na aktywność enzymów związanych z degradacją chrząstki².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Hiszpania... [odniesienia do Vidal, Derbré S.]</small>`,
+  },
+  {
+    bgImage: zenszen,
+    title: "ŻEŃ-SZEŃ SYBERYJSKI",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano standaryzowany wysuszony i sproszkowany ekstrakt wodny z korzenia żeń-szenia syberyjskiego (Eleutherococcus senticosus), otrzymany opatentowaną metodą uzyskiwania dawki ipowder®, odpowiadającej 3 dawkom surowca roślinnego*. <strong>Żeń-szeń syberyjski (Eleutherococcus senticosus)</strong> jest rośliną wykorzystywaną w fitoterapii ze względu na swoje właściwości wspierające odporność i ogólną kondycję organizmu¹². Korzeń tej rośliny zawiera eleuterozydy, które zaliczane są do związków o działaniu adaptogennym. Związki te <strong>mogą wspierać organizm w adaptacji do stresu oraz pomagać w utrzymaniu równowagi i witalności³.</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Larousse, Vidal, Panossian A.]</small>`,
+  },
+  {
+    bgImage: bambus,
+    title: "BAMBUS TRZCINOWY",
+    descriptionHtml: `W suplemencie <strong>diety iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano sproszkowaną żywicę z bambusa trzcinowego (Bambusa arundinacea) standaryzowaną na ≥75% krzemionki (SiO₂), która wspiera naturalne funkcjonowanie organizmu*. <strong>Bambus trzcinowy</strong> jest rośliną wykorzystywaną w tradycyjnej medycynie ajurwedyjskiej i indyjskiej¹. Sok z bambusa jest bogaty w krzemionkę, która może wspierać tkanki chrzęstne oraz uczestniczyć w procesach syntezy i stabilizacji kolagenu¹². Dzięki wysokiej zawartości krzemionki składniki pozyskiwane z bambusa mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Larousse, Jugdaohsingh]</small>`,
+  },
+  {
+    bgImage: czarnaPorzeczka,
+    title: "CZARNA PORZECZKA",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano standaryzowany <strong>ekstrakt wodny z liści czarnej porzeczki (Ribes nigrum)</strong>, otrzymany opatentowaną metodą uzyskiwania dawki <strong>ipowder®</strong>, odpowiadającej 3 dawkom surowca roślinnego*. Czarna porzeczka (Ribes nigrum) jest rośliną tradycyjnie wykorzystywaną w fitoterapii w celu wspierania komfortu stawów¹². Liście czarnej porzeczki zawierają naturalne związki bioaktywne, w tym flawonoidy (m.in. kwercetynę i kemferol) oraz proantocyjanidyny, cenione za swoje właściwości biologiczne¹. Związki te mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Hiszpania... [szczegóły jak na makiecie, odniesienia do Vidal, Serrano]</small>`,
+  },
+];
+
+const routineItems = [
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-red)'>ROZGRZEWAJĄCO</span>",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-blue)'>CHŁODZĄCO</span>",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-yellowish)'>ROZLUŹNIAJĄCO</span>",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
+];
+---
+
+<ProductTemplate
+  themeColor="var(--color-orange)"
+  ctaColor="var(--color-orange)"
+  productCategory="Suplement diety"
+  productTitle=""
+  productSubtitle="ELASTYCZNOŚĆ + ENERGIA"
+  images={galleryImages}
+>
+  <Fragment slot="short-desc">
+    <p>
+      Suplement diety oparty na wyjątkowym kompleksie roślinnych składników
+      aktywnych.
+    </p>
+  </Fragment>
+
+  <Fragment slot="attributes">
+    <li>Ogranicza zmęczenie związane z dyskomfortem stawowym</li>
+    <li>Wspiera komfort stawów.</li>
+  </Fragment>
+
+  <Fragment slot="usage-heading">
+    <h3 class="usage-heading">ZALECENIA DOTYCZĄCE STOSOWANIA:</h3>
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p>2 tabletki rano, popić dużą ilością wody.</p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Ograniczona elastyczność stawów po przebudzeniu? Czy ma to wpływ na Twój
+      dzień i odbiera Ci energię? iana Stawy Elastyczność i Energia to suplement
+      diety oparty na wyjątkowym kompleksie roślinnych składników aktywnych.
+      Dwuwarstwowe tabletki umożliwiają optymalne uwalnianie składników
+      aktywnych w czasie, zapewniając ciągłość działania przez cały dzień.
+    </p>
+    <p>
+      Składniki aktywne pochodzenia roślinnego, które Cię nie zawiodą! Suplement
+      diety, który pomaga zachować elastyczność stawów dzięki harpagophytum (500
+      mg) i poprawia komfort stawów dzięki bambusowi (70 mg).
+    </p>
+    <p>
+      Dyskomfort w okolicy stawów może mieć bardziej podstępny wpływ,
+      szczególnie na witalność. W tym przypadku żeń-szeń syberyjski (100 mg)
+      przyczynia się do zwiększenia energii fizycznej i psychicznej.
+    </p>
+  </Fragment>
+
+  <Fragment slot="usage-tips">
+    <p>
+      1 opakowanie to program wystarczający na 1 miesiąc, w razie potrzeby można
+      powtórzyć. 60 tabletek z podziałką.
+    </p>
+  </Fragment>
+
+  <Fragment slot="precautions">
+    <p>
+      Produkt przeznaczony dla osób dorosłych. Niewskazany dla kobiet w ciąży
+      i/lub karmiących piersią, oraz osób cierpiących na chorobę wrzodową
+      (żołądka lub dwunastnicy) lub kamienie żółciowe. Nie należy przekraczać
+      zalecanej porcji do spożycia w ciągu dnia. Suplement diety nie może być
+      stosowany jako substytut (zamiennik) zróżnicowanej diety. Przechowywać w
+      sposób niedostępny dla małych dzieci. Przechowywać w zamkniętym pudełku na
+      tabletki, z dala od źródeł ciepła (&lt;30°C), wilgoci i światła.
+    </p>
+  </Fragment>
+
+  <Fragment slot="origin-section">
+    <h2 class="details-heading">POCHODZENIE SKŁADNIKÓW:</h2>
+    <div class="details-text">
+      <p>
+        Składniki aktywne zawarte w suplemencie diety IANA Stawy Zdrowe stawy i
+        dobry nastrój są pochodzenia roślinnego, od europejskich, sprawdzonych
+        dostawców.
+      </p>
+    </div>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p style="font-style: italic; margin-top: 32px; font-size: 0.875rem;">
+      *Suplement diety. Nie zastępuje zróżnicowanej diety.*
+    </p>
+  </Fragment>
+
+  <Fragment slot="custom-highlights">
+    <div
+      class="custom-highlights-energia"
+      style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;"
+    >
+      <div style="flex: 1; text-align: right;">
+        <div
+          style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-orange); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;"
+        >
+          KORZYŚCI DLA CIAŁA
+        </div>
+        <div style="color: var(--color-dark-green); font-size: 1.125rem;">
+          Łagodzenie dyskomfortu stawów
+        </div>
+      </div>
+      <div style="margin: 0 40px; flex-shrink: 0;">
+        <Image
+          src={iconPodwojneDzialanie}
+          alt="Podwójne działanie"
+          loading="lazy"
+          style="height: 120px; filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(3015%) hue-rotate(349deg) brightness(98%) contrast(97%);"
+        />
+      </div>
+      <div style="flex: 1; text-align: left;">
+        <div
+          style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-orange); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;"
+        >
+          KORZYŚCI DLA UMYSŁU
+        </div>
+        <div style="color: var(--color-dark-green); font-size: 1.125rem;">
+          Poprawa dobrostanu
+        </div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        .custom-highlights-energia {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .custom-highlights-energia > div {
+          text-align: center !important;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <IngredientsCarousel
+    heading="Kompleks roślinnych składników aktywnych o podwójnym działaniu:"
+    ingredients={ingredients}
+  />
+
+  <LifestyleBanner image={lifestyleBanner}>
+    <p>
+      <strong>Dobry dzień zaczyna się od swobody ruchu.</strong> Ograniczona elastyczność
+      stawów po przebudzeniu może wpływać na to, jak zaczyna się cały dzień – odbierając
+      lekkość ruchu i poczucie witalności. A przecież poranek powinien dawać impuls
+      do działania, nie spowalniać pierwszych kroków.
+    </p>
+    <p>
+      Dlatego powstała formuła iana Stawy Elastyczność i Energia – kompleks
+      roślinnych składników aktywnych, który wspiera naturalną elastyczność
+      stawów i pomaga odzyskać swobodę ruchu od pierwszych chwil dnia.
+    </p>
+  </LifestyleBanner>
+
+  <RoutineCrossSell
+    heading="Stwórz swoją codzienną rutynę na nowo:"
+    items={routineItems}
+  />
+</ProductTemplate>

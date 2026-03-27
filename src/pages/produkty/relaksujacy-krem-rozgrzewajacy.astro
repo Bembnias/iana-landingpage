@@ -1,0 +1,246 @@
+---
+import ProductTemplate from "../../components/ProductTemplate.astro";
+
+// Obrazy Galerii
+import img1 from "../../assets/banner-krem/Rozgrzewajacy_Krem_1.png";
+import img2 from "../../assets/banner-krem/Rozgrzewajacy_Krem_2.png";
+import img3 from "../../assets/banner-krem/Rozgrzewajacy_Krem_3.png";
+import img4 from "../../assets/banner-krem/Rozgrzewajacy_Krem_4.png";
+import img5 from "../../assets/banner-krem/Rozgrzewajacy_Krem_5.png";
+import img6 from "../../assets/banner-krem/Rozgrzewajacy_Krem_6.png";
+import img7 from "../../assets/banner-krem/Rozgrzewajacy_Krem_7.png";
+import img8 from "../../assets/banner-krem/Rozgrzewajacy_Krem_8.png";
+import img9 from "../../assets/banner-krem/Rozgrzewajacy_Krem_9.png";
+import img10 from "../../assets/banner-krem/Rozgrzewajacy_Krem_10.png";
+import img11 from "../../assets/banner-krem/Rozgrzewajacy_Krem_11.png";
+import img12 from "../../assets/banner-krem/Rozgrzewajacy_Krem_12.png";
+import img13 from "../../assets/banner-krem/Rozgrzewajacy_Krem_13.png";
+import img14 from "../../assets/banner-krem/Rozgrzewajacy_Krem_14.png";
+
+// Ikony
+import iconOgien from "../../assets/krem-ogien-icon.svg";
+import iconKolana from "../../assets/krem-kolana-icon.svg";
+import iconPlecy from "../../assets/krem-plecy-icon.svg";
+import iconRece from "../../assets/krem-rece-icon.svg";
+
+// Zbierzmy w tablicę wszystkie obrazki, kolejność np. numerycznie
+const galleryImages = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img13,
+  img14,
+];
+
+// Niezbędne komponenty dolnej sekcji
+import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
+import LifestyleBanner from "../../components/LifestyleBanner.astro";
+import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+
+// Obrazki dolnych sekcji
+import schizandra from "../../assets/schizandra_tlo.png";
+import imbir from "../../assets/imbir_tlo.png";
+import cayenne from "../../assets/cayenne_tlo.png";
+import lawenda from "../../assets/lawenda_tlo.png";
+import lifestyleBanner from "../../assets/krem-lifestyle-banner.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const ingredients = [
+  {
+    bgImage: schizandra,
+    title: "SCHISANDRA",
+    descriptionHtml: `W <strong>Relaksującym kremie rozgrzewającym iana</strong> zastosowano <strong>SWEETONE® Bio – hydrolizat sacharydów i peptydów roślinnych</strong> pochodzących z jagód Schisandra sphenanthera, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Schisandra sphenanthera, nazywana „jagodą pięciu smaków”</strong>, to roślina wykorzystywana od wieków w tradycyjnej medycynie wschodniej. Jej jagody są cenione za właściwości tonizujące i rewitalizujące. Dzięki zawartości bioaktywnych związków roślinnych składniki pozyskiwane z jagód Schisandra <strong>wspierają działanie kojące skóry oraz pomagają przywrócić jej równowagę i komfort.</strong>`
+  },
+  {
+    bgImage: imbir,
+    title: "ORGANICZNY OLEJEK ETERYCZNY Z IMBIRU",
+    descriptionHtml: `W <strong>Relaksującym kremie rozgrzewającym iana</strong> zastosowano organiczny olejek eteryczny z imbiru, który wspiera działanie rozgrzewające produktu i pomaga przywrócić skórze uczucie komfortu.<br/><br/><strong>Imbir (Zingiber officinale)</strong> to roślina ceniona w tradycyjnej medycynie i pielęgnacji za swoje właściwości rozgrzewające i pobudzające. Olejek eteryczny pozyskiwany z jego kłącza zawiera naturalne związki aromatyczne, w tym terpeny i seskwiterpeny.<br/><br/>Dzięki zawartości tych bioaktywnych składników olejek z <strong>imbiru wspiera uczucie rozgrzania skóry oraz pomaga zmniejszyć dyskomfort mięśni i stawów.</strong>`
+  },
+  {
+    bgImage: cayenne,
+    title: "PIEPRZ CAYENNE",
+    descriptionHtml: `W <strong>Relaksującym kremie rozgrzewającym iana</strong> zastosowano <strong>ekstrakt z owoców pieprzu cayenne (Capsicum frutescens)</strong>, który wspiera działanie rozgrzewające produktu i pomaga przywrócić skórze uczucie komfortu. Pieprz cayenne to papryka bogata w kapsaicynę – naturalny związek roślinny znany ze swoich właściwości rozgrzewających. Po zastosowaniu na skórę kapsaicyna pobudza mikrokrążenie i wywołuje uczucie ciepła. Dzięki temu ekstrakt z pieprzu cayenne <strong>wspiera efekt rozgrzewający oraz pomaga zmniejszyć uczucie dyskomfortu mięśni i stawów.</strong>`
+  },
+  {
+    bgImage: lawenda,
+    title: "LAWENDA",
+    descriptionHtml: `W <strong>Relaksującym kremie rozgrzewającym iana zastosowano olejek eteryczny z lawendy w stężeniu 0,5%</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. Lawenda (Lavandula) to roślina ceniona za swoje <strong>właściwości pielęgnacyjne i aromaterapeutyczne.</strong> Olejek eteryczny z lawendy zawiera naturalne związki aktywne, takie jak linalol, cyneol i kamfora, które wykazują działanie kojące. Dzięki zawartości tych składników olejek lawendowy <strong>wspiera łagodzenie dyskomfortu mięśni i stawów oraz pomaga przywrócić uczucie relaksu i ukojenia skóry.</strong>`
+  }
+];
+
+const routineItems = [
+  { title: "Elastyczność i energia", image: imgElastycznosc, href: "/rutyna/elastycznosc-i-energia" },
+  { title: "Mobilność i spokój", image: imgMobilnosc, href: "/rutyna/mobilnosc-i-spokoj" },
+  { title: "Komfort i odpoczynek", image: imgKomfort, href: "/rutyna/komfort-i-odpoczynek" }
+];
+---
+
+<ProductTemplate
+  themeColor="var(--color-red)"
+  ctaColor="var(--color-orange)"
+  productTitle="RELAKSUJĄCY"
+  productSubtitle="KREM ROZGRZEWAJĄCY"
+  images={galleryImages}
+>
+  <Fragment slot="short-desc">
+    <p>
+      Krem o lekkiej konsystencji. Unikalna kombinacja organicznych składników
+      aktywnych pochodzenia roślinnego.
+    </p>
+  </Fragment>
+
+  <Fragment slot="attributes">
+    <li>Poprawia elastyczność</li>
+    <li>Łagodzi uczucie napięcia</li>
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p>
+      2 RAZY DZIENNIE na następujące obszary: ramiona, okolice lędźwiowe,
+      dłonie, kolana, kostki. Nakładać delikatnymi, okrężnymi ruchami, aż do
+      całkowitego wchłonięcia produktu.
+    </p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Rozgrzewa i łagodzi dolegliwości stawów! Lekki krem o szybkim i
+      długotrwałym działaniu rozgrzewającym (do 80 minut¹), który rozluźnia,
+      łagodzi napięcie i poprawia ruchomość stawów.
+    </p>
+    <p>
+      Jego kluczowe składniki aktywne nadają mu relaksujący, naturalny zapach:
+      organiczne jagody schisandra (opatentowany składnik), tradycyjnie
+      stosowane w medycynie chińskiej, organiczny pieprz cayenne, organiczna
+      lawenda i organiczne olejki eteryczne z imbiru.
+    </p>
+  </Fragment>
+
+  <Fragment slot="usage-tips">
+    <p>
+      Stosować przed i po wysiłku fizycznym lub w ramach codziennej pielęgnacji.
+      Nakładać delikatnymi, okrężnymi ruchami, aż do całkowitego wchłonięcia
+      produktu. Stosować dwa razy dziennie na następujące obszary: ramiona,
+      okolice lędźwiowe, dłonie, nadgarstki, kolana, kostki. Dostosować ilość
+      produktu do obszaru stosowania i intensywności pożądanego efektu
+      rozgrzewającego.
+    </p>
+  </Fragment>
+
+  <Fragment slot="precautions">
+    <p>
+      Do użytku zewnętrznego. Nie stosować na uszkodzoną skórę. Przed
+      pierwszym użyciem przetestować na niewielkiej powierzchni. Nie stosować
+      u dzieci poniżej 15 roku życia, kobiet w ciąży lub karmiących piersią.
+      Nie stosować w przypadku uczulenia na którykolwiek ze składników.
+      Unikać kontaktu z oczami i błonami śluzowymi. W przypadku kontaktu
+      przemyć olejem roślinnym. Po każdym użyciu umyć ręce.
+    </p>
+  </Fragment>
+
+  <Fragment slot="studies-intro">
+    przeprowadzone pod nadzorem dermatologa, fizjoterapeuty i reumatologa:
+  </Fragment>
+
+  <Fragment slot="studies-list">
+    <li>
+      87% badanych zadeklarowało zmniejszenie wpływu dolegliwości stawowych na elastyczność*
+      <span
+        >*Badanie kliniczne przeprowadzone na 39 osobach w wieku od 50 do 86
+        lat, ocena własna po 28 dniach stosowania, dwa razy dziennie</span
+      >
+    </li>
+    <li>
+      89% respondentów zadeklarowało poprawę jakości życia**
+      <span
+        >** Badanie kliniczne przeprowadzone na 42 osobach w wieku od 50 do 86
+        lat, wyniki poprawy jakości życia uzyskane zgodnie z opiniami osób,
+        których dotyczyło deklarowane działanie (co najmniej 20 osób).</span
+      >
+      <span
+        >¹ Badanie satysfakcji przeprowadzone na 39 osobach: 84,87 ± 22,25 min po 4
+        tygodniach. Czas trwania efektu rozgrzewającego wynosi średnio 84,87 min.
+        Czas ten różni się statystycznie o plus lub minus 22,25 min w zależności
+        od osoby, ze względu na zmienność indywidualnej wrażliwości.</span
+      >
+    </li>
+  </Fragment>
+
+  <Fragment slot="certificate">
+    <p>
+      <strong
+        >Produkt certyfikowany przez Ecocert Greenlife zgodnie z międzynarodowym
+        standardem COSMOS.</strong
+      >
+    </p>
+  </Fragment>
+
+  <Fragment slot="highlight-left">
+    <div style="color: var(--color-dark-green); text-align: center;">
+      <div style="font-size: 4rem; font-weight: 700; line-height: 1;">
+        98<span style="font-size: 2rem;">%</span>
+      </div>
+      <div style="font-size: 1.75rem; font-weight: 400; line-height: 1.2;">
+        SKŁADNIKÓW POCHODZENIA NATURALNEGO
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="highlight-right">
+    <div
+      style="color: var(--color-red); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
+    >
+      <img
+        src={iconOgien.src}
+        alt="Ogień ikona"
+        style="height: 52px; margin-bottom: 8px;"
+      />
+      <div
+        style="font-size: 1.25rem; font-weight: 400; text-transform: uppercase; line-height: 1;"
+      >
+        EFEKT
+      </div>
+      <div
+        style="font-size: 1.5rem; font-weight: 400; text-transform: uppercase; line-height: 1; margin: 4px 0;"
+      >
+        ROZGRZEWAJĄCY
+      </div>
+      <div
+        style="font-size: 1.5rem; font-weight: 700; text-transform: uppercase; line-height: 1; margin-bottom: 4px;"
+      >
+        DO 80 min.
+      </div>
+      <div
+        style="font-size: 1rem; font-weight: 400; line-height: 1.2; text-transform: none;"
+      >
+        Natychmiastowy<br />i długotrwały
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="body-icons">
+    <img src={iconKolana.src} alt="Kolana" />
+    <img src={iconPlecy.src} alt="Plecy" />
+    <img src={iconRece.src} alt="Ręce" />
+  </Fragment>
+
+  <IngredientsCarousel heading="Jego kluczowe składniki aktywne nadają mu relaksujący, naturalny zapach:" ingredients={ingredients} />
+  
+  <LifestyleBanner image={lifestyleBanner}>
+    <p><strong>Znajdź swój rytm.</strong> Sztywność i napięcie mogą pojawiać się po wysiłku, długim dniu lub w chłodniejsze dni. Dlatego stworzyliśmy <strong>Rozgrzewający krem iana</strong>, który pomaga rozluźnić ciało i wspiera naturalną mobilność wtedy, gdy najbardziej jej potrzebujesz. Formuła oparta na starannie dobranych składnikach roślinnych – m.in. organicznych jagodach schisandry, pieprzu cayenne, lawendzie i olejkach eterycznych z imbiru – zapewnia przyjemne, długotrwałe uczucie ciepła, wspierając komfort ruchu i codzienną witalność.</p>
+  </LifestyleBanner>
+
+  <RoutineCrossSell heading="Stwórz swoją codzienną rutynę na nowo:" items={routineItems} />
+</ProductTemplate>

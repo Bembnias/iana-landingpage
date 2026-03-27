@@ -1,0 +1,229 @@
+---
+import ProductTemplate from "../../components/ProductTemplate.astro";
+import { Image } from "astro:assets";
+
+// Obrazy Galerii
+import img1 from "../../assets/banner-balsam/Baner_balsam_1.png";
+import img2 from "../../assets/banner-balsam/Baner_balsam_2.png";
+import img3 from "../../assets/banner-balsam/Baner_balsam_3.png";
+import img4 from "../../assets/banner-balsam/Baner_balsam_4.png";
+import img5 from "../../assets/banner-balsam/Baner_balsam_5.png";
+import img6 from "../../assets/banner-balsam/Baner_balsam_6.png";
+import img7 from "../../assets/banner-balsam/Baner_balsam_7.png";
+import img8 from "../../assets/banner-balsam/Baner_balsam_8.png";
+import img9 from "../../assets/banner-balsam/Baner_balsam_9.png";
+import img10 from "../../assets/banner-balsam/Baner_balsam_10.png";
+import img11 from "../../assets/banner-balsam/Baner_balsam_11.png";
+import img12 from "../../assets/banner-balsam/Baner_balsam_12.png";
+import img13 from "../../assets/banner-balsam/Baner_balsam_13.png";
+import img14 from "../../assets/banner-balsam/Baner_balsam_14.png";
+
+// Ikony
+import iconZegar from "../../assets/balsam-zegar-icon.svg";
+import iconKolana from "../../assets/balsam-kolana-icon.svg";
+import iconPlecy from "../../assets/balsam-plecy-icon.svg";
+import iconRece from "../../assets/balsam-rece-icon.svg";
+
+// Zbierzmy w tablicę wszystkie obrazki, kolejność np. numerycznie
+const galleryImages = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+];
+
+// Niezbędne komponenty dolnej sekcji
+import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
+import LifestyleBanner from "../../components/LifestyleBanner.astro";
+import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+
+// Obrazki dolnych sekcji
+import swietaBazylia from "../../assets/swieta_bazylia_tlo.png";
+import arnika from "../../assets/arnika_tlo.png";
+import wierzba from "../../assets/wierzba_tlo.png";
+import lawenda from "../../assets/lawenda_tlo.png";
+import lifestyleBanner from "../../assets/balsam-lifestyle-banner.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const ingredients = [
+  {
+    bgImage: swietaBazylia,
+    title: "CHLAMYDOMONAS ACIDOPHILA",
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z liści Świętej bazylii, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Święta bazylia (Ocimum sanctum)</strong> to roślina znana z tradycji ajurwedyjskiej, ceniona za swoje właściwości pielęgnacyjne. Ekstrakt z jej liści jest bogaty w polifenole, które wykazują działanie antyoksydacyjne i kojące. Dzięki zawartości naturalnych związków aktywnych ekstrakt ze Świętej bazylii <strong>wspiera łagodzenie podrażnień skóry oraz pomaga chronić ją przed stresem oksydacyjnym.</strong>`
+  },
+  {
+    bgImage: arnika,
+    title: "ARNIKA GÓRSKA",
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano <strong>ekstrakt z kwiatów arniki górskiej</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Arnika górska (Arnica montana)</strong> to jedna z najbardziej znanych roślin wykorzystywanych w ziołolecznictwie. Ekstrakt z jej kwiatów jest ceniony za swoje właściwości łagodzące i kojące, dlatego często stosuje się go w kosmetykach przeznaczonych do pielęgnacji skóry wymagającej ukojenia. Dzięki zawartości naturalnych związków aktywnych, arnika wspiera <strong>łagodzenie podrażnień skóry oraz pomaga przywrócić jej komfort.</strong>`
+  },
+  {
+    bgImage: wierzba,
+    title: "BIAŁA WIERZBA",
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z kory białej wierzby w stężeniu 0,02%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Biała wierzba (Salix alba)</strong> jest rośliną znaną od wieków ze swoich właściwości pielęgnacyjnych. Jej kora <strong>zawiera naturalne związki aktywne, w tym salicynę, flawonoidy i polifenole, cenione za działanie kojące.</strong> Dzięki zawartości tych składników ekstrakt z kory białej wierzby <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i komfortu.</strong>`
+  },
+  {
+    bgImage: lawenda,
+    title: "LAWENDA",
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano olejek eteryczny z lawendy w stężeniu 0,5%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Lawenda szerokolistna (Lavandula latifolia)</strong> to roślina znana ze swoich właściwości pielęgnacyjnych i aromaterapeutycznych. Jej olejek eteryczny zawiera naturalne związki aktywne, takie jak linalol, cyneol i kamfora, cenione za działanie kojące. Dzięki zawartości tych składników olejek lawendowy <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i relaksu.</strong>`
+  }
+];
+
+const routineItems = [
+  { title: "Elastyczność i energia", image: imgElastycznosc, href: "/rutyna/elastycznosc-i-energia" },
+  { title: "Mobilność i spokój", image: imgMobilnosc, href: "/rutyna/mobilnosc-i-spokoj" },
+  { title: "Komfort i odpoczynek", image: imgKomfort, href: "/rutyna/komfort-i-odpoczynek" }
+];
+---
+
+<ProductTemplate
+  themeColor="var(--color-yellowish)"
+  productTitle="KOJĄCY"
+  productSubtitle="BALSAM DO MASAŻU"
+  images={galleryImages}
+>
+  <Fragment slot="short-desc">
+    <p>
+      Balsam o bogatej konsystencji. Unikalna kombinacja organicznych składników
+      aktywnych pochodzenia roślinnego.
+    </p>
+  </Fragment>
+
+  <Fragment slot="attributes">
+    <li>Poprawia mobilność</li>
+    <li>Łagodzi uczucie napięcia</li>
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p>
+      2 RAZY DZIENNIE na następujące obszary: ramiona, okolice lędźwiowe,
+      dłonie, kolana, kostki. Nakładać delikatnymi, okrężnymi ruchami, aż do
+      całkowitego wchłonięcia produktu.
+    </p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Idealny balsam do masażu i łagodzenia napięcia dzięki kluczowym składnikom
+      aktywnym: organicznej świętej bazylii (opatentowany składnik), tradycyjnie
+      stosowanej w ajurwedzie, organicznej wierzbie białej, organicznej arnice i
+      organicznemu olejkowi lawendowemu.
+    </p>
+    <p>
+      Podwójne działanie fizyczne i emocjonalne: bogata, kremowa, nietłusta
+      konsystencja i naturalny zapach składników aktywnych pochodzenia
+      roślinnego sprzyjają dobremu samopoczuciu i zapewniają wyjątkowe doznania
+      sensoryczne**.
+    </p>
+    <p><em>**Stosować ostrożnie.</em></p>
+  </Fragment>
+
+  <Fragment slot="usage-tips">
+    <p>
+      Rozgrzej niewielką ilość balsamu do masażu w dłoniach. Stosuj jako masaż
+      samodzielny: rano, aby przygotować się do codziennych czynności i/lub
+      wieczorem, aby zrelaksować się po całym dniu. Podczas samodzielnego masażu
+      nie trzeba wywierać dużego nacisku. W przypadku miejsc wrażliwszych
+      wystarczy delikatnie ucisnąć je płaską dłonią. Poświęć odrobinę czasu na
+      relaks i ciesz się tą chwilą tylko dla siebie.
+    </p>
+  </Fragment>
+
+  <Fragment slot="precautions">
+    <p>
+      Wyłącznie do użytku zewnętrznego. Nie stosować na uszkodzoną lub popękaną
+      skórę. Przed pierwszym użyciem przetestować na niewielkiej powierzchni
+      skóry. Nie stosować u dzieci poniżej 15 roku życia, kobiet w ciąży lub
+      karmiących piersią. Nie stosować w przypadku uczulenia na którykolwiek ze
+      składników. Unikać kontaktu z oczami i błonami śluzowymi. W przypadku
+      kontaktu przemyć olejem roślinnym. Po każdym użyciu umyć ręce.
+    </p>
+  </Fragment>
+
+  <Fragment slot="studies-intro">
+    przeprowadzone pod nadzorem dermatologa, fizjoterapeuty i reumatologa:
+  </Fragment>
+
+  <Fragment slot="studies-list">
+    <li>
+      85% zauważyło poprawę jakości życia*.
+      <span
+        >*Badanie kliniczne przeprowadzone na 42 osobach w wieku od 50 do 78
+        lat, samoocena po 28 dniach stosowania, dwa razy dziennie. Pod nadzorem
+        dermatologa, reumatologa i fizjoterapeuty. Wyniki wykazały wysoką
+        tolerancję dla skóry.</span
+      >
+    </li>
+    <li>
+      90% osób uważa, że konsystencja produktu jest idealna do codziennego
+      masażu**.
+      <span
+        >**Badanie kliniczne przeprowadzone na 40 osobach w wieku od 45 do 74
+        lat, samoocena po 28 dniach stosowania, dwa razy dziennie.</span
+      >
+    </li>
+  </Fragment>
+
+  <Fragment slot="certificate">
+    <p>
+      <strong
+        >Produkt certyfikowany przez Ecocert Greenlife zgodnie z międzynarodowym
+        standardem COSMOS.</strong
+      >
+    </p>
+  </Fragment>
+
+  <Fragment slot="highlight-left">
+    <div style="color: var(--color-dark-green); text-align: center;">
+      <div style="font-size: 4rem; font-weight: 700; line-height: 1;">
+        99<span style="font-size: 2rem;">%</span>
+      </div>
+      <div style="font-size: 1.75rem; font-weight: 400; line-height: 1.2;">
+        SKŁADNIKÓW POCHODZENIA NATURALNEGO
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="highlight-right">
+    <div
+      style="color: var(--color-yellowish); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
+    >
+      <img
+        src={iconZegar.src}
+        alt="Zegar ikona"
+        style="height: 58px; margin-bottom: 6px;"
+      />
+      <div
+        style="font-size: 1.75rem; font-weight: 400; text-transform: uppercase; line-height: 1.2;"
+      >
+        SZYBKIE I DŁUGOTRWAŁE<br />DZIAŁANIE
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="body-icons">
+    <img src={iconKolana.src} alt="Kolana" />
+    <img src={iconPlecy.src} alt="Plecy" />
+    <img src={iconRece.src} alt="Ręce" />
+  </Fragment>
+
+  <IngredientsCarousel heading="Jego kluczowe składniki aktywne nadają mu świeży, naturalny zapach:" ingredients={ingredients} />
+  
+  <LifestyleBanner image={lifestyleBanner}>
+    <p><strong>Spokój zaczyna się od chwili dla siebie.</strong> Napięcie mięśni i zmęczenie ciała mogą pojawiać się po intensywnym dniu lub wysiłku. Dlatego stworzyliśmy <strong>Kojący balsam do masażu iana</strong>, który pomaga rozluźnić ciało i przywrócić uczucie komfortu.</p>
+    <p>Formuła oparta na starannie dobranych składnikach roślinnych – m.in. organicznej świętej bazylii, wierzbie białej, arnice i olejku lawendowym – wspiera odprężenie mięśni, a bogata, kremowa konsystencja sprawia, że masaż staje się chwilą relaksu dla ciała i zmysłów. <strong>To chwila wytchnienia dla ciała.</strong></p>
+  </LifestyleBanner>
+
+  <RoutineCrossSell heading="Stwórz swoją codzienną rutynę na nowo:" items={routineItems} />
+</ProductTemplate>

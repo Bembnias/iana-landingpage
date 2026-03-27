@@ -12,6 +12,10 @@ const schema = z.object({
     street: z.string().min(3),
     postalCode: z.string().regex(/^\d{2}-\d{3}$/),
     selectedRoutine: z.string().min(1),
+    followers: z.string().optional().default(""),
+    socialLink: z.string().optional().default(""),
+    pharmacyAddress: z.string().optional().default(""),
+    pharmacyMotivation: z.string().optional().default(""),
 });
 
 export const POST: APIRoute = async ({ request }) => {

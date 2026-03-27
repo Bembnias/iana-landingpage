@@ -115,6 +115,14 @@
   opacity: 0.5;
 }
 
+/* Textarea (multiline field) */
+.form-section__textarea {
+  border-radius: 20px 20px 3px 20px;
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
 /* Select wrapper for custom chevron */
 .form-section__select-wrapper {
   position: relative;
@@ -173,7 +181,7 @@
 }
 
 .form-section__banner-step {
-  font-size: clamp(1.5rem, 2vw, 2.5rem);
+  font-size: clamp(1.5rem, 2vw, 2rem);
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-dark-green);
@@ -216,7 +224,7 @@
   border-radius: 36px;
   padding: 48px;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 300px;
   gap: 32px;
   align-items: center;
 }
@@ -304,7 +312,6 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  min-width: 180px;
 }
 
 .form-section__card-action-label {
@@ -431,6 +438,23 @@
   .form-section__product {
     flex-direction: column;
     text-align: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .form-section__product-image,
+  .form-section__product:nth-child(2) .form-section__product-image {
+    order: 1;
+    margin: 0 auto !important;
+  }
+
+  .form-section__product-info {
+    order: 2;
+  }
+
+  .form-section__product-link {
+    order: 3;
+    margin: 0 auto !important;
   }
 
   .form-section__card-action {

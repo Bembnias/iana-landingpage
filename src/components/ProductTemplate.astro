@@ -1,0 +1,851 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
+import logoSvg from "../assets/logo.svg";
+
+export interface Props {
+  themeColor: string;
+  ctaColor?: string;
+  productCategory?: string;
+  productTitle: string;
+  productSubtitle: string;
+  images: ImageMetadata[];
+}
+
+const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images } = Astro.props;
+---
+
+<Layout title={`IANA STAWY - ${productTitle}`}>
+  <Navbar currentPath="/produkty" fixed={true} />
+
+  <main class="product-page" style={`--theme-color: ${themeColor};`}>
+    <section class="product-section">
+      <div class="product-layout">
+        {/* LEWA KOLUMNA: Galeria + Opis */}
+        <div class="col-left">
+          {/* GALERIA */}
+          <div
+            class="product-gallery"
+            data-images={JSON.stringify(images.map((img) => img.src))}
+          >
+            <!-- Miniaturki -->
+            <div class="gallery-thumbs-wrapper">
+              <button
+                class="thumb-nav-btn prev-thumb"
+                aria-label="Poprzednie miniatury"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="icon-up"
+                >
+                  <path
+                    d="M18 15L12 9L6 15"
+                    stroke="var(--color-dark-green)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </button>
+
+              <div class="thumbs-window">
+                <div class="thumbs-track">
+                  {
+                    images.map((img, index) => (
+                      <button
+                        class={`thumb-btn ${index === 0 ? "active" : ""}`}
+                        data-index={index}
+                      >
+                        <Image
+                          src={img}
+                          alt={`Miniatura ${index + 1}`}
+                          width={100}
+                          loading="lazy"
+                          class="thumb-img"
+                        />
+                      </button>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <button
+                class="thumb-nav-btn next-thumb"
+                aria-label="Następne miniatury"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="icon-down"
+                >
+                  <path
+                    d="M6 9L12 15L18 9"
+                    stroke="var(--color-dark-green)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Główny Obraz -->
+            <div class="gallery-main-wrapper">
+              <button
+                class="main-nav-btn prev-main"
+                aria-label="Poprzedni obraz"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="icon-left"
+                >
+                  <path
+                    d="M15 18L9 12L15 6"
+                    stroke="var(--color-dark-green)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </button>
+
+              <div class="main-image-container">
+                <Image
+                  src={images[0]}
+                  alt="Zdjęcie produktu"
+                  loading="eager"
+                  fetchpriority="high"
+                  class="main-img"
+                  id="galleryMainImg"
+                />
+              </div>
+
+              <button
+                class="main-nav-btn next-main"
+                aria-label="Następny obraz"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="icon-right"
+                >
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke="var(--color-dark-green)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* SZCZEGÓŁY PRODUKTU (Pod galerią, w lewej kolumnie) */}
+          <div class="product-details">
+            <h3 class="details-heading">OPIS PRODUKTU:</h3>
+            <div class="details-content">
+              <slot name="description" />
+            </div>
+
+            <h3 class="details-heading">WSKAZÓWKI DOTYCZĄCE STOSOWANIA:</h3>
+            <div class="details-content">
+              <slot name="usage-tips" />
+            </div>
+
+            <h3 class="details-heading">ŚRODKI OSTROŻNOŚCI:</h3>
+            <div class="details-content">
+              <slot name="precautions" />
+            </div>
+
+            {Astro.slots.has('origin-section') ? (
+              <slot name="origin-section" />
+            ) : (
+              <div class="details-studies">
+                <h3 class="details-heading inline-heading">BADANIE KLINICZNE</h3>
+                <span class="studies-intro"><slot name="studies-intro" /></span>
+                <ul class="details-list studies-list">
+                  <slot name="studies-list" />
+                </ul>
+              </div>
+            )}
+
+            <slot name="disclaimer" />
+
+            <div class="details-cert">
+              <slot name="certificate" />
+            </div>
+          </div>
+        </div>
+
+        {/* PRAWA KOLUMNA: Wprowadzenie + Highlights + CTA */}
+        <div class="col-right">
+          <div class="right-sticky-wrapper">
+            <p class="product-category">{productCategory || "Produkt do stosowania miejscowego"}</p>
+            <h1 class="main-title">
+              <span class="iana-text"
+                ><span class="iana-logo-inline"></span> STAWY</span
+              >
+              <span class="product-name" style={`color: ${themeColor}`}
+                >{productTitle}</span
+              >
+            </h1>
+            <h2 class="sub-title" style={`color: ${themeColor}`}>
+              {productSubtitle}
+            </h2>
+
+            <div class="short-desc">
+              <slot name="short-desc" />
+            </div>
+
+            <ul class="details-list attributes-list">
+              <slot name="attributes" />
+            </ul>
+
+            {Astro.slots.has('usage-heading') ? <slot name="usage-heading" /> : <h3 class="usage-heading">STOSOWANIE:</h3>}
+            <div class="usage-short-desc">
+              <slot name="usage-short" />
+            </div>
+
+            <!-- Kafelki Atutów -->
+            {Astro.slots.has('custom-highlights') ? (
+              <slot name="custom-highlights" />
+            ) : (
+              <Fragment>
+                <div class="highlights-grid">
+                  <div class="highlight-card">
+                    <slot name="highlight-left" />
+                  </div>
+                  <div class="highlight-card custom-highlight">
+                    <slot name="highlight-right" />
+                  </div>
+                </div>
+
+                <!-- Ikony Obszarów Stosowania -->
+                <div class="body-icons-container">
+                  <slot name="body-icons" />
+                </div>
+              </Fragment>
+            )}
+
+            <!-- CTA -->
+            <div class="cta-actions">
+              <a href="/#form-section" class="btn btn-primary">PRZETESTUJ</a>
+              <a
+                href="#"
+                class="btn btn-secondary"
+                style={`background-color: ${ctaColor || themeColor}; border-color: ${ctaColor || themeColor};`}
+                >KUP TERAZ</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dolne sekcje doklejane na stronie konkretnego produktu -->
+    <slot />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .product-page {
+    background-color: var(--color-white);
+    padding-top: calc(var(--navbar-height, 89px) + 60px);
+    color: var(--color-dark-green);
+  }
+
+  .product-section {
+    padding-bottom: 80px;
+  }
+
+  .product-layout {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 80px;
+  }
+
+  .col-left {
+    flex: 1.1; /* Trochę szersza lewa kolumna */
+    min-width: 0;
+  }
+
+  .col-right {
+    flex: 0.9;
+    min-width: 0;
+  }
+
+  .right-sticky-wrapper {
+    position: sticky;
+    top: calc(var(--navbar-height, 89px) + 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* --- GALERIA --- */
+  .product-gallery {
+    --thumb-size: 110px;
+    --thumb-gap: 12px;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .gallery-thumbs-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: var(--thumb-size);
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .thumb-nav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .thumb-nav-btn:hover {
+    opacity: 1;
+  }
+  .thumb-nav-btn:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+
+  .thumbs-window {
+    height: calc(3 * var(--thumb-size) + 2 * var(--thumb-gap));
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 0;
+  }
+
+  .thumbs-track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--thumb-gap);
+    transition: transform 0.3s ease;
+  }
+
+  .thumb-btn {
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+
+  .thumb-btn.active {
+    border-color: var(--color-dark-green);
+  }
+
+  .thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-main-wrapper {
+    flex-grow: 1;
+    position: relative;
+    border-radius: 24px;
+    border: 1px solid var(--color-dark-green);
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-white);
+    aspect-ratio: 1 / 1;
+    min-width: 0;
+    min-height: 0;
+    align-self: flex-start;
+  }
+
+  .main-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .main-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      opacity 0.2s;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  .main-nav-btn:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+  .main-nav-btn.prev-main {
+    left: 16px;
+  }
+  .main-nav-btn.next-main {
+    right: 16px;
+  }
+  .main-nav-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* --- SZCZEGÓŁY (Lewa kolumna) --- */
+  .details-heading {
+    color: var(--color-light-green);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+  .details-heading:first-child {
+    margin-top: 0;
+  }
+
+  .inline-heading {
+    display: inline;
+    margin-right: 8px;
+  }
+
+  .details-content {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-dark-green);
+  }
+
+  .details-content :global(p) {
+    margin-bottom: 20px;
+  }
+
+  .studies-intro {
+    font-size: 1.125rem;
+    color: var(--color-dark-green);
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+  .details-list :global(li) {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+  .details-list :global(li::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background-image: url("/src/assets/list-indicator.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .studies-list :global(li span) {
+    display: block;
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+
+  .details-cert {
+    margin-top: 40px;
+    font-size: 1.125rem;
+  }
+  .details-cert :global(strong) {
+    font-weight: 700;
+  }
+
+  /* --- PRAWA KOLUMNA --- */
+  .product-category {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 12px;
+    align-items: center;
+  }
+
+  .iana-text {
+    color: var(--color-dark-green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .iana-logo-inline {
+    display: inline-block;
+    width: 80px;
+    height: 38px;
+    background-color: var(--color-dark-green);
+    mask-image: url("/src/assets/logo.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("/src/assets/logo.svg");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    transform: translateY(-2px);
+  }
+
+  .sub-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 24px;
+    margin-top: 4px;
+  }
+
+  .short-desc {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .attributes-list {
+    margin-bottom: 32px;
+  }
+  .attributes-list :global(li) {
+    font-weight: 700;
+  }
+
+  .usage-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .usage-short-desc {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 32px;
+  }
+
+  .highlight-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Specyficzne stylowanie dla prawego kafelka wstrzykiwane z zewn. ale bazowe wspierające tu */
+  .custom-highlight {
+    color: var(--theme-color);
+  }
+
+  .body-icons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  .body-icons-container :global(img) {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding: 16px 40px;
+    border-radius: 50px;
+    width: 100%;
+    transition:
+      transform 0.15s ease,
+      opacity 0.2s ease;
+    border: 2px solid transparent;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  .btn-primary {
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+  }
+
+  .btn-secondary {
+    color: var(--color-white);
+  }
+
+  /* --- RWD --- */
+  @media screen and (max-width: 1024px) {
+    .product-layout {
+      flex-direction: column;
+      gap: 40px;
+    }
+    .right-sticky-wrapper {
+      position: static;
+    }
+    .product-gallery {
+      height: 480px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-layout {
+      padding: 0 20px;
+    }
+    .product-gallery {
+      --thumb-size: 80px;
+      --thumb-gap: 12px;
+      flex-direction: column-reverse;
+    }
+    .gallery-thumbs-wrapper {
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .thumbs-window {
+      width: calc(3 * var(--thumb-size) + 2 * var(--thumb-gap));
+      height: var(--thumb-size);
+      margin: 0 12px;
+    }
+    .thumbs-track {
+      flex-direction: row;
+    }
+    .gallery-main-wrapper {
+      width: 100%;
+    }
+
+    .icon-up {
+      transform: rotate(-90deg);
+    }
+    .icon-down {
+      transform: rotate(-90deg);
+    }
+  }
+</style>
+
+<script>
+  // Logika Galerii
+  function initGallery() {
+    const galleries = document.querySelectorAll(".product-gallery");
+
+    galleries.forEach((gallery) => {
+      const imagesAttr = gallery.getAttribute("data-images");
+      if (!imagesAttr) return;
+
+      const imagesUrls = JSON.parse(imagesAttr);
+      const mainImg = gallery.querySelector(".main-img") as HTMLImageElement;
+      const thumbBtns = gallery.querySelectorAll(".thumb-btn");
+      const thumbsTrack = gallery.querySelector(".thumbs-track") as HTMLElement;
+
+      const prevMainBtn = gallery.querySelector(
+        ".prev-main",
+      ) as HTMLButtonElement;
+      const nextMainBtn = gallery.querySelector(
+        ".next-main",
+      ) as HTMLButtonElement;
+      const prevThumbBtn = gallery.querySelector(
+        ".prev-thumb",
+      ) as HTMLButtonElement;
+      const nextThumbBtn = gallery.querySelector(
+        ".next-thumb",
+      ) as HTMLButtonElement;
+
+      let currentIndex = 0;
+      let thumbGroupIndex = 0;
+      const THUMBS_VISIBLE = 3;
+
+      function updateMainImage(index: number) {
+        if (index < 0 || index >= imagesUrls.length) return;
+        currentIndex = index;
+        mainImg.src = imagesUrls[currentIndex];
+
+        // Update active class
+        thumbBtns.forEach((btn, i) => {
+          if (i === currentIndex) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+
+        updateButtons();
+        ensureThumbVisible(currentIndex);
+      }
+
+      function updateThumbsPosition() {
+        const thumbBtn = gallery.querySelector(".thumb-btn") as HTMLElement;
+        if (!thumbBtn) return;
+        const currentIsMobile = window.innerWidth <= 768;
+        const gapVal = currentIsMobile ? 12 : 16;
+
+        if (currentIsMobile) {
+          const shift = thumbGroupIndex * (thumbBtn.offsetWidth + gapVal);
+          thumbsTrack.style.transform = `translateX(-${shift}px)`;
+        } else {
+          const shift = thumbGroupIndex * (thumbBtn.offsetHeight + gapVal);
+          thumbsTrack.style.transform = `translateY(-${shift}px)`;
+        }
+      }
+
+      function ensureThumbVisible(index: number) {
+        if (index < thumbGroupIndex) {
+          thumbGroupIndex = index;
+          updateThumbsPosition();
+        } else if (index >= thumbGroupIndex + THUMBS_VISIBLE) {
+          thumbGroupIndex = index - THUMBS_VISIBLE + 1;
+          updateThumbsPosition();
+        }
+      }
+
+      function updateButtons() {
+        if (prevMainBtn) prevMainBtn.disabled = currentIndex === 0;
+        if (nextMainBtn)
+          nextMainBtn.disabled = currentIndex === imagesUrls.length - 1;
+
+        if (prevThumbBtn) prevThumbBtn.disabled = thumbGroupIndex === 0;
+        if (nextThumbBtn)
+          nextThumbBtn.disabled =
+            thumbGroupIndex >= imagesUrls.length - THUMBS_VISIBLE;
+      }
+
+      // Event Listeners
+      thumbBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const idx = parseInt(
+            (e.currentTarget as HTMLElement).getAttribute("data-index") || "0",
+            10,
+          );
+          updateMainImage(idx);
+        });
+      });
+
+      if (prevMainBtn) {
+        prevMainBtn.addEventListener("click", () => {
+          updateMainImage(currentIndex - 1);
+        });
+      }
+
+      if (nextMainBtn) {
+        nextMainBtn.addEventListener("click", () => {
+          updateMainImage(currentIndex + 1);
+        });
+      }
+
+      if (prevThumbBtn) {
+        prevThumbBtn.addEventListener("click", () => {
+          if (thumbGroupIndex > 0) {
+            thumbGroupIndex--;
+            updateThumbsPosition();
+            updateButtons();
+          }
+        });
+      }
+
+      if (nextThumbBtn) {
+        nextThumbBtn.addEventListener("click", () => {
+          if (thumbGroupIndex < imagesUrls.length - THUMBS_VISIBLE) {
+            thumbGroupIndex++;
+            updateThumbsPosition();
+            updateButtons();
+          }
+        });
+      }
+
+      // Initialize
+      if (imagesUrls.length <= THUMBS_VISIBLE) {
+        if (prevThumbBtn) prevThumbBtn.style.display = "none";
+        if (nextThumbBtn) nextThumbBtn.style.display = "none";
+      }
+
+      updateButtons();
+    });
+  }
+
+  // Uruchomienie skryptu po załadowaniu DOM lub zmianach stron ViewTransitions
+  document.addEventListener("astro:page-load", initGallery);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGallery);
+  } else {
+    initGallery();
+  }
+</script>

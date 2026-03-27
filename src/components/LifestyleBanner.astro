@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+
+export interface Props {
+  image: any;
+}
+const { image } = Astro.props;
+---
+
+<section class="lifestyle-banner-section">
+  <Image src={image} alt="Lifestyle" class="lifestyle-img" />
+  <div class="lifestyle-text-wrapper">
+    <div class="lifestyle-text">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .lifestyle-banner-section {
+    width: 100%;
+    margin-bottom: 80px;
+  }
+  .lifestyle-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 800px;
+  }
+  .lifestyle-text-wrapper {
+    max-width: var(--max-width, 1545px);
+    margin: 0 auto;
+    padding: 60px 40px 0;
+  }
+  .lifestyle-text {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+    color: var(--color-dark-green);
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+  .lifestyle-text :global(p) {
+    margin-bottom: 24px;
+  }
+  .lifestyle-text :global(strong) {
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .lifestyle-text-wrapper {
+      padding: 40px 20px 0;
+    }
+    .lifestyle-img {
+      max-height: 400px;
+    }
+  }
+</style>

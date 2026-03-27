@@ -8,17 +8,73 @@ import "../styles/FormSection.css";
    Types & Schema
    =========================== */
 
-const formSchema = z.object({
-  role: z.string().min(1, "Wybierz opcję"),
-  firstName: z.string().min(2, "Imię jest wymagane"),
-  lastName: z.string().min(2, "Nazwisko jest wymagane"),
-  email: z.email("Podaj poprawny adres e-mail"),
-  phone: z.string().min(9, "Podaj poprawny numer telefonu"),
-  street: z.string().min(3, "Podaj ulicę i numer"),
-  postalCode: z
-    .string()
-    .regex(/^\d{2}-\d{3}$/, "Format: XX-XXX"),
-});
+const formSchema = z
+  .object({
+    role: z.string().min(1, "Wybierz opcję z listy"),
+    firstName: z.string().min(2, "Imię jest wymagane"),
+    lastName: z.string().min(2, "Nazwisko jest wymagane"),
+    email: z.email("Podaj poprawny adres e-mail"),
+    phone: z.string().min(9, "Podaj poprawny numer telefonu"),
+    street: z.string().min(3, "Podaj ulicę i numer"),
+    postalCode: z.string().regex(/^\d{2}-\d{3}$/, "Format: XX-XXX"),
+    followers: z.string().optional(),
+    socialLink: z.string().optional(),
+    pharmacyAddress: z.string().optional(),
+    pharmacyMotivation: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.role === "Influencer") {
+      if (!data.followers || data.followers.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["followers"],
+          message: "Podaj liczbę followersów",
+        });
+      } else if (!/^\d+$/.test(data.followers)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["followers"],
+          message: "Podaj liczbę całkowitą",
+        });
+      }
+      if (!data.socialLink || data.socialLink.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["socialLink"],
+          message: "Podaj link do profilu",
+        });
+      }
+    }
+    if (data.role === "Farmaceuta") {
+      if (!data.pharmacyAddress || data.pharmacyAddress.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["pharmacyAddress"],
+          message: "Podaj nazwę i adres apteki",
+        });
+      }
+      if (!data.socialLink || data.socialLink.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["socialLink"],
+          message: "Podaj link do profilu",
+        });
+      }
+      if (!data.pharmacyMotivation || data.pharmacyMotivation.trim().length < 3) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["pharmacyMotivation"],
+          message: "Odpowiedz na pytanie (min. 3 znaki)",
+        });
+      } else if (data.pharmacyMotivation.length > 500) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["pharmacyMotivation"],
+          message: "Maksymalnie 500 znaków",
+        });
+      }
+    }
+  });
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -68,6 +124,7 @@ interface CardData {
 
 export default function FormSectionIsland({ images }: Props) {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [routineError, setRoutineError] = useState("");
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -89,6 +146,7 @@ export default function FormSectionIsland({ images }: Props) {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -99,8 +157,14 @@ export default function FormSectionIsland({ images }: Props) {
       phone: "",
       street: "",
       postalCode: "",
+      followers: "",
+      socialLink: "",
+      pharmacyAddress: "",
+      pharmacyMotivation: "",
     },
   });
+
+  const selectedRole = watch("role");
 
   const cards: CardData[] = [
     {
@@ -111,7 +175,7 @@ export default function FormSectionIsland({ images }: Props) {
           title: "Suplement diety",
           subtitle: "ELASTYCZNOŚĆ + ENERGIA",
           subtitleColor: "var(--color-orange)",
-          slug: "suplement-elastycznosc",
+          slug: "elastycznosc-i-energia",
         },
         {
           linkColor: "var(--color-red)",
@@ -119,7 +183,7 @@ export default function FormSectionIsland({ images }: Props) {
           title: "Relaksujący",
           subtitle: "KREM ROZGRZEWAJĄCY",
           subtitleColor: "var(--color-red)",
-          slug: "krem-rozgrzewajacy",
+          slug: "relaksujacy-krem-rozgrzewajacy",
         },
       ],
       actionLabel: "Elastyczność i energia",
@@ -132,7 +196,7 @@ export default function FormSectionIsland({ images }: Props) {
           title: "Suplement diety",
           subtitle: "ZDROWE STAWY + DOBRY NASTRÓJ",
           subtitleColor: "var(--color-purple)",
-          slug: "suplement-mobilnosc",
+          slug: "zdrowe-stawy-dobry-nastroj",
         },
         {
           linkColor: "var(--color-blue)",
@@ -140,7 +204,7 @@ export default function FormSectionIsland({ images }: Props) {
           title: "Intensywnie",
           subtitle: "CHŁODZĄCY ŻEL",
           subtitleColor: "var(--color-blue)",
-          slug: "zel-chlodzacy",
+          slug: "intensywnie-chlodzacy-zel",
         },
       ],
       actionLabel: "Mobilność i spokój",
@@ -148,20 +212,20 @@ export default function FormSectionIsland({ images }: Props) {
     {
       products: [
         {
-          linkColor: "var(--color-light-blue)",
+          linkColor: "#2C6492", // Darkened for accessibility
           image: images.supOdpornosc,
           title: "Suplement diety",
           subtitle: "ODPORNOŚĆ CHRZĄSTKI + ZDROWY SEN",
-          subtitleColor: "var(--color-light-blue)",
+          subtitleColor: "#2C6492",
           slug: "suplement-odpornosc",
         },
         {
-          linkColor: "var(--color-yellowish)",
+          linkColor: "#C47000", // Darkened for accessibility
           image: images.balsamKojacy,
           title: "Kojący",
           subtitle: "BALSAM DO MASAŻU",
-          subtitleColor: "var(--color-yellowish)",
-          slug: "balsam-kojacy",
+          subtitleColor: "#C47000",
+          slug: "kojacy-balsam-do-masazu",
         },
       ],
       actionLabel: "Komfort i odpoczynek",
@@ -171,12 +235,26 @@ export default function FormSectionIsland({ images }: Props) {
   const routineLabels = ["Elastyczność i energia", "Mobilność i spokój", "Komfort i odpoczynek"];
 
   async function onSubmit(data: FormData) {
-    if (selectedCard === null) return;
+    if (selectedCard === null) {
+      setRoutineError("Wybierz jedną z rutyn");
+      return;
+    }
+    setRoutineError("");
 
     setSubmitStatus("loading");
 
     const payload = {
-      ...data,
+      role: data.role,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      street: data.street,
+      postalCode: data.postalCode,
+      followers: data.role === "Influencer" ? data.followers || "" : "",
+      socialLink: data.socialLink || "",
+      pharmacyAddress: data.role === "Farmaceuta" ? data.pharmacyAddress || "" : "",
+      pharmacyMotivation: data.role === "Farmaceuta" ? data.pharmacyMotivation || "" : "",
       selectedRoutine: routineLabels[selectedCard],
     };
 
@@ -204,7 +282,7 @@ export default function FormSectionIsland({ images }: Props) {
         <div className="form-section__intro">
           <img
             src={images.woman.src}
-            alt="Kobieta korzystająca z programu testowego IANA"
+            alt="Kobieta korzystająca z programu testowania IANA"
             className="form-section__intro-image"
             loading="lazy"
             decoding="async"
@@ -220,7 +298,7 @@ export default function FormSectionIsland({ images }: Props) {
               aktywności jest Ci bliska i dzielisz się swoją wiedzą,
               doświadczeniem lub perspektywą w sieci – zapraszamy do{" "}
               <span className="form-section__intro-highlight">
-                Programu Testowego iana
+                Programu Testowania iana
               </span>{" "}
               dla kobiet 40+, które chcą mówić o zmianach związanych z upływem
               czasu, nowym etapem życia i transformacją ciała.
@@ -256,7 +334,6 @@ export default function FormSectionIsland({ images }: Props) {
                     Wybierz...
                   </option>
                   <option value="Influencer">Influencer</option>
-                  <option value="Bloger">Bloger</option>
                   <option value="Farmaceuta">Farmaceuta</option>
                 </select>
                 <img
@@ -374,6 +451,110 @@ export default function FormSectionIsland({ images }: Props) {
                 {errors.postalCode?.message}
               </span>
             </div>
+
+            {/* Row 5 — Conditional fields */}
+            {selectedRole === "Influencer" && (
+              <>
+                <div className="form-section__field">
+                  <label
+                    className="form-section__label"
+                    htmlFor="field-followers"
+                  >
+                    Liczba followersów
+                  </label>
+                  <input
+                    id="field-followers"
+                    type="number"
+                    min="0"
+                    className="form-section__input"
+                    placeholder="np. 10000"
+                    {...register("followers")}
+                  />
+                  <span className="form-section__error">
+                    {errors.followers?.message}
+                  </span>
+                </div>
+                <div className="form-section__field">
+                  <label
+                    className="form-section__label"
+                    htmlFor="field-socialLink"
+                  >
+                    Link do profilu Social Media
+                  </label>
+                  <input
+                    id="field-socialLink"
+                    type="url"
+                    className="form-section__input"
+                    placeholder="https://..."
+                    {...register("socialLink")}
+                  />
+                  <span className="form-section__error">
+                    {errors.socialLink?.message}
+                  </span>
+                </div>
+              </>
+            )}
+
+            {selectedRole === "Farmaceuta" && (
+              <>
+                <div className="form-section__field">
+                  <label
+                    className="form-section__label"
+                    htmlFor="field-pharmacyAddress"
+                  >
+                    Nazwa i adres apteki
+                  </label>
+                  <input
+                    id="field-pharmacyAddress"
+                    type="text"
+                    className="form-section__input"
+                    placeholder="Nazwa i adres apteki"
+                    {...register("pharmacyAddress")}
+                  />
+                  <span className="form-section__error">
+                    {errors.pharmacyAddress?.message}
+                  </span>
+                </div>
+                <div className="form-section__field">
+                  <label
+                    className="form-section__label"
+                    htmlFor="field-socialLink-farmaceuta"
+                  >
+                    Link do profilu Social Media
+                  </label>
+                  <input
+                    id="field-socialLink-farmaceuta"
+                    type="url"
+                    className="form-section__input"
+                    placeholder="https://..."
+                    {...register("socialLink")}
+                  />
+                  <span className="form-section__error">
+                    {errors.socialLink?.message}
+                  </span>
+                </div>
+                <div className="form-section__field form-section__field--full">
+                  <label
+                    className="form-section__label"
+                    htmlFor="field-pharmacyMotivation"
+                  >
+                    <strong>Odpowiedz na pytanie:</strong> Co zainteresowało Cię
+                    w produktach marki iana i dlaczego chcesz je przetestować?
+                  </label>
+                  <textarea
+                    id="field-pharmacyMotivation"
+                    className="form-section__input form-section__textarea"
+                    placeholder="max 500 znaków"
+                    maxLength={500}
+                    rows={5}
+                    {...register("pharmacyMotivation")}
+                  />
+                  <span className="form-section__error">
+                    {errors.pharmacyMotivation?.message}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           {/* --- 3. Steps Banner --- */}
@@ -433,6 +614,7 @@ export default function FormSectionIsland({ images }: Props) {
                     <div className="form-section__product" key={pIndex}>
                       <a
                         href={`/produkty/${product.slug}`}
+                        target="_blank"
                         className="form-section__product-link"
                         aria-label={`Poznaj ${product.subtitle}`}
                       >
@@ -478,11 +660,12 @@ export default function FormSectionIsland({ images }: Props) {
                       ? " form-section__btn-select--active"
                       : ""
                       }`}
-                    onClick={() =>
+                    onClick={() => {
                       setSelectedCard(
                         selectedCard === cardIndex ? null : cardIndex
-                      )
-                    }
+                      );
+                      setRoutineError("");
+                    }}
                   >
                     WYBIERAM
                   </button>
@@ -490,6 +673,12 @@ export default function FormSectionIsland({ images }: Props) {
               </div>
             ))}
           </div>
+
+          {routineError && (
+            <div className="form-section__error" style={{ textAlign: "center", marginTop: "-16px", marginBottom: "16px" }}>
+              {routineError}
+            </div>
+          )}
 
           {/* --- 5. Submit --- */}
           <div className="form-section__submit-wrapper">

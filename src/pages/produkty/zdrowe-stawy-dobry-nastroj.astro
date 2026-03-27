@@ -1,0 +1,157 @@
+---
+import ProductTemplate from "../../components/ProductTemplate.astro";
+
+// Obrazy Galerii
+import img1 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_1.png";
+import img2 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_2.png";
+import img3 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_3.png";
+import img4 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_4.png";
+import img5 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_5.png";
+import img6 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_6.png";
+import img7 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_7.png";
+import img8 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_8.png";
+import img9 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_9.png";
+import img10 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_10.png";
+import img11 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_11.png";
+import img12 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_12.png";
+import img13 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_13.png";
+import img14 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_14.png";
+
+const galleryImages = [
+  img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14
+];
+
+// SVG
+import logo from "../../assets/logo.svg";
+import iconPodwojneDzialanie from "../../assets/stawy-podwojne-dzialanie.svg";
+
+// Lower section components
+import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
+import LifestyleBanner from "../../components/LifestyleBanner.astro";
+import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+
+// Lower section images
+import czarnaPorzeczka from "../../assets/czarna_porzeczka_tlo.png";
+import bambus from "../../assets/bambus_tlo.png";
+import witaminaC from "../../assets/witamina_C_tlo.png";
+import szafran from "../../assets/szafran_tlo.png";
+import lifestyleBanner from "../../assets/stawy-lifestyle-banner.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const ingredients = [
+  {
+    bgImage: czarnaPorzeczka,
+    title: "CZARNA PORZECZKA",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano standaryzowany <strong>ekstrakt wodny z liści czarnej porzeczki (Ribes nigrum)</strong>, otrzymany opatentowaną metodą uzyskiwania dawki <strong>ipowder®</strong>, odpowiadającej 3 dawkom surowca roślinnego*. Czarna porzeczka (Ribes nigrum) jest rośliną tradycyjnie wykorzystywaną w fitoterapii w celu wspierania komfortu stawów¹². Liście czarnej porzeczki zawierają naturalne związki bioaktywne, w tym flawonoidy (m.in. kwercetynę i kemferol) oraz proantocyjanidyny, cenione za swoje właściwości biologiczne¹. Związki te mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Hiszpania... [szczegóły jak na makiecie, odniesienia do Vidal, Serrano]</small>`
+  },
+  {
+    bgImage: bambus,
+    title: "BAMBUS TRZCINOWY",
+    descriptionHtml: `W suplemencie <strong>diety iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano sproszkowaną żywicę z bambusa trzcinowego (Bambusa arundinacea) standaryzowaną na ≥75% krzemionki (SiO₂), która wspiera naturalne funkcjonowanie organizmu*. <strong>Bambus trzcinowy</strong> jest rośliną wykorzystywaną w tradycyjnej medycynie ajurwedyjskiej i indyjskiej¹. Sok z bambusa jest bogaty w krzemionkę, która może wspierać tkanki chrzęstne oraz uczestniczyć w procesach syntezy i stabilizacji kolagenu¹². Dzięki wysokiej zawartości krzemionki składniki pozyskiwane z bambusa mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Larousse, Jugdaohsingh]</small>`
+  },
+  {
+    bgImage: witaminaC,
+    title: "WITAMINA C",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano witaminę C w ilości 60 mg w porcji dziennej*, która wspiera prawidłowe funkcjonowanie organizmu. <strong>Witamina C</strong> odgrywa istotną rolę w syntezie kolagenu, który jest ważnym składnikiem tkanki łącznej budującej m.in. naczynia krwionośne, ścięgna, więzadła, kości i chrząstki¹. Dzięki swoim <strong>właściwościom antyoksydacyjnym</strong> witamina C pomaga również chronić komórki przed stresem oksydacyjnym wywołanym przez wolne rodniki².<br/><br/><small style="font-size: 0.75rem;">*W 2 tabletkach... [odniesienia do Vidal, Berche]</small>`
+  },
+  {
+    bgImage: szafran,
+    title: "SZAFRAN",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano Safr’Inside™ – standaryzowany suchy ekstrakt ze znamion krokusa (Crocus sativus), który zawiera naturalne związki bioaktywne, takie jak krocyna i safranal*. <strong>Szafran (Crocus sativus)</strong> jest rośliną, która w ostatnich latach wzbudza duże zainteresowanie ze względu na swoje potencjalne właściwości wspierające równowagę nastroju¹. Badania wskazują, że krocyna i safranal <strong>mogą wpływać na aktywność neuroprzekaźników, takich jak serotonina i dopamina</strong>, które odgrywają ważną rolę w regulacji nastroju¹ ².<br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Hausenblas, Akhondzadeh]</small>`
+  }
+];
+
+const routineItems = [
+  { title: "Działa <br/><span style='color: var(--color-blue)'>CHŁODZĄCO</span>", image: imgMobilnosc, href: "/rutyna/mobilnosc-i-spokoj" },
+  { title: "Działa <br/><span style='color: var(--color-yellowish)'>ROZLUŹNIAJĄCO</span>", image: imgKomfort, href: "/rutyna/komfort-i-odpoczynek" },
+  { title: "Działa <br/><span style='color: var(--color-red)'>ROZGRZEWAJĄCO</span>", image: imgElastycznosc, href: "/rutyna/elastycznosc-i-energia" }
+];
+---
+
+<ProductTemplate
+  themeColor="var(--color-purple)"
+  ctaColor="var(--color-orange)"
+  productCategory="Suplement diety"
+  productTitle="ZDROWE STAWY"
+  productSubtitle="+ DOBRY NASTRÓJ"
+  images={galleryImages}
+>
+  <Fragment slot="short-desc">
+    <p>Zawiera standaryzowane ekstrakty od europejskich, sprawdzonych dostawców.</p>
+  </Fragment>
+
+  <Fragment slot="attributes">
+    <li>Pomaga utrzymać pozytywny nastrój</li>
+    <li>Wspiera komfort stawów.</li>
+  </Fragment>
+
+  <Fragment slot="usage-heading">
+    <h3 class="usage-heading">ZALECENIA DOTYCZĄCE STOSOWANIA::</h3>
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p>2 tabletki dziennie, popić dużą ilością wody.</p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>Czy dolegliwości stawów mają negatywny wpływ na Twoją codzienna aktywność? Czy obciąża to twoja aktywność psychiczną?</p>
+    <p>Nie należy lekceważyć znaczenia nastroju i równowagi emocjonalnej w przypadku codziennych dolegliwości lub sztywności stawów. Czarna porzeczka (667 mg) wspomaga zdrowie stawów, witamina C (40 mg) przyczynia się do prawidłowego tworzenia kolagenu, zapewniając prawidłowe funkcjonowanie chrząstki, bambus (100 mg) poprawia komfort stawów, a szafran (30 mg) pomaga utrzymać równowagę emocjonalną, wspierając pozytywny nastrój.</p>
+  </Fragment>
+
+  <Fragment slot="usage-tips">
+    <p>1 opakowanie to program wystarczający na 1 miesiąc, w razie potrzeby można powtórzyć. 60 tabletek z podziałką.</p>
+  </Fragment>
+
+  <Fragment slot="precautions">
+    <p>Przeznaczony dla osób dorosłych. Nie zaleca się stosowania u kobiet w ciąży i/lub karmiących piersią, w przypadku obrzękowej niewydolności serca lub nerek, w przypadku leczenia przeciwdepresyjnego. Nie należy przekraczać zalecanej porcji do spożycia w ciągu dnia. Suplement diety nie może być stosowany jako substytut (zamiennik) zróżnicowanej diety. Przechowywać w sposób niedostępny dla małych dzieci. Przechowywać w zamkniętym pudełku na tabletki, z dala od źródeł ciepła (&lt;30°C), wilgoci i światła.</p>
+  </Fragment>
+
+  <Fragment slot="origin-section">
+    <h2 class="details-heading">POCHODZENIE SKŁADNIKÓW:</h2>
+    <div class="details-text">
+      <p>Składniki aktywne zawarte w suplemencie diety IANA Stawy Zdrowe stawy i dobry nastrój są pochodzenia roślinnego, od europejskich, sprawdzonych dostawców.</p>
+    </div>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p style="font-style: italic; margin-top: 32px; font-size: 0.875rem;">*Suplement diety. Nie zastępuje zróżnicowanej diety.*</p>
+  </Fragment>
+
+  <Fragment slot="custom-highlights">
+    <div class="custom-highlights-nastroj" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;">
+      <div style="flex: 1; text-align: right;">
+        <div style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-purple); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;">KORZYŚCI DLA CIAŁA</div>
+        <div style="color: var(--color-dark-green); font-size: 1.125rem;">Łagodzenie dyskomfortu stawów</div>
+      </div>
+      <div style="margin: 0 40px; flex-shrink: 0;">
+        <img src={iconPodwojneDzialanie.src} alt="Podwójne działanie" style="height: 120px;" />
+      </div>
+      <div style="flex: 1; text-align: left;">
+        <div style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-purple); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;">KORZYŚCI DLA UMYSŁU</div>
+        <div style="color: var(--color-dark-green); font-size: 1.125rem;">Poprawa dobrostanu</div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) {
+        .custom-highlights-nastroj {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .custom-highlights-nastroj > div {
+          text-align: center !important;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <IngredientsCarousel heading="Kompleks roślinnych składników aktywnych o podwójnym działaniu" ingredients={ingredients} />
+  
+  <LifestyleBanner image={lifestyleBanner}>
+    <p><strong>Czy czujesz, że Twoje ciało potrzebuje dziś więcej wsparcia niż kiedyś?</strong> Zmiany w sprawności ruchowej mogą pojawiać się stopniowo – wpływając nie tylko na komfort ruchu, ale też na nasze codzienne samopoczucie. A przecież swoboda poruszania się daje coś więcej niż tylko mobilność. Daje poczucie energii, niezależności i równowagi.</p>
+    <p>Dlatego powstała formuła iana Stawy, która wspiera zdrowie stawów i pomaga odzyskać lekkość ruchu – tak, aby ciało i nastrój mogły znów działać w harmonii. <strong>Bo dobre samopoczucie zaczyna się od swobody ruchu.</strong></p>
+  </LifestyleBanner>
+
+  <RoutineCrossSell heading="Stwórz swoją codzienną rutynę na nowo:" items={routineItems} />
+</ProductTemplate>
