@@ -41,36 +41,37 @@ import LifestyleBanner from "../../components/LifestyleBanner.astro";
 import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
 
 // Lower section images
-import czarciPazur from "../../assets/czarci_pazur_tlo.png";
-import zenszen from "../../assets/zenszen_tlo.png";
-import bambus from "../../assets/bambus_tlo.png";
-import czarnaPorzeczka from "../../assets/czarna_porzeczka_tlo.png";
+import czarciPazur from "../../assets/ingredients-carousel/czarci_pazur.png";
+import zenszen from "../../assets/ingredients-carousel/zenszen.png";
+import bambus from "../../assets/ingredients-carousel/bambus.png";
+import czarnaPorzeczka from "../../assets/ingredients-carousel/czarna-porzeczka.png";
 import lifestyleBanner from "../../assets/energia-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
-import { Image } from "astro:assets";
 
 const ingredients = [
   {
     bgImage: czarciPazur,
     title: "CZARCI PAZUR",
-    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano suchy ekstrakt z korzenia czarciego pazura (Harpagophytum procumbens) standaryzowany na 2% harpagozydu*. <strong>Czarci pazur (Harpagophytum procumbens)</strong> jest rośliną wykorzystywaną w fitoterapii w celu wspierania prawidłowego funkcjonowania stawów¹. Korzeń tej rośliny zawiera naturalne związki bioaktywne, w tym harpagozyd, harpagochinon oraz kwas cynamonowy. Badania wskazują, że wyciąg z korzenia czarciego pazura <strong>może wspierać komfort stawów, m.in. poprzez wpływ na aktywność enzymów związanych z degradacją chrząstki².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Hiszpania... [odniesienia do Vidal, Derbré S.]</small>`,
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano suchy ekstrakt z korzenia czarciego pazura (Harpagophytum procumbens) standaryzowany na 2% harpagozydu*. <strong>Czarci pazur (Harpagophytum procumbens)</strong> jest rośliną wykorzystywaną w fitoterapii w celu wspierania prawidłowego funkcjonowania stawów¹. Korzeń tej rośliny zawiera naturalne związki bioaktywne, w tym harpagozyd, harpagochinon oraz kwas cynamonowy. Badania wskazują, że wyciąg z korzenia czarciego pazura <strong>może wspierać komfort stawów, m.in. poprzez wpływ na aktywność enzymów związanych z degradacją chrząstki².</strong><br/><br/><small>*Kraj pochodzenia: Hiszpania <br/>¹Vidal. Phytothérapie: les plantes de A à Z – Harpagophytum.https://www.vidal.fr/parapharmacie/phytotherapie-plantes/harpagophyton-harpagophytum-procumbens.html (dostęp: marzec 2024). <br/>²Derbré S., Clerc M.-V. Alternatywne leczenie bólu stawów. Pharmaceutical News, 2012;521:38–41</small>`,
   },
   {
     bgImage: zenszen,
     title: "ŻEŃ-SZEŃ SYBERYJSKI",
-    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano standaryzowany wysuszony i sproszkowany ekstrakt wodny z korzenia żeń-szenia syberyjskiego (Eleutherococcus senticosus), otrzymany opatentowaną metodą uzyskiwania dawki ipowder®, odpowiadającej 3 dawkom surowca roślinnego*. <strong>Żeń-szeń syberyjski (Eleutherococcus senticosus)</strong> jest rośliną wykorzystywaną w fitoterapii ze względu na swoje właściwości wspierające odporność i ogólną kondycję organizmu¹². Korzeń tej rośliny zawiera eleuterozydy, które zaliczane są do związków o działaniu adaptogennym. Związki te <strong>mogą wspierać organizm w adaptacji do stresu oraz pomagać w utrzymaniu równowagi i witalności³.</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Larousse, Vidal, Panossian A.]</small>`,
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Elastyczność + Energia</strong> zastosowano standaryzowany wysuszony i sproszkowany ekstrakt wodny z korzenia żeń-szenia syberyjskiego (Eleutherococcus senticosus), otrzymany opatentowaną metodą uzyskiwania dawki ipowder®, odpowiadającej 3 dawkom surowca roślinnego*. <strong>Żeń-szeń syberyjski (Eleutherococcus senticosus)</strong> jest rośliną wykorzystywaną w fitoterapii ze względu na swoje właściwości wspierające odporność i ogólną kondycję organizmu¹². Korzeń tej rośliny zawiera eleuterozydy, które zaliczane są do związków o działaniu adaptogennym. Związki te <strong>mogą wspierać organizm w adaptacji do stresu oraz pomagać w utrzymaniu równowagi i witalności³.</strong><br/><br/><small>*Kraj pochodzenia: Francja <br/>
+    ¹Encyclopédie des plantes médicinales. Larousse. 2001. ISBN: 2-03-560252-1. <br/> ²Vidal. Phytothérapie: les plantes de A à Z – Eleutherocoque.https://www.vidal.fr/parapharmacie/phytotherapie-plantes/eleutherocoque-eleutherococcus-senticosus.html (dostęp: marzec 2024). <br/> ³Panossian A., Wagner H. Stimulating effect of adaptogens: an overview with particular reference to their efficacy following single dose administration. Phytotherapy Research. 2005;19(10):819-838.</small>`,
   },
   {
     bgImage: bambus,
     title: "BAMBUS TRZCINOWY",
-    descriptionHtml: `W suplemencie <strong>diety iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano sproszkowaną żywicę z bambusa trzcinowego (Bambusa arundinacea) standaryzowaną na ≥75% krzemionki (SiO₂), która wspiera naturalne funkcjonowanie organizmu*. <strong>Bambus trzcinowy</strong> jest rośliną wykorzystywaną w tradycyjnej medycynie ajurwedyjskiej i indyjskiej¹. Sok z bambusa jest bogaty w krzemionkę, która może wspierać tkanki chrzęstne oraz uczestniczyć w procesach syntezy i stabilizacji kolagenu¹². Dzięki wysokiej zawartości krzemionki składniki pozyskiwane z bambusa mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Francja... [odniesienia do Larousse, Jugdaohsingh]</small>`,
+    descriptionHtml: `W suplemencie <strong>diety iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano sproszkowaną żywicę z bambusa trzcinowego (Bambusa arundinacea) standaryzowaną na ≥75% krzemionki (SiO₂), która wspiera naturalne funkcjonowanie organizmu*. <strong>Bambus trzcinowy</strong> jest rośliną wykorzystywaną w tradycyjnej medycynie ajurwedyjskiej i indyjskiej¹. Sok z bambusa jest bogaty w krzemionkę, która może wspierać tkanki chrzęstne oraz uczestniczyć w procesach syntezy i stabilizacji kolagenu¹². Dzięki wysokiej zawartości krzemionki składniki pozyskiwane z bambusa mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small>*Kraj pochodzenia: Francja<br/>¹ Encyclopédie des plantes médicinales. Larousse. 2001. ISBN: 2-03-560252-1.² Jugdaohsingh R. Silicon and bone health. J Nutr Health Aging. 2007;11:99-110.</small>`,
   },
   {
     bgImage: czarnaPorzeczka,
     title: "CZARNA PORZECZKA",
-    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano standaryzowany <strong>ekstrakt wodny z liści czarnej porzeczki (Ribes nigrum)</strong>, otrzymany opatentowaną metodą uzyskiwania dawki <strong>ipowder®</strong>, odpowiadającej 3 dawkom surowca roślinnego*. Czarna porzeczka (Ribes nigrum) jest rośliną tradycyjnie wykorzystywaną w fitoterapii w celu wspierania komfortu stawów¹². Liście czarnej porzeczki zawierają naturalne związki bioaktywne, w tym flawonoidy (m.in. kwercetynę i kemferol) oraz proantocyjanidyny, cenione za swoje właściwości biologiczne¹. Związki te mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small style="font-size: 0.75rem;">*Kraj pochodzenia: Hiszpania... [szczegóły jak na makiecie, odniesienia do Vidal, Serrano]</small>`,
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Zdrowe Stawy + Dobry Nastrój</strong> zastosowano standaryzowany <strong>ekstrakt wodny z liści czarnej porzeczki (Ribes nigrum)</strong>, otrzymany opatentowaną metodą uzyskiwania dawki <strong>ipowder®</strong>, odpowiadającej 3 dawkom surowca roślinnego*. Czarna porzeczka (Ribes nigrum) jest rośliną tradycyjnie wykorzystywaną w fitoterapii w celu wspierania komfortu stawów¹². Liście czarnej porzeczki zawierają naturalne związki bioaktywne, w tym flawonoidy (m.in. kwercetynę i kemferol) oraz proantocyjanidyny, cenione za swoje właściwości biologiczne¹. Związki te mogą <strong>wspierać utrzymanie prawidłowego funkcjonowania stawów oraz komfort ruchu².</strong><br/><br/><small>*Kraj pochodzenia: Francja <br/>
+    ¹Encyclopédie des plantes médicinales. Larousse. 2001. ISBN: 2-03-560252-1. <br/> ²Vidal. Phytothérapie: les plantes de A à Z – Eleutherocoque.https://www.vidal.fr/parapharmacie/phytotherapie-plantes/eleutherocoque-eleutherococcus-senticosus.html (dostęp: marzec 2024). <br/> ³Panossian A., Wagner H. Stimulating effect of adaptogens: an overview with particular reference to their efficacy following single dose administration. Phytotherapy Research. 2005;19(10):819-838.</small>`,
   },
 ];
 
@@ -183,48 +184,59 @@ const routineItems = [
   <Fragment slot="custom-highlights">
     <div
       class="custom-highlights-energia"
-      style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;"
+      style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 40px;"
     >
-      <div style="flex: 1; text-align: right;">
+      <div style="flex: 1; text-align: right; margin-top: 8px;">
         <div
-          style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-orange); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;"
+          style="color: var(--color-dark-green); font-weight: 400; line-height: 1.1; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-size: 1.5rem;"
         >
-          KORZYŚCI DLA CIAŁA
+          KORZYŚCI<br />
+          <span style="font-weight: 700;">DLA CIAŁA</span>
         </div>
-        <div style="color: var(--color-dark-green); font-size: 1.125rem;">
+        <div
+          style="border-bottom: 2px solid var(--color-orange); margin: 4px 0"
+        >
+        </div>
+        <div style="color: var(--color-mint); font-size: 1.125rem;">
           Łagodzenie dyskomfortu stawów
         </div>
       </div>
-      <div style="margin: 0 40px; flex-shrink: 0;">
-        <Image
-          src={iconPodwojneDzialanie}
+      <div style="margin: 0 40px; flex-shrink: 0; align-self: center;">
+        <img
+          src={iconPodwojneDzialanie.src}
           alt="Podwójne działanie"
           loading="lazy"
           style="height: 120px; filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(3015%) hue-rotate(349deg) brightness(98%) contrast(97%);"
         />
       </div>
-      <div style="flex: 1; text-align: left;">
+      <div style="flex: 1; text-align: left; margin-top: 8px;">
         <div
-          style="color: var(--color-dark-green); font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--color-orange); display: inline-block; margin-bottom: 8px; font-size: 1.125rem;"
+          style="color: var(--color-dark-green); font-weight: 400; line-height: 1.1; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-size: 1.5rem;"
         >
-          KORZYŚCI DLA UMYSŁU
+          KORZYŚCI<br />
+          <span style="font-weight: 700;">DLA UMYSŁU</span>
         </div>
-        <div style="color: var(--color-dark-green); font-size: 1.125rem;">
+        <div
+          style="border-bottom: 2px solid var(--color-orange); margin: 4px 0"
+        >
+        </div>
+        <div style="color: var(--color-mint); font-size: 1.125rem;">
           Poprawa dobrostanu
         </div>
       </div>
+      <style>
+        @media (max-width: 768px) {
+          .custom-highlights-energia {
+            flex-direction: column;
+            align-items: center !important;
+            gap: 20px;
+          }
+          .custom-highlights-energia > div {
+            text-align: center !important;
+          }
+        }
+      </style>
     </div>
-    <style>
-      @media (max-width: 768px) {
-        .custom-highlights-energia {
-          flex-direction: column;
-          gap: 20px;
-        }
-        .custom-highlights-energia > div {
-          text-align: center !important;
-        }
-      }
-    </style>
   </Fragment>
 
   <IngredientsCarousel

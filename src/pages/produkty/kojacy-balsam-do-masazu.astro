@@ -46,12 +46,13 @@ const galleryImages = [
 import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
 import LifestyleBanner from "../../components/LifestyleBanner.astro";
 import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+import bioBadge from "../../assets/bio-badge.svg";
 
 // Obrazki dolnych sekcji
-import swietaBazylia from "../../assets/swieta_bazylia_tlo.png";
-import arnika from "../../assets/arnika_tlo.png";
-import wierzba from "../../assets/wierzba_tlo.png";
-import lawenda from "../../assets/lawenda_tlo.png";
+import swietaBazylia from "../../assets/ingredients-carousel/bazylia.png";
+import arnika from "../../assets/ingredients-carousel/aranika.png";
+import wierzba from "../../assets/ingredients-carousel/biala-wierzba.png";
+import lawenda from "../../assets/ingredients-carousel/lawenda.png";
 import lifestyleBanner from "../../assets/balsam-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
@@ -61,34 +62,47 @@ const ingredients = [
   {
     bgImage: swietaBazylia,
     title: "CHLAMYDOMONAS ACIDOPHILA",
-    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z liści Świętej bazylii, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Święta bazylia (Ocimum sanctum)</strong> to roślina znana z tradycji ajurwedyjskiej, ceniona za swoje właściwości pielęgnacyjne. Ekstrakt z jej liści jest bogaty w polifenole, które wykazują działanie antyoksydacyjne i kojące. Dzięki zawartości naturalnych związków aktywnych ekstrakt ze Świętej bazylii <strong>wspiera łagodzenie podrażnień skóry oraz pomaga chronić ją przed stresem oksydacyjnym.</strong>`
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z liści Świętej bazylii, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Święta bazylia (Ocimum sanctum)</strong> to roślina znana z tradycji ajurwedyjskiej, ceniona za swoje właściwości pielęgnacyjne. Ekstrakt z jej liści jest bogaty w polifenole, które wykazują działanie antyoksydacyjne i kojące. Dzięki zawartości naturalnych związków aktywnych ekstrakt ze Świętej bazylii <strong>wspiera łagodzenie podrażnień skóry oraz pomaga chronić ją przed stresem oksydacyjnym.</strong>`,
   },
   {
     bgImage: arnika,
     title: "ARNIKA GÓRSKA",
-    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano <strong>ekstrakt z kwiatów arniki górskiej</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Arnika górska (Arnica montana)</strong> to jedna z najbardziej znanych roślin wykorzystywanych w ziołolecznictwie. Ekstrakt z jej kwiatów jest ceniony za swoje właściwości łagodzące i kojące, dlatego często stosuje się go w kosmetykach przeznaczonych do pielęgnacji skóry wymagającej ukojenia. Dzięki zawartości naturalnych związków aktywnych, arnika wspiera <strong>łagodzenie podrażnień skóry oraz pomaga przywrócić jej komfort.</strong>`
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano <strong>ekstrakt z kwiatów arniki górskiej</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Arnika górska (Arnica montana)</strong> to jedna z najbardziej znanych roślin wykorzystywanych w ziołolecznictwie. Ekstrakt z jej kwiatów jest ceniony za swoje właściwości łagodzące i kojące, dlatego często stosuje się go w kosmetykach przeznaczonych do pielęgnacji skóry wymagającej ukojenia. Dzięki zawartości naturalnych związków aktywnych, arnika wspiera <strong>łagodzenie podrażnień skóry oraz pomaga przywrócić jej komfort.</strong>`,
   },
   {
     bgImage: wierzba,
     title: "BIAŁA WIERZBA",
-    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z kory białej wierzby w stężeniu 0,02%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Biała wierzba (Salix alba)</strong> jest rośliną znaną od wieków ze swoich właściwości pielęgnacyjnych. Jej kora <strong>zawiera naturalne związki aktywne, w tym salicynę, flawonoidy i polifenole, cenione za działanie kojące.</strong> Dzięki zawartości tych składników ekstrakt z kory białej wierzby <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i komfortu.</strong>`
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano ekstrakt z kory białej wierzby w stężeniu 0,02%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Biała wierzba (Salix alba)</strong> jest rośliną znaną od wieków ze swoich właściwości pielęgnacyjnych. Jej kora <strong>zawiera naturalne związki aktywne, w tym salicynę, flawonoidy i polifenole, cenione za działanie kojące.</strong> Dzięki zawartości tych składników ekstrakt z kory białej wierzby <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i komfortu.</strong>`,
   },
   {
     bgImage: lawenda,
     title: "LAWENDA",
-    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano olejek eteryczny z lawendy w stężeniu 0,5%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Lawenda szerokolistna (Lavandula latifolia)</strong> to roślina znana ze swoich właściwości pielęgnacyjnych i aromaterapeutycznych. Jej olejek eteryczny zawiera naturalne związki aktywne, takie jak linalol, cyneol i kamfora, cenione za działanie kojące. Dzięki zawartości tych składników olejek lawendowy <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i relaksu.</strong>`
-  }
+    descriptionHtml: `W <strong>Kojącym balsamie do masażu iana</strong> zastosowano olejek eteryczny z lawendy w stężeniu 0,5%, który wspiera działanie łagodzące produktu i pomaga przywrócić skórze uczucie komfortu. <strong>Lawenda szerokolistna (Lavandula latifolia)</strong> to roślina znana ze swoich właściwości pielęgnacyjnych i aromaterapeutycznych. Jej olejek eteryczny zawiera naturalne związki aktywne, takie jak linalol, cyneol i kamfora, cenione za działanie kojące. Dzięki zawartości tych składników olejek lawendowy <strong>wspiera łagodzenie podrażnień skóry oraz pomaga przywrócić jej uczucie ukojenia i relaksu.</strong>`,
+  },
 ];
 
 const routineItems = [
-  { title: "Elastyczność i energia", image: imgElastycznosc, href: "/rutyna/elastycznosc-i-energia" },
-  { title: "Mobilność i spokój", image: imgMobilnosc, href: "/rutyna/mobilnosc-i-spokoj" },
-  { title: "Komfort i odpoczynek", image: imgKomfort, href: "/rutyna/komfort-i-odpoczynek" }
+  {
+    title: "Elastyczność i energia",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+  {
+    title: "Mobilność i spokój",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title: "Komfort i odpoczynek",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
 ];
 ---
 
 <ProductTemplate
   themeColor="var(--color-yellowish)"
+  ctaColor="var(--color-orange)"
   productTitle="KOJĄCY"
   productSubtitle="BALSAM DO MASAŻU"
   images={galleryImages}
@@ -124,9 +138,9 @@ const routineItems = [
       Podwójne działanie fizyczne i emocjonalne: bogata, kremowa, nietłusta
       konsystencja i naturalny zapach składników aktywnych pochodzenia
       roślinnego sprzyjają dobremu samopoczuciu i zapewniają wyjątkowe doznania
-      sensoryczne**.
+      sensoryczne**.<br />
+      **Stosować ostrożnie.
     </p>
-    <p><em>**Stosować ostrożnie.</em></p>
   </Fragment>
 
   <Fragment slot="usage-tips">
@@ -182,6 +196,11 @@ const routineItems = [
         standardem COSMOS.</strong
       >
     </p>
+    <img
+      src={bioBadge.src}
+      alt="Certyfikat Ecocert COSMOS"
+      style="margin-top: 24px; max-width: 130px; display: block;"
+    />
   </Fragment>
 
   <Fragment slot="highlight-left">
@@ -189,7 +208,7 @@ const routineItems = [
       <div style="font-size: 4rem; font-weight: 700; line-height: 1;">
         99<span style="font-size: 2rem;">%</span>
       </div>
-      <div style="font-size: 1.75rem; font-weight: 400; line-height: 1.2;">
+      <div style="font-size: 1.5rem; font-weight: 400; line-height: 1.2;">
         SKŁADNIKÓW POCHODZENIA NATURALNEGO
       </div>
     </div>
@@ -205,7 +224,7 @@ const routineItems = [
         style="height: 58px; margin-bottom: 6px;"
       />
       <div
-        style="font-size: 1.75rem; font-weight: 400; text-transform: uppercase; line-height: 1.2;"
+        style="font-size: 1.5rem; font-weight: 400; text-transform: uppercase; line-height: 1.2;"
       >
         SZYBKIE I DŁUGOTRWAŁE<br />DZIAŁANIE
       </div>
@@ -218,12 +237,30 @@ const routineItems = [
     <img src={iconRece.src} alt="Ręce" />
   </Fragment>
 
-  <IngredientsCarousel heading="Jego kluczowe składniki aktywne nadają mu świeży, naturalny zapach:" ingredients={ingredients} />
-  
+  <IngredientsCarousel
+    heading="Jego kluczowe składniki aktywne nadają mu świeży, naturalny zapach:"
+    ingredients={ingredients}
+  />
+
   <LifestyleBanner image={lifestyleBanner}>
-    <p><strong>Spokój zaczyna się od chwili dla siebie.</strong> Napięcie mięśni i zmęczenie ciała mogą pojawiać się po intensywnym dniu lub wysiłku. Dlatego stworzyliśmy <strong>Kojący balsam do masażu iana</strong>, który pomaga rozluźnić ciało i przywrócić uczucie komfortu.</p>
-    <p>Formuła oparta na starannie dobranych składnikach roślinnych – m.in. organicznej świętej bazylii, wierzbie białej, arnice i olejku lawendowym – wspiera odprężenie mięśni, a bogata, kremowa konsystencja sprawia, że masaż staje się chwilą relaksu dla ciała i zmysłów. <strong>To chwila wytchnienia dla ciała.</strong></p>
+    <p>
+      <strong>Spokój zaczyna się od chwili dla siebie.</strong> Napięcie mięśni i
+      zmęczenie ciała mogą pojawiać się po intensywnym dniu lub wysiłku. Dlatego stworzyliśmy
+      <strong>Kojący balsam do masażu iana</strong>, który pomaga rozluźnić
+      ciało i przywrócić uczucie komfortu.
+    </p>
+    <p>
+      Formuła oparta na starannie dobranych składnikach roślinnych – m.in.
+      organicznej świętej bazylii, wierzbie białej, arnice i olejku lawendowym –
+      wspiera odprężenie mięśni, a bogata, kremowa konsystencja sprawia, że
+      masaż staje się chwilą relaksu dla ciała i zmysłów. <strong
+        >To chwila wytchnienia dla ciała.</strong
+      >
+    </p>
   </LifestyleBanner>
 
-  <RoutineCrossSell heading="Stwórz swoją codzienną rutynę na nowo:" items={routineItems} />
+  <RoutineCrossSell
+    heading="Stwórz swoją codzienną rutynę na nowo:"
+    items={routineItems}
+  />
 </ProductTemplate>

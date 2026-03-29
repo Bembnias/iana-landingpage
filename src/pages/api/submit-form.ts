@@ -16,6 +16,9 @@ const schema = z.object({
     socialLink: z.string().optional().default(""),
     pharmacyAddress: z.string().optional().default(""),
     pharmacyMotivation: z.string().optional().default(""),
+    consentRequired: z.string().min(1),
+    consentMarketing: z.string().min(1),
+    consentOpinion: z.string().min(1),
 });
 
 export const POST: APIRoute = async ({ request }) => {

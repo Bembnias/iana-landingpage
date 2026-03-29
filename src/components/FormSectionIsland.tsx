@@ -21,6 +21,9 @@ const formSchema = z
     socialLink: z.string().optional(),
     pharmacyAddress: z.string().optional(),
     pharmacyMotivation: z.string().optional(),
+    consentRequired: z.literal(true, { message: "Ta zgoda jest wymagana" }),
+    consentMarketing: z.boolean().optional(),
+    consentOpinion: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.role === "Influencer") {
@@ -161,6 +164,9 @@ export default function FormSectionIsland({ images }: Props) {
       socialLink: "",
       pharmacyAddress: "",
       pharmacyMotivation: "",
+      consentRequired: false as unknown as true,
+      consentMarketing: false,
+      consentOpinion: false,
     },
   });
 
@@ -217,7 +223,7 @@ export default function FormSectionIsland({ images }: Props) {
           title: "Suplement diety",
           subtitle: "ODPORNOŚĆ CHRZĄSTKI + ZDROWY SEN",
           subtitleColor: "#2C6492",
-          slug: "suplement-odpornosc",
+          slug: "odpornosc-chrzastki-i-zdrowy-sen",
         },
         {
           linkColor: "#C47000", // Darkened for accessibility
@@ -256,6 +262,9 @@ export default function FormSectionIsland({ images }: Props) {
       pharmacyAddress: data.role === "Farmaceuta" ? data.pharmacyAddress || "" : "",
       pharmacyMotivation: data.role === "Farmaceuta" ? data.pharmacyMotivation || "" : "",
       selectedRoutine: routineLabels[selectedCard],
+      consentRequired: data.consentRequired ? "TAK" : "NIE",
+      consentMarketing: data.consentMarketing ? "TAK" : "NIE",
+      consentOpinion: data.consentOpinion ? "TAK" : "NIE",
     };
 
     try {
@@ -680,7 +689,55 @@ export default function FormSectionIsland({ images }: Props) {
             </div>
           )}
 
-          {/* --- 5. Submit --- */}
+          {/* --- 5. Consents --- */}
+          <div className="form-section__consents">
+            <label className="form-section__consent-label">
+              <input
+                type="checkbox"
+                className="form-section__consent-checkbox"
+                {...register("consentRequired")}
+              />
+              <span>
+                Wyrażam zgodę na przetwarzanie moich danych osobowych przez
+                Laboratoires Expanscience Sp. z o.o. w celu udziału w Programie
+                Testowania IANA zgodnie z Polityką prywatności.{" "}
+                <span className="form-section__consent-required">*</span>
+              </span>
+            </label>
+            {errors.consentRequired && (
+              <span className="form-section__error">
+                {errors.consentRequired.message}
+              </span>
+            )}
+
+            <label className="form-section__consent-label">
+              <input
+                type="checkbox"
+                className="form-section__consent-checkbox"
+                {...register("consentMarketing")}
+              />
+              <span>
+                Wyrażam zgodę na otrzymywanie informacji marketingowych
+                dotyczących produktów marki IANA drogą elektroniczną
+                (e-mail/SMS).
+              </span>
+            </label>
+
+            <label className="form-section__consent-label">
+              <input
+                type="checkbox"
+                className="form-section__consent-checkbox"
+                {...register("consentOpinion")}
+              />
+              <span>
+                Wyrażam zgodę na publikację mojej opinii o produktach IANA w
+                materiałach marketingowych marki (strona internetowa, media
+                społecznościowe).
+              </span>
+            </label>
+          </div>
+
+          {/* --- 6. Submit --- */}
           <div className="form-section__submit-wrapper">
             <button
               type="submit"

@@ -43,12 +43,13 @@ const galleryImages = [
 import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
 import LifestyleBanner from "../../components/LifestyleBanner.astro";
 import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+import bioBadge from "../../assets/bio-badge.svg";
 
 // Obrazki dolnych sekcji
-import acidophila from "../../assets/acidophila_tlo.png";
-import arnika from "../../assets/arnika_tlo.png";
-import eukaliptus from "../../assets/eukaliptus_tlo.png";
-import mieta from "../../assets/mieta_tlo.png";
+import acidophila from "../../assets/ingredients-carousel/acidophila.png";
+import arnika from "../../assets/ingredients-carousel/aranika.png";
+import eukaliptus from "../../assets/ingredients-carousel/eukaliptus.png";
+import mieta from "../../assets/ingredients-carousel/mieta.png";
 import lifestyleBanner from "../../assets/zel-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
@@ -58,29 +59,44 @@ const ingredients = [
   {
     bgImage: acidophila,
     title: "CHLAMYDOMONAS ACIDOPHILA",
-    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano ALGAENIA® - koncentrat peptydowy z mikroalg Chlamydomonas acidophila, <strong>który wspiera działanie kojące i pomaga przywrócić skórze uczucie komfortu.</strong><br/><br/>Chlamydomonas acidophila to wyjątkowe mikroalgi zielone, które potrafią przetrwać w ekstremalnych warunkach środowiskowych. Dzięki temu są cennym źródłem składników aktywnych wykorzystywanych w nowoczesnej kosmetologii.`
+    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano ALGAENIA® - koncentrat peptydowy z mikroalg Chlamydomonas acidophila, <strong>który wspiera działanie kojące i pomaga przywrócić skórze uczucie komfortu.</strong><br/>Chlamydomonas acidophila to wyjątkowe mikroalgi zielone, które potrafią przetrwać w ekstremalnych warunkach środowiskowych. Dzięki temu są cennym źródłem składników aktywnych wykorzystywanych w nowoczesnej kosmetologii.`,
   },
   {
     bgImage: arnika,
     title: "ARNIKA GÓRSKA",
-    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>ekstrakt z kwiatów arniki górskiej</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu.<br/><br/><strong>Arnika górska (Arnica montana)</strong> to jedna z najbardziej znanych roślin wykorzystywanych w ziołolecznictwie. Ekstrakt z jej kwiatów jest ceniony za swoje właściwości łagodzące i kojące, dlatego często stosuje się go w kosmetykach przeznaczonych do pielęgnacji skóry wymagającej ukojenia.<br/><br/>Dzięki zawartości naturalnych związków aktywnych, arnika wspiera <strong>łagodzenie podrażnień skóry oraz pomaga przywrócić jej komfort.</strong>`
+    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>ekstrakt z kwiatów arniki górskiej</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu.<br/><strong>Arnika górska (Arnica montana)</strong> to jedna z najbardziej znanych roślin wykorzystywanych w ziołolecznictwie. Ekstrakt z jej kwiatów jest ceniony za swoje właściwości łagodzące i kojące, dlatego często stosuje się go w kosmetykach przeznaczonych do pielęgnacji skóry wymagającej ukojenia.<br/>Dzięki zawartości naturalnych związków aktywnych, arnika wspiera <strong>łagodzenie podrażnień skóry oraz pomaga przywrócić jej komfort.</strong>`,
   },
   {
     bgImage: eukaliptus,
     title: "EUKALIPTUS",
-    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>organiczny olejek eteryczny z eukaliptusa zawierający 1,8-cyneol</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. Eukaliptus to roślina znana ze swoich właściwości pielęgnacyjnych i aromaterapeutycznych. Głównym składnikiem jego olejku eterycznego jest 1,8-cyneol, który odpowiada za jego działanie biologiczne, w tym właściwości antyoksydacyjne i kojące. Dzięki zawartości naturalnych związków aktywnych olejek eukaliptusowy <strong>wspiera łagodzenie podrażnień skóry oraz zapewnia uczucie świeżości i chłodzenia.</strong>`
+    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>organiczny olejek eteryczny z eukaliptusa zawierający 1,8-cyneol</strong>, który wspiera działanie kojące produktu i pomaga przywrócić skórze uczucie komfortu. Eukaliptus to roślina znana ze swoich właściwości pielęgnacyjnych i aromaterapeutycznych. Głównym składnikiem jego olejku eterycznego jest 1,8-cyneol, który odpowiada za jego działanie biologiczne, w tym właściwości antyoksydacyjne i kojące. Dzięki zawartości naturalnych związków aktywnych olejek eukaliptusowy <strong>wspiera łagodzenie podrażnień skóry oraz zapewnia uczucie świeżości i chłodzenia.</strong>`,
   },
   {
     bgImage: mieta,
     title: "MIĘTA PIEPRZOWA (MENTHA PIPERITA)",
-    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>organiczny olejek eteryczny z mięty pieprzowej o stężeniu 0,5%</strong>, który wspiera działanie kojące produktu i zapewnia uczucie intensywnego chłodzenia. Mięta pieprzowa (Mentha piperita) jest rośliną znaną ze swoich właściwości odświeżających i pielęgnacyjnych. Jej olejek eteryczny zawiera wysokie stężenie mentolu, który oddziałuje na receptory zimna w skórze.<br/><br/>Dzięki temu mentol <strong>wywołuje efekt przyjemnego chłodzenia, pomaga łagodzić dyskomfort skóry i wspiera uczucie ukojenia</strong> po zastosowaniu produktu.`
-  }
+    descriptionHtml: `W Intensywnie chłodzącym żelu iana zastosowano <strong>organiczny olejek eteryczny z mięty pieprzowej o stężeniu 0,5%</strong>, który wspiera działanie kojące produktu i zapewnia uczucie intensywnego chłodzenia. Mięta pieprzowa (Mentha piperita) jest rośliną znaną ze swoich właściwości odświeżających i pielęgnacyjnych. Jej olejek eteryczny zawiera wysokie stężenie mentolu, który oddziałuje na receptory zimna w skórze.<br/><br/>Dzięki temu mentol <strong>wywołuje efekt przyjemnego chłodzenia, pomaga łagodzić dyskomfort skóry i wspiera uczucie ukojenia</strong> po zastosowaniu produktu.`,
+  },
 ];
 
 const routineItems = [
-  { title: "Działa <br/><span style='color: var(--color-red)'>ROZGRZEWAJĄCO</span>", image: imgElastycznosc, href: "/rutyna/elastycznosc-i-energia" },
-  { title: "Działa <br/><span style='color: var(--color-blue)'>CHŁODZĄCO</span>", image: imgMobilnosc, href: "/rutyna/mobilnosc-i-spokoj" },
-  { title: "Działa <br/><span style='color: var(--color-yellowish)'>ROZLUŹNIAJĄCO</span>", image: imgKomfort, href: "/rutyna/komfort-i-odpoczynek" }
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-red)'>ROZGRZEWAJĄCO</span>",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-blue)'>CHŁODZĄCO</span>",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-yellowish)'>ROZLUŹNIAJĄCO</span>",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
 ];
 ---
 
@@ -93,8 +109,8 @@ const routineItems = [
 >
   <Fragment slot="short-desc">
     <p>
-      Żel o lekkiej i płynnej konsystencji. Unikalna kombinacja organicznych składników
-      aktywnych pochodzenia roślinnego.
+      Żel o lekkiej i płynnej konsystencji. Unikalna kombinacja organicznych
+      składników aktywnych pochodzenia roślinnego.
     </p>
   </Fragment>
 
@@ -113,29 +129,30 @@ const routineItems = [
 
   <Fragment slot="description">
     <p>
-      Nieklejący się płynny żel o szybkim i długotrwałym działaniu chłodzącym (do
-      40 minut¹), idealny do łagodzenia napięcia i poprawy ruchomości stawów.
+      Nieklejący się płynny żel o szybkim i długotrwałym działaniu chłodzącym
+      (do 40 minut¹), idealny do łagodzenia napięcia i poprawy ruchomości
+      stawów.
     </p>
   </Fragment>
 
   <Fragment slot="usage-tips">
     <p>
-      Przed i po ćwiczeniach lub jako część codziennej rutyny. Nakładaj delikatnymi,
-      okrężnymi ruchami, aż produkt całkowicie się wchłonie. Stosuj 2 razy dziennie
-      na następujące obszary: ramiona, dolną część pleców, dłonie, kolana, kostki.
-      Dostosuj ilość produktu do obszaru aplikacji i intensywności pożądanego efektu
-      chłodzenia.
+      Przed i po ćwiczeniach lub jako część codziennej rutyny. Nakładaj
+      delikatnymi, okrężnymi ruchami, aż produkt całkowicie się wchłonie. Stosuj
+      2 razy dziennie na następujące obszary: ramiona, dolną część pleców,
+      dłonie, kolana, kostki. Dostosuj ilość produktu do obszaru aplikacji i
+      intensywności pożądanego efektu chłodzenia.
     </p>
   </Fragment>
 
   <Fragment slot="precautions">
     <p>
-      Do użytku zewnętrznego. Nie stosować na uszkodzoną skórę. Przed 
-      pierwszym użyciem przetestować na niewielkiej powierzchni. Nie stosować u dzieci
-      poniżej 15 roku życia, kobiet w ciąży lub karmiących piersią. Nie stosować 
-      w przypadku uczulenia na którykolwiek ze składników. Unikać kontaktu z oczami 
-      i błonami śluzowymi. W przypadku kontaktu przemyć olejem roślinnym. Po każdym 
-      użyciu umyć ręce.
+      Do użytku zewnętrznego. Nie stosować na uszkodzoną skórę. Przed pierwszym
+      użyciem przetestować na niewielkiej powierzchni. Nie stosować u dzieci
+      poniżej 15 roku życia, kobiet w ciąży lub karmiących piersią. Nie stosować
+      w przypadku uczulenia na którykolwiek ze składników. Unikać kontaktu z
+      oczami i błonami śluzowymi. W przypadku kontaktu przemyć olejem roślinnym.
+      Po każdym użyciu umyć ręce.
     </p>
   </Fragment>
 
@@ -145,7 +162,8 @@ const routineItems = [
 
   <Fragment slot="studies-list">
     <li>
-      85% uczestników zauważyło poprawę mobilności przed, po ćwiczeniach lub w codziennych aktywnościach*
+      85% uczestników zauważyło poprawę mobilności przed, po ćwiczeniach lub w
+      codziennych aktywnościach*
       <span
         >*Badanie kliniczne przeprowadzone na 42 osobach w wieku od 50 do 78
         lat, samoocena po 28 dniach stosowania, dwa razy dziennie. Pod nadzorem
@@ -154,7 +172,14 @@ const routineItems = [
       >
     </li>
     <li>
-      95% respondentów zadeklarowało skuteczne złagodzenie napięcia stawów w docelowych obszarach*.
+      95% respondentów zadeklarowało skuteczne złagodzenie napięcia stawów w
+      docelowych obszarach*.
+      <span
+        >*Badanie kliniczne przeprowadzone na 42 osobach w wieku od 50 do 78
+        lat, samoocena po 28 dniach stosowania, dwa razy dziennie. Pod nadzorem
+        dermatologa, reumatologa i fizjoterapeuty. Wyniki wykazały wysoką
+        tolerancję dla skóry.</span
+      >
       <span
         >¹Badanie satysfakcji przeprowadzone na 42 osobach: 39,1 ± 45,9 min po 4
         tygodniach stosowania. Czas trwania efektu chłodzącego wynosi średnio
@@ -171,6 +196,11 @@ const routineItems = [
         standardem COSMOS.</strong
       >
     </p>
+    <img
+      src={bioBadge.src}
+      alt="Certyfikat Ecocert COSMOS"
+      style="margin-top: 24px; max-width: 130px; display: block;"
+    />
   </Fragment>
 
   <Fragment slot="highlight-left">
@@ -196,8 +226,10 @@ const routineItems = [
       <div
         style="font-size: 1.25rem; font-weight: 400; text-transform: uppercase; line-height: 1;"
       >
-        EFEKT 
-        <br/><strong style="font-size: 2.25rem; font-weight: 700;">40 min</strong>
+        EFEKT
+        <br /><strong style="font-size: 2.25rem; font-weight: 700;"
+          >40 min</strong
+        >
       </div>
       <div
         style="font-size: 1.5rem; font-weight: 400; text-transform: uppercase; line-height: 1; margin: 4px 0;"
@@ -218,12 +250,28 @@ const routineItems = [
     <img src={iconRece.src} alt="Ręce" />
   </Fragment>
 
-  <IngredientsCarousel heading="Jego kluczowe składniki aktywne nadają mu świeży, naturalny zapach:" ingredients={ingredients} />
-  
+  <IngredientsCarousel
+    heading="Jego kluczowe składniki aktywne nadają mu świeży, naturalny zapach:"
+    ingredients={ingredients}
+  />
+
   <LifestyleBanner image={lifestyleBanner}>
-    <p><strong>Mobilność zaczyna się w stawach!</strong> Każdy ruch i każda aktywność zależą od ich sprawności. Z czasem naturalne zmiany mogą wpływać na elastyczność i komfort poruszania się, dlatego razem ze specjalistami stworzyliśmy Intensywnie Chłodzący Żel, który wspiera uczucie lekkości i swobody ruchu wtedy, gdy najbardziej tego potrzebujesz.</p>
-    <p>Starannie dobrane składniki roślinne zapewniają przyjemne uczucie chłodzenia i pomagają odzyskać komfort po wysiłku oraz w ciągu aktywnego dnia. <strong>To swoboda ruchu.</strong></p>
+    <p>
+      <strong>Mobilność zaczyna się w stawach!</strong> Każdy ruch i każda aktywność
+      zależą od ich sprawności. Z czasem naturalne zmiany mogą wpływać na elastyczność
+      i komfort poruszania się, dlatego razem ze specjalistami stworzyliśmy Intensywnie
+      Chłodzący Żel, który wspiera uczucie lekkości i swobody ruchu wtedy, gdy najbardziej
+      tego potrzebujesz.
+    </p>
+    <p>
+      Starannie dobrane składniki roślinne zapewniają przyjemne uczucie
+      chłodzenia i pomagają odzyskać komfort po wysiłku oraz w ciągu aktywnego
+      dnia. <strong>To swoboda ruchu.</strong>
+    </p>
   </LifestyleBanner>
 
-  <RoutineCrossSell heading="Stwórz swoją codzienną rutynę na nowo:" items={routineItems} />
+  <RoutineCrossSell
+    heading="Stwórz swoją codzienną rutynę na nowo:"
+    items={routineItems}
+  />
 </ProductTemplate>

@@ -1,0 +1,256 @@
+---
+import ProductTemplate from "../../components/ProductTemplate.astro";
+
+// Obrazy Galerii
+import img1 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_1.png";
+import img2 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_2.png";
+import img3 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_3.png";
+import img4 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_4.png";
+import img5 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_5.png";
+import img6 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_6.png";
+import img7 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_7.png";
+import img8 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_8.png";
+import img9 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_9.png";
+import img10 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_10.png";
+import img11 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_11.png";
+import img12 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_12.png";
+import img13 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_13.png";
+import img14 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_14.png";
+
+const galleryImages = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+];
+
+// SVG
+import iconPodwojneDzialanie from "../../assets/stawy-podwojne-dzialanie.svg";
+
+// Lower section components
+import IngredientsCarousel from "../../components/IngredientsCarousel.astro";
+import LifestyleBanner from "../../components/LifestyleBanner.astro";
+import RoutineCrossSell from "../../components/RoutineCrossSell.astro";
+
+// Lower section images
+import kurkuma from "../../assets/ingredients-carousel/kurkuma.png";
+import skrzyp from "../../assets/ingredients-carousel/skrzyp.png";
+import lifestyleBanner from "../../assets/sen-lifestyle-banner.png";
+import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
+import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
+import imgKomfort from "../../assets/lifestyle-komfort.png";
+
+const ingredients = [
+  {
+    bgImage: kurkuma,
+    title: "KURKUMA",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Odporność Chrząstki + Zdrowy Sen</strong> zastosowano Curcumin C3 Reduct® – ekstrakt z kurkumy standaryzowany na 95% tetrahydrokurkuminoidów, który wspiera naturalne funkcjonowanie organizmu. <strong>Kurkuma (Curcuma longa)</strong> jest rośliną bogatą w kurkuminę, której głównymi metabolitami są tetrahydrokurkuminoidy¹. Związki te wykazują <strong>właściwości antyoksydacyjne</strong> i charakteryzują się dobrą biodostępnością². Badania naukowe wskazują, że kurkumina może <strong>wspierać łagodzenie dolegliwości mięśni i stawów oraz komfort ruchu³'⁵.</strong><br/><br/><small>¹ Encyclopédie des plantes médicinales. Larousse. 2001. ISBN: 2-03-560252-1.² Sabinsa. Curcumin C3 Reduct. https://sabinsa.com/newsroom/sabinsa-products-faq/curcumin-c3-red uct-faq (dostęp: maj 2024).³ Haiyang Kou et al. Effect of curcumin on rheumatoid arthritis: a systematic review and meta-analysis. Frontiers in Immunology, 2023.⁴ Kristopher R. et al. Therapeutic effects of turmeric or curcumin extract on pain and function for individuals with knee osteoarthritis. BMJ Open Sport & Exercise Medicine, 2021.⁵ Shep D., Khanwelkar C., Gade P. et al. Safety and efficacy of curcumin versus diclofenac in knee osteoarthritis. Trials, 2014.</small>`,
+  },
+  {
+    bgImage: skrzyp,
+    title: "SKRZYP POLNY",
+    descriptionHtml: `W suplemencie diety <strong>iana Stawy Odporność Chrząstki + Zdrowy Sen</strong> zastosowano zagęszczony ekstrakt wodny ze skrzypu polnego (Equisetum arvense), otrzymany opatentowaną metodą uzyskiwania dawki ipowder®, odpowiadającej 3 dawkom surowca roślinnego*. <strong>Skrzyp polny (Equisetum arvense)</strong> to roślina znana od setek milionów lat¹. Jest naturalnym źródłem krzemionki, która może wspierać produkcję kolagenu w tkance łącznej¹. Badania wskazują również, że skrzyp polny może <strong>wspierać amortyzację wstrząsów oraz komfort funkcjonowania stawów².</strong><br/><br/><small>W suplemencie diety iana Stawy Odporność Chrząstki + Zdrowy Sen
+zastosowano zagęszczony ekstrakt wodny ze skrzypu polnego
+(Equisetum arvense), otrzymany opatentowaną metodą uzyskiwania
+dawki ipowder®, odpowiadającej 3 dawkom surowca roślinnego*.
+Skrzyp polny (Equisetum arvense) to roślina znana od setek
+milionów lat¹. Jest naturalnym źródłem krzemionki, która może
+wspierać produkcję kolagenu w tkance łącznej¹. Badania wskazują
+również, że skrzyp polny może wspierać amortyzację wstrząsów oraz
+komfort funkcjonowania stawów².</small>`,
+  },
+];
+
+const routineItems = [
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-red)'>ROZGRZEWAJĄCO</span>",
+    image: imgElastycznosc,
+    href: "/rutyna/elastycznosc-i-energia",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-blue)'>CHŁODZĄCO</span>",
+    image: imgMobilnosc,
+    href: "/rutyna/mobilnosc-i-spokoj",
+  },
+  {
+    title:
+      "Działa <br/><span style='color: var(--color-yellowish)'>ROZLUŹNIAJĄCO</span>",
+    image: imgKomfort,
+    href: "/rutyna/komfort-i-odpoczynek",
+  },
+];
+---
+
+<ProductTemplate
+  themeColor="var(--color-blue)"
+  ctaColor="var(--color-orange)"
+  productCategory="Suplement diety"
+  productTitle=""
+  productSubtitle="ODPORNOŚĆ CHRZĄSTKI\n+ ZDROWY SEN"
+  images={galleryImages}
+>
+  <Fragment slot="short-desc">
+    <p>Unikalna formuła na bazie substancji pochodzenia roślinnego.</p>
+  </Fragment>
+
+  <Fragment slot="attributes">
+    <li>Wspomaga elastyczność chrząstki stawowej</li>
+    <li>Wspomaga dobry sen dzięki zawartości skrzypu polnego i passiflory.</li>
+  </Fragment>
+
+  <Fragment slot="usage-heading">
+    <h3 class="usage-heading">ZALECENIA DOTYCZĄCE STOSOWANIA:</h3>
+  </Fragment>
+
+  <Fragment slot="usage-short">
+    <p>2 tabletki dziennie, popić dużą ilością wody.</p>
+  </Fragment>
+
+  <Fragment slot="description">
+    <p>
+      Czy dyskomfort stawów negatywnie wpływa na Twój sen?<br />Sen jest
+      najlepszym sposobem, aby pomóc ciału w regeneracji po codziennych
+      aktywnościach.<br />Dobry dzień zaczyna się od dobrej nocy, również dla
+      Twoich stawów!<br />Na unikalną formułę suplementu diety IANA Odporność
+      chrząstki i Zdrowy sen składają się substancje aktywne pochodzenia
+      roślinnego. Kluczowe składniki aktywne: skrzyp polny wspomaga odporność
+      chrząstki, czyli jej zdolność do amortyzowania wstrząsów, a passiflora
+      wspomaga dobry i zdrowy sen. Dodatkowo produkt zawiera ekstrakt z
+      kurkuminy pochodzącej z Curcuma Longa – Curcumin C3 Reduct®.
+    </p>
+  </Fragment>
+
+  <Fragment slot="usage-tips">
+    <p>
+      1 opakowanie to program wystarczający na 1 miesiąc, w razie potrzeby można
+      powtórzyć. 60 tabletek z podziałką.
+    </p>
+  </Fragment>
+
+  <Fragment slot="precautions">
+    <p>
+      Przeznaczony dla osób dorosłych. Nie stosować u dzieci, kobiet w ciąży i w
+      trakcie laktacji. Nie stosować dłużej niż 12 tygodni. Produkty zawierające
+      Passiflora incarnata mogą powodować senność i wpływać negatywnie na
+      zdolność prowadzenia pojazdów lub obsługi maszyn. Nie stosować w
+      połączeniu z innymi substancjami wpływającymi na ośrodkowy układ nerwowy,
+      oraz w przypadkach obrzękowej niewydolności nerek lub serca. W przypadku
+      jednoczesnego przyjmowania leków, zaleca się konsultację z lekarzem, przed
+      zastosowaniem tego produktu. Nie stosować w przypadku jednoczesnego
+      przyjmowania innych suplementów diety zawierających kurkuminę i/lub
+      kurkuminoidy. Nie przekraczać zalecanej dziennej dawki. Produkt nie
+      zastępuje zróżnicowanej i zbilansowanej diety oraz zdrowego trybu życia.
+      Przechowywać w zamkniętym pojemniku, z dala od źródeł ciepła (&lt; 30 °C),
+      wilgoci i światła.
+    </p>
+  </Fragment>
+
+  <Fragment slot="origin-section">
+    <h2 class="details-heading">POCHODZENIE SKŁADNIKÓW:</h2>
+    <div class="details-text">
+      <p>
+        Składniki aktywne zawarte w suplemencie diety IANA Stawy Odporność
+        chrząstki i zdrowy sen są pochodzenia roślinnego, od europejskich,
+        sprawdzonych dostawców.
+      </p>
+    </div>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p style="font-style: italic; margin-top: 32px; font-size: 0.875rem;">
+      *Suplement diety. Nie zastępuje zróżnicowanej diety.*
+    </p>
+  </Fragment>
+
+  <Fragment slot="custom-highlights">
+    <div
+      class="custom-highlights-sen"
+      style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 40px;"
+    >
+      <div style="flex: 1; text-align: right; margin-top: 8px;">
+        <div
+          style="color: var(--color-dark-green); font-weight: 400; line-height: 1.1; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-size: 1.5rem;"
+        >
+          KORZYŚCI<br />
+          <span style="font-weight: 700;">DLA CIAŁA</span>
+        </div>
+        <div style="border-bottom: 2px solid var(--color-blue); margin: 4px 0">
+        </div>
+        <div style="color: var(--color-mint); font-size: 1.125rem;">
+          Łagodzenie dyskomfortu stawów
+        </div>
+      </div>
+      <div style="margin: 0 40px; flex-shrink: 0; align-self: center;">
+        <img
+          src={iconPodwojneDzialanie.src}
+          alt="Podwójne działanie"
+          style="height: 120px; filter: brightness(0) saturate(100%) invert(20%) sepia(97%) saturate(2222%) hue-rotate(193deg) brightness(89%) contrast(100%);"
+        />
+      </div>
+      <div style="flex: 1; text-align: left; margin-top: 8px;">
+        <div
+          style="color: var(--color-dark-green); font-weight: 400; line-height: 1.1; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-size: 1.5rem;"
+        >
+          KORZYŚCI<br />
+          <span style="font-weight: 700;">DLA UMYSŁU</span>
+        </div>
+        <div style="border-bottom: 2px solid var(--color-blue); margin: 4px 0">
+        </div>
+        <div style="color: var(--color-mint); font-size: 1.125rem;">
+          Poprawa dobrostanu
+        </div>
+      </div>
+      <style>
+        @media (max-width: 768px) {
+          .custom-highlights-sen {
+            flex-direction: column;
+            align-items: center !important;
+            gap: 20px;
+          }
+          .custom-highlights-sen > div {
+            text-align: center !important;
+          }
+        }
+      </style>
+    </div>
+  </Fragment>
+
+  <IngredientsCarousel
+    heading="Kompleks roślinnych składników aktywnych o podwójnym działaniu:"
+    ingredients={ingredients}
+  />
+
+  <LifestyleBanner image={lifestyleBanner}>
+    <p>
+      <strong>Czy Twoje ciało potrafi naprawdę odpocząć?</strong> Napięcie w stawach
+      i zmęczenie dnia potrafią odebrać spokojny sen. A to właśnie noc jest momentem,
+      w którym organizm się regeneruje – również układ ruchu.
+    </p>
+    <p>
+      Dobry sen to nie tylko odpoczynek. To czas, w którym ciało odzyskuje
+      równowagę, a stawy przygotowują się na kolejny dzień aktywności.
+    </p>
+    <p>
+      Dlatego stworzyliśmy formułę iana STAWY, która wspiera naturalne procesy
+      regeneracyjne organizmu i pomaga zadbać o komfort ruchu – także wtedy, gdy
+      śpisz. Bo każdy nowy dzień zaczyna się od dobrej nocy!
+    </p>
+  </LifestyleBanner>
+
+  <RoutineCrossSell
+    heading="Stwórz swoją codzienną rutynę na nowo:"
+    items={routineItems}
+  />
+</ProductTemplate>
