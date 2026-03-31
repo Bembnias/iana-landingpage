@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
+import ProductReviews from "./ProductReviews";
 import logoSvg from "../assets/logo.svg";
 
 export interface Props {
@@ -12,9 +13,13 @@ export interface Props {
   productTitle: string;
   productSubtitle: string;
   images: ImageMetadata[];
+  productSlug?: string;
 }
 
-const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images } = Astro.props;
+const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images, productSlug } = Astro.props;
+
+// Derive slug from URL path if not explicitly provided
+const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() || '';
 ---
 
 <Layout title={`IANA STAWY - ${productTitle}`}>
@@ -253,6 +258,9 @@ const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, im
 
     <!-- Dolne sekcje doklejane na stronie konkretnego produktu -->
     <slot />
+
+    <!-- Sekcja opinii użytkowników -->
+    <ProductReviews client:visible productSlug={slug} />
   </main>
 
   <Footer />

@@ -10,6 +10,9 @@ const {
   title = 'IANA — Kosmetyki i Suplementy',
   description = 'IANA — polska marka kosmetyków i suplementów. Dołącz do grona testerów i odkryj nasze produkty.',
 } = Astro.props;
+
+const googleClientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
+const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
 ---
 
 <!doctype html>
@@ -22,8 +25,37 @@ const {
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Google Identity Services -->
+    {googleClientId && (
+      <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
+    )}
   </head>
   <body>
     <slot />
+
+    <!-- Facebook SDK -->
+    {facebookAppId && (
+      <script is:inline define:vars={{ facebookAppId }}>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId: facebookAppId,
+            cookie: true,
+            xfbml: false,
+            version: 'v19.0'
+          });
+        };
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/pl_PL/sdk.js";
+          js.async = true;
+          js.defer = true;
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      </script>
+    )}
   </body>
 </html>
+
