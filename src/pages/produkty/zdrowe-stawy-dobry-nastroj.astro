@@ -2,8 +2,8 @@
 import ProductTemplate from "../../components/ProductTemplate.astro";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_1.png";
-import img2 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_2.png";
+import img1 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_2.png";
+import img2 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_1.png";
 import img3 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_3.png";
 import img4 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_4.png";
 import img5 from "../../assets/banner-nastroj/Suplement_Dobry_Nastroj_5.png";
@@ -51,6 +51,7 @@ import lifestyleBanner from "../../assets/stawy-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
 
 const ingredients = [
   {
@@ -114,7 +115,7 @@ const routineItems = [
 
   <Fragment slot="attributes">
     <li>Pomaga utrzymać pozytywny nastrój</li>
-    <li>Wspiera komfort stawów.</li>
+    <li>Wspiera komfort i wspomaga zdrowie stawów</li>
   </Fragment>
 
   <Fragment slot="usage-heading">
@@ -130,11 +131,12 @@ const routineItems = [
       Czy dolegliwości stawów mają negatywny wpływ na Twoją codzienna aktywność?
       Czy obciąża to twoja aktywność psychiczną?<br /> Nie należy lekceważyć znaczenia
       nastroju i równowagi emocjonalnej w przypadku codziennych dolegliwości lub sztywności
-      stawów. Czarna porzeczka (667 mg) wspomaga zdrowie stawów, witamina C (40 mg)
+      stawów. Czarna porzeczka (667 mg*) wspomaga zdrowie stawów, witamina C (40 mg*)
       przyczynia się do prawidłowego tworzenia kolagenu, zapewniając prawidłowe funkcjonowanie
-      chrząstki, bambus (100 mg) poprawia komfort stawów, a szafran (30 mg) pomaga
+      chrząstki, bambus (100 mg*) poprawia komfort stawów, a szafran (30 mg*) pomaga
       utrzymać równowagę emocjonalną, wspierając pozytywny nastrój.
     </p>
+    <p>* w porcji dziennej (2 tabletki)</p>
   </Fragment>
 
   <Fragment slot="usage-tips">
@@ -164,6 +166,17 @@ const routineItems = [
         Składniki aktywne zawarte w suplemencie diety IANA Stawy Zdrowe stawy i
         dobry nastrój są pochodzenia roślinnego, od europejskich, sprawdzonych
         dostawców.
+      </p>
+      <p>
+        <br /> Składniki: <br />
+
+        Ekstrakt z lisci czarnej porzeczki (Ribes nigrum L.), substancje
+        wypełniajace: celuloza i fosforan dwuwapniowy, sproszkowana zywica
+        bambusa (Bambusa bambos (L.) Voss.), witamina C (kwas L-askorbinowy),
+        substancje przeciwzbrylajace: mono- i diglicerydy kwasów tłuszczowych i
+        sole magnezowe kwasów tłuszczowych, ekstrakt z znamienia szafranu
+        (Crocus sativus L.), substancja zagęszczająca: sól sodowa
+        karboksymetylocelulozy usieciowana.
       </p>
     </div>
   </Fragment>
@@ -195,8 +208,8 @@ const routineItems = [
         </div>
       </div>
       <div style="margin: 0 40px; flex-shrink: 0; align-self: center;">
-        <img
-          src={iconPodwojneDzialanie.src}
+        <Image
+          src={iconPodwojneDzialanie}
           alt="Podwójne działanie"
           style="height: 120px;"
         />
@@ -246,9 +259,9 @@ const routineItems = [
       i równowagi.
     </p>
     <p>
-      Dlatego powstała formuła iana Stawy, która wspiera zdrowie stawów i pomaga
-      odzyskać lekkość ruchu – tak, aby ciało i nastrój mogły znów działać w
-      harmonii. <strong
+      Dlatego powstała formuła iana Zdrowe stawy i Dobry nastrój, która wspiera
+      zdrowie stawów i pomaga odzyskać lekkość ruchu – tak, aby ciało i nastrój
+      mogły znów działać w harmonii. <strong
         >Bo dobre samopoczucie zaczyna się od swobody ruchu.</strong
       >
     </p>

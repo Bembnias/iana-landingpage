@@ -26,11 +26,12 @@ const { heading = "Stwórz swoją codzienną rutynę na nowo:", items } =
         {
           items.map((item) => (
             <div class="cross-sell-card">
-              <div class="cross-sell-card__img-wrapper">
+              <div class="cross-sell-card__img-wrapper" role="button" tabindex="0" aria-label="Powiększ zdjęcie rutyny">
                 <Image
                   src={item.image}
                   alt="Rutyna"
                   class="cross-sell-card__img"
+                  data-highres={item.image.src || item.image}
                 />
               </div>
               <a href={item.href} class="cross-sell-card__btn">
@@ -43,6 +44,17 @@ const { heading = "Stwórz swoją codzienną rutynę na nowo:", items } =
     </div>
   </div>
 </section>
+
+<!-- Lightbox dla Routine -->
+<div class="routine-lightbox" id="routineLightbox" aria-hidden="true">
+  <div class="routine-lightbox__backdrop"></div>
+  <button class="routine-lightbox__close" aria-label="Zamknij podgląd">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </button>
+  <img class="routine-lightbox__img" src="" alt="Powiększone zdjęcie rutyny" />
+</div>
 
 <style>
   .routine-cross-sell {
@@ -93,6 +105,7 @@ const { heading = "Stwórz swoją codzienną rutynę na nowo:", items } =
   .cross-sell-card__img-wrapper {
     width: 100%;
     margin-bottom: 24px;
+    cursor: zoom-in;
   }
 
   .cross-sell-card__img {
@@ -129,4 +142,126 @@ const { heading = "Stwórz swoją codzienną rutynę na nowo:", items } =
       width: 100%;
     }
   }
+
+  /* --- LIGHTBOX --- */
+  .routine-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .routine-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .routine-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .routine-lightbox__img {
+    position: relative;
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 16px;
+    transform: scale(0.92);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .routine-lightbox.is-open .routine-lightbox__img {
+    transform: scale(1);
+  }
+
+  .routine-lightbox__close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 2;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .routine-lightbox__close:hover {
+    background: rgba(255,255,255,0.3);
+  }
 </style>
+
+<script>
+  function initRoutineLightbox() {
+    const wrappers = document.querySelectorAll('.cross-sell-card__img-wrapper');
+    const lightbox = document.getElementById('routineLightbox');
+    const lightboxImg = lightbox?.querySelector('.routine-lightbox__img') as HTMLImageElement;
+    const lightboxClose = lightbox?.querySelector('.routine-lightbox__close');
+    const lightboxBackdrop = lightbox?.querySelector('.routine-lightbox__backdrop');
+
+    if (!lightbox || !lightboxImg) return;
+
+    function openLightbox(src: string) {
+      if (!lightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      if (!lightbox || !lightboxImg) return;
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(() => { lightboxImg.src = ''; }, 300); // wyczyszczenie src po animacji
+    }
+
+    wrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', () => {
+        const imgTarget = wrapper.querySelector('.cross-sell-card__img') as HTMLImageElement;
+        const src = imgTarget.getAttribute('data-highres') || imgTarget.src;
+        openLightbox(src);
+      });
+      wrapper.addEventListener('keydown', (e) => {
+        const evt = e as KeyboardEvent;
+        if (evt.key === 'Enter' || evt.key === ' ') {
+          evt.preventDefault();
+          const imgTarget = wrapper.querySelector('.cross-sell-card__img') as HTMLImageElement;
+          const src = imgTarget.getAttribute('data-highres') || imgTarget.src;
+          openLightbox(src);
+        }
+      });
+    });
+
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxBackdrop?.addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initRoutineLightbox);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initRoutineLightbox);
+  } else {
+    initRoutineLightbox();
+  }
+</script>

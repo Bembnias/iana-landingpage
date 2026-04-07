@@ -4,13 +4,30 @@ import { z } from "zod/v4";
 
 export const prerender = false;
 
-const reviewSchema = z.object({
+/* ─── Schemas ─── */
+const socialReviewSchema = z.object({
+  mode: z.literal("social"),
   token: z.string().min(1),
   provider: z.enum(["google", "facebook"]),
   productSlug: z.string().min(1),
   rating: z.number().min(1).max(5),
   content: z.string().min(10).max(500),
 });
+
+const anonymousReviewSchema = z.object({
+  mode: z.literal("anonymous"),
+  firstName: z.string().min(1).max(50),
+  lastName: z.string().max(50).optional().default(""),
+  email: z.email(),
+  productSlug: z.string().min(1),
+  rating: z.number().min(1).max(5),
+  content: z.string().min(10).max(500),
+});
+
+const reviewSchema = z.discriminatedUnion("mode", [
+  socialReviewSchema,
+  anonymousReviewSchema,
+]);
 
 /** Verify Google ID token and extract user info */
 async function verifyGoogleToken(idToken: string) {
@@ -78,21 +95,47 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const { token, provider, productSlug, rating, content } = result.data;
+  const parsed = result.data;
 
-  // Verify social token
-  let userInfo: { id: string; name: string; email: string; avatar: string };
+  // Resolve user info based on mode
+  let authorName: string;
+  let authorEmail: string;
+  let authorAvatar: string;
+  let authProvider: string;
+  let authProviderId: string;
 
-  try {
-    if (provider === "google") {
-      userInfo = await verifyGoogleToken(token);
-    } else {
-      userInfo = await verifyFacebookToken(token);
+  if (parsed.mode === "social") {
+    // Verify social token
+    let userInfo: { id: string; name: string; email: string; avatar: string };
+
+    try {
+      if (parsed.provider === "google") {
+        userInfo = await verifyGoogleToken(parsed.token);
+      } else {
+        userInfo = await verifyFacebookToken(parsed.token);
+      }
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Błąd weryfikacji tokena";
+      return new Response(JSON.stringify({ error: message }), { status: 401 });
     }
-  } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Błąd weryfikacji tokena";
-    return new Response(JSON.stringify({ error: message }), { status: 401 });
+
+    authorName = userInfo.name;
+    authorEmail = userInfo.email;
+    authorAvatar = userInfo.avatar;
+    authProvider = parsed.provider;
+    authProviderId = `${parsed.provider}:${userInfo.id}`;
+  } else {
+    // Anonymous mode
+    const displayName = parsed.lastName
+      ? `${parsed.firstName} ${parsed.lastName}`
+      : parsed.firstName;
+
+    authorName = displayName;
+    authorEmail = parsed.email;
+    authorAvatar = "";
+    authProvider = "anonymous";
+    authProviderId = `anonymous:${parsed.email.toLowerCase()}`;
   }
 
   // Create Sanity write client
@@ -115,7 +158,7 @@ export const POST: APIRoute = async ({ request }) => {
   // Check for duplicate review (same user + same product)
   const existingReview = await writeClient.fetch(
     `count(*[_type == "review" && authProviderId == $providerId && productSlug == $productSlug])`,
-    { providerId: `${provider}:${userInfo.id}`, productSlug },
+    { providerId: authProviderId, productSlug: parsed.productSlug },
   );
 
   if (existingReview > 0) {
@@ -129,14 +172,14 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     await writeClient.create({
       _type: "review",
-      productSlug,
-      authorName: userInfo.name,
-      authorEmail: userInfo.email,
-      authorAvatar: userInfo.avatar,
-      authProvider: provider,
-      authProviderId: `${provider}:${userInfo.id}`,
-      rating,
-      content,
+      productSlug: parsed.productSlug,
+      authorName,
+      authorEmail,
+      authorAvatar,
+      authProvider,
+      authProviderId,
+      rating: parsed.rating,
+      content: parsed.content,
       status: "pending",
       createdAt: new Date().toISOString(),
     });

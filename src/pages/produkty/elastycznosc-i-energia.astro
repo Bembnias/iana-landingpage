@@ -2,8 +2,8 @@
 import ProductTemplate from "../../components/ProductTemplate.astro";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-energia/baner_elastycznosc i energia_1.png";
-import img2 from "../../assets/banner-energia/baner_elastycznosc i energia_2.png";
+import img1 from "../../assets/banner-energia/baner_elastycznosc i energia_2.png";
+import img2 from "../../assets/banner-energia/baner_elastycznosc i energia_1.png";
 import img3 from "../../assets/banner-energia/baner_elastycznosc i energia_3.png";
 import img4 from "../../assets/banner-energia/baner_elastycznosc i energia_4.png";
 import img5 from "../../assets/banner-energia/baner_elastycznosc i energia_5.png";
@@ -49,6 +49,7 @@ import lifestyleBanner from "../../assets/energia-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
 
 const ingredients = [
   {
@@ -113,8 +114,8 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="attributes">
-    <li>Ogranicza zmęczenie związane z dyskomfortem stawowym</li>
-    <li>Wspiera komfort stawów.</li>
+    <li>Przyczynia się do zwiększenia energii</li>
+    <li>Wspiera komfort i elastyczność stawów</li>
   </Fragment>
 
   <Fragment slot="usage-heading">
@@ -130,19 +131,22 @@ const routineItems = [
       Ograniczona elastyczność stawów po przebudzeniu? Czy ma to wpływ na Twój
       dzień i odbiera Ci energię? iana Stawy Elastyczność i Energia to suplement
       diety oparty na wyjątkowym kompleksie roślinnych składników aktywnych.
-      Dwuwarstwowe tabletki umożliwiają optymalne uwalnianie składników
-      aktywnych w czasie, zapewniając ciągłość działania przez cały dzień.
+      <b
+        >Dwuwarstwowe tabletki umożliwiają optymalne uwalnianie składników
+        aktywnych w czasie, zapewniając ciągłość działania przez cały dzień.</b
+      >
     </p>
     <p>
       Składniki aktywne pochodzenia roślinnego, które Cię nie zawiodą! Suplement
       diety, który pomaga zachować elastyczność stawów dzięki harpagophytum (500
-      mg) i poprawia komfort stawów dzięki bambusowi (70 mg).
+      mg*) i poprawia komfort stawów dzięki bambusowi (70 mg*).
     </p>
     <p>
       Dyskomfort w okolicy stawów może mieć bardziej podstępny wpływ,
-      szczególnie na witalność. W tym przypadku żeń-szeń syberyjski (100 mg)
+      szczególnie na witalność. W tym przypadku żeń-szeń syberyjski (100 mg*)
       przyczynia się do zwiększenia energii fizycznej i psychicznej.
     </p>
+    <p>* w porcji dziennej (2 tabletki)</p>
   </Fragment>
 
   <Fragment slot="usage-tips">
@@ -171,6 +175,15 @@ const routineItems = [
         Składniki aktywne zawarte w suplemencie diety IANA Stawy Zdrowe stawy i
         dobry nastrój są pochodzenia roślinnego, od europejskich, sprawdzonych
         dostawców.
+      </p>
+      <p>
+        <br /> Składniki: <br />
+        Substancje wypełniające: celuloza i fosforan dwuwapniowy, ekstrakt z korzenia
+        herpagophytum (Harpagophytum procumbens (Burch.) DC ), substancja zagęszczająca:
+        hydroksypropylometyloceluloza, substancje przeciwzbrylające: sole magnezowe
+        kwasów tłuszczowych oraz mono- i diglicerydy kwasów tłuszczowych, ekstrakt
+        z korzenia żen-szenia syberyjskiego (Eleutherococcus senticosus Rupr. et Maxim),
+        sproszkowana Żywica bambusa (Bambusa bambos (L.) Voss), sproszkowany.
       </p>
     </div>
   </Fragment>
@@ -202,8 +215,8 @@ const routineItems = [
         </div>
       </div>
       <div style="margin: 0 40px; flex-shrink: 0; align-self: center;">
-        <img
-          src={iconPodwojneDzialanie.src}
+        <Image
+          src={iconPodwojneDzialanie}
           alt="Podwójne działanie"
           loading="lazy"
           style="height: 120px; filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(3015%) hue-rotate(349deg) brightness(98%) contrast(97%);"

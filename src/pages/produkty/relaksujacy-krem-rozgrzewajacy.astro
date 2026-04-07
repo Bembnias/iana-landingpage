@@ -2,8 +2,8 @@
 import ProductTemplate from "../../components/ProductTemplate.astro";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-krem/Rozgrzewajacy_Krem_1.png";
-import img2 from "../../assets/banner-krem/Rozgrzewajacy_Krem_2.png";
+import img1 from "../../assets/banner-krem/Rozgrzewajacy_Krem_2.png";
+import img2 from "../../assets/banner-krem/Rozgrzewajacy_Krem_1.png";
 import img3 from "../../assets/banner-krem/Rozgrzewajacy_Krem_3.png";
 import img4 from "../../assets/banner-krem/Rozgrzewajacy_Krem_4.png";
 import img5 from "../../assets/banner-krem/Rozgrzewajacy_Krem_5.png";
@@ -56,6 +56,7 @@ import lifestyleBanner from "../../assets/krem-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
 
 const ingredients = [
   {
@@ -130,7 +131,7 @@ const routineItems = [
     <p>
       Rozgrzewa i łagodzi dolegliwości stawów! Lekki krem o szybkim i
       długotrwałym działaniu rozgrzewającym (do 80 minut¹), który rozluźnia,
-      łagodzi napięcie i poprawia ruchomość stawów.
+      łagodzi napięcie i poprawia elastyczność stawów.
     </p>
     <p>
       Jego kluczowe składniki aktywne nadają mu relaksujący, naturalny zapach:
@@ -159,6 +160,18 @@ const routineItems = [
       w przypadku uczulenia na którykolwiek ze składników. Unikać kontaktu z
       oczami i błonami śluzowymi. W przypadku kontaktu przemyć olejem roślinnym.
       Po każdym użyciu umyć ręce.
+    </p>
+    <p>
+      Składniki: <br />
+      Aqua (Water), Helianthus Annuus (Sunflower) Seed Oil, Glycerin, Polyglyceryl-3
+      Distearate, Butyrospermum Parkii (Shea) Butter, Vanillyl Butyl Ether, Sclerotium
+      Gum, Lavandula Latifolia (Lavender) Herb Oil, Zingiber Officinale (Ginger) Root
+      Oil, Glyceryl Stearate Citrate, Caprylyl Glycol, Sodium Stearoyl Glutamate,
+      Linalool, Maltodextrin*, Saccharide Hydrolysate*, Menthyl Nicotinate, Sodium
+      Benzoate, Xanthan Gum, Capsicum Frutescens Fruit Extract, Tocopherol, Citric
+      Acid, Camphor, Pinene, Limonene, Citral, Terpineol, Geraniol, N-Butyl Alcohol,
+      Vanillyl Alcohol, Beta-Caryophyllene, Geranyl Acetate, Terpinolene, Vanillin,
+      Alpha-Terpinene, Linalyl Acetate, Citronellol, Coumarin, Menthol.
     </p>
   </Fragment>
 
@@ -206,8 +219,8 @@ const routineItems = [
     <div
       style="color: var(--color-red); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
     >
-      <img
-        src={iconOgien.src}
+      <Image
+        src={iconOgien}
         alt="Ogień ikona"
         style="height: 52px; margin-bottom: 8px;"
       />
@@ -235,9 +248,9 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="body-icons">
-    <img src={iconKolana.src} alt="Kolana" />
-    <img src={iconPlecy.src} alt="Plecy" />
-    <img src={iconRece.src} alt="Ręce" />
+    <Image src={iconKolana} alt="Kolana" />
+    <Image src={iconPlecy} alt="Plecy" />
+    <Image src={iconRece} alt="Ręce" />
   </Fragment>
 
   <IngredientsCarousel

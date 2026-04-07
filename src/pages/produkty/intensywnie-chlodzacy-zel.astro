@@ -2,8 +2,8 @@
 import ProductTemplate from "../../components/ProductTemplate.astro";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-zel/baner_zel_1.png";
-import img2 from "../../assets/banner-zel/baner_zel_2.png";
+import img1 from "../../assets/banner-zel/baner_zel_2.png";
+import img2 from "../../assets/banner-zel/baner_zel_1.png";
 import img3 from "../../assets/banner-zel/baner_zel_3.png";
 import img4 from "../../assets/banner-zel/baner_zel_4.png";
 import img5 from "../../assets/banner-zel/baner_zel_5.png";
@@ -54,6 +54,7 @@ import lifestyleBanner from "../../assets/zel-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
 
 const ingredients = [
   {
@@ -154,6 +155,18 @@ const routineItems = [
       oczami i błonami śluzowymi. W przypadku kontaktu przemyć olejem roślinnym.
       Po każdym użyciu umyć ręce.
     </p>
+    <p>
+      Składniki: <br />
+      Aqua (Water), Alcohol² Denat., Glycerin², Menthol, Microcrystalline Cellulose,
+      Cellulose Gum, Eucalyptus Globulus Oil, Eucalyptus Globulus (Eucalyptus) Leaf
+      Oil¹, Mentha Piperita (Peppermint) Oil¹, Menthyl Lactate, Xanthan Gum, Propanediol,
+      Pinene, Aloe Barbadensis Leaf Juice Powder¹, Limonene, Arnica Montana Flower
+      Extract¹, Citric Acid, Beta-Caryophyllene, Terpineol, Chlamydomonas Acidophila
+      Extract, Potassium Sorbate, Sodium Benzoate, Terpinolene, Carvone, Alpha-Terpinene,
+      Linalool, Geraniol, Eugenol.<br />
+      ¹ Składniki z upraw ekologicznych.<br />
+      ² Pochodzenia organicznego.
+    </p>
   </Fragment>
 
   <Fragment slot="studies-intro">
@@ -196,8 +209,8 @@ const routineItems = [
         standardem COSMOS.</strong
       >
     </p>
-    <img
-      src={bioBadge.src}
+    <Image
+      src={bioBadge}
       alt="Certyfikat Ecocert COSMOS"
       style="margin-top: 24px; max-width: 130px; display: block;"
     />
@@ -218,8 +231,8 @@ const routineItems = [
     <div
       style="color: var(--color-blue); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
     >
-      <img
-        src={iconSniezka.src}
+      <Image
+        src={iconSniezka}
         alt="Śnieżka ikona"
         style="height: 52px; margin-bottom: 8px;"
       />
@@ -245,9 +258,9 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="body-icons">
-    <img src={iconKolana.src} alt="Kolana" />
-    <img src={iconPlecy.src} alt="Plecy" />
-    <img src={iconRece.src} alt="Ręce" />
+    <Image src={iconKolana} alt="Kolana" />
+    <Image src={iconPlecy} alt="Plecy" />
+    <Image src={iconRece} alt="Ręce" />
   </Fragment>
 
   <IngredientsCarousel
@@ -258,10 +271,10 @@ const routineItems = [
   <LifestyleBanner image={lifestyleBanner}>
     <p>
       <strong>Mobilność zaczyna się w stawach!</strong> Każdy ruch i każda aktywność
-      zależą od ich sprawności. Z czasem naturalne zmiany mogą wpływać na elastyczność
-      i komfort poruszania się, dlatego razem ze specjalistami stworzyliśmy Intensywnie
-      Chłodzący Żel, który wspiera uczucie lekkości i swobody ruchu wtedy, gdy najbardziej
-      tego potrzebujesz.
+      zależą od ich sprawności. Z czasem naturalne zmiany mogą wpływać na spadek mobilności
+      i komfortu poruszania się, dlatego razem ze specjalistami stworzyliśmy iana
+      Stawy Intensywnie chłodzący żel, który wspiera uczucie lekkości i swobody ruchu
+      wtedy, gdy najbardziej tego potrzebujesz.
     </p>
     <p>
       Starannie dobrane składniki roślinne zapewniają przyjemne uczucie

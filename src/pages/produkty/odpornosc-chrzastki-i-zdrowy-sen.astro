@@ -2,8 +2,8 @@
 import ProductTemplate from "../../components/ProductTemplate.astro";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_1.png";
-import img2 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_2.png";
+import img1 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_2.png";
+import img2 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_1.png";
 import img3 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_3.png";
 import img4 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_4.png";
 import img5 from "../../assets/banner-sen/Suplement_Zdrowy_Sen_5.png";
@@ -49,6 +49,7 @@ import lifestyleBanner from "../../assets/sen-lifestyle-banner.png";
 import imgElastycznosc from "../../assets/lifestyle-elastycznosc.png";
 import imgMobilnosc from "../../assets/lifestyle-mobilnosc.png";
 import imgKomfort from "../../assets/lifestyle-komfort.png";
+import { Image } from "astro:assets";
 
 const ingredients = [
   {
@@ -106,8 +107,8 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="attributes">
-    <li>Wspomaga elastyczność chrząstki stawowej</li>
-    <li>Wspomaga dobry sen dzięki zawartości skrzypu polnego i passiflory.</li>
+    <li>Wspiera odporność chrząstki stawowej</li>
+    <li>Wspomaga dobry sen</li>
   </Fragment>
 
   <Fragment slot="usage-heading">
@@ -125,11 +126,13 @@ const routineItems = [
       aktywnościach.<br />Dobry dzień zaczyna się od dobrej nocy, również dla
       Twoich stawów!<br />Na unikalną formułę suplementu diety IANA Odporność
       chrząstki i Zdrowy sen składają się substancje aktywne pochodzenia
-      roślinnego. Kluczowe składniki aktywne: skrzyp polny wspomaga odporność
-      chrząstki, czyli jej zdolność do amortyzowania wstrząsów, a passiflora
-      wspomaga dobry i zdrowy sen. Dodatkowo produkt zawiera ekstrakt z
-      kurkuminy pochodzącej z Curcuma Longa – Curcumin C3 Reduct®.
+      roślinnego. Kluczowe składniki aktywne: skrzyp polny (60 mg*) wspomaga
+      odporność chrząstki, czyli jej zdolność do amortyzowania wstrząsów, a
+      passiflora (500 mg*) wspomaga dobry i zdrowy sen. Dodatkowo produkt
+      zawiera ekstrakt z kurkuminy pochodzącej z Curcuma Longa – Curcumin C3
+      Reduct® (80 mg*).
     </p>
+    <p>* w porcji dziennej (2 tabletki)</p>
   </Fragment>
 
   <Fragment slot="usage-tips">
@@ -165,6 +168,13 @@ const routineItems = [
         chrząstki i zdrowy sen są pochodzenia roślinnego, od europejskich,
         sprawdzonych dostawców.
       </p>
+      <p>
+        <br /> Składniki: <br />
+        Substancje wypełniajace: celuloza i fosforan dwuwapniowy, ekstrakt z części
+        nadziemnych passifory (Passi_ora incarnata L.), tetrahydrokurkuminoidy, ekstrakt
+        z części nadziemnych skrzypu (Equisetum arvense L.), substancja przeciwzbrylająca:
+        sole magnezowe kwasów tłuszczowych.
+      </p>
     </div>
   </Fragment>
 
@@ -193,8 +203,8 @@ const routineItems = [
         </div>
       </div>
       <div style="margin: 0 40px; flex-shrink: 0; align-self: center;">
-        <img
-          src={iconPodwojneDzialanie.src}
+        <Image
+          src={iconPodwojneDzialanie}
           alt="Podwójne działanie"
           style="height: 120px; filter: brightness(0) saturate(100%) invert(20%) sepia(97%) saturate(2222%) hue-rotate(193deg) brightness(89%) contrast(100%);"
         />
@@ -243,9 +253,10 @@ const routineItems = [
       równowagę, a stawy przygotowują się na kolejny dzień aktywności.
     </p>
     <p>
-      Dlatego stworzyliśmy formułę iana STAWY, która wspiera naturalne procesy
-      regeneracyjne organizmu i pomaga zadbać o komfort ruchu – także wtedy, gdy
-      śpisz. Bo każdy nowy dzień zaczyna się od dobrej nocy!
+      Dlatego stworzyliśmy formułę iana Stawy Odporność chrząstki i Zdrowy sen,
+      która wspiera naturalne procesy regeneracyjne organizmu i pomaga zadbać o
+      komfort ruchu – także wtedy, gdy śpisz. Bo każdy nowy dzień zaczyna się od
+      dobrej nocy!
     </p>
   </LifestyleBanner>
 

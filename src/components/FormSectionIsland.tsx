@@ -56,13 +56,6 @@ const formSchema = z
           message: "Podaj nazwę i adres apteki",
         });
       }
-      if (!data.socialLink || data.socialLink.trim() === "") {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["socialLink"],
-          message: "Podaj link do profilu",
-        });
-      }
       if (!data.pharmacyMotivation || data.pharmacyMotivation.trim().length < 3) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -429,13 +422,13 @@ export default function FormSectionIsland({ images }: Props) {
             {/* Row 4 */}
             <div className="form-section__field">
               <label className="form-section__label" htmlFor="field-street">
-                Ulica i numer
+                Ulica, numer i miejscowość
               </label>
               <input
                 id="field-street"
                 type="text"
                 className="form-section__input"
-                placeholder="Ulica i numer"
+                placeholder="Ulica, numer i miejscowość"
                 {...register("street")}
               />
               <span className="form-section__error">
@@ -615,7 +608,7 @@ export default function FormSectionIsland({ images }: Props) {
           </div>
 
           {/* --- 4. Product Cards --- */}
-          <div className="form-section__cards">
+          <div className="form-section__cards" id="karty-rutyn">
             {cards.map((card, cardIndex) => (
               <div className="form-section__card" key={cardIndex}>
                 <div className="form-section__card-products">
@@ -752,7 +745,15 @@ export default function FormSectionIsland({ images }: Props) {
 
           {submitStatus === "success" && (
             <div className="form-section__toast form-section__toast--success">
-              Dziękujemy za zgłoszenie! Odezwiemy się wkrótce.
+              <p className="form-section__toast-header">
+                Dziękujemy, przyjęliśmy Twoje zgłoszenie.
+              </p>
+              <br />
+              <p>
+                Wkrótce wybierzemy testerów i <br />
+                skontaktujemy się z wybranymi osobami <br />
+                mailowo.
+              </p>
             </div>
           )}
           {submitStatus === "error" && (

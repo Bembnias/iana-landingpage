@@ -69,6 +69,7 @@ export const reviewType = defineType({
         list: [
           { title: "Google", value: "google" },
           { title: "Facebook", value: "facebook" },
+          { title: "Anonimowy", value: "anonymous" },
         ],
       },
       readOnly: true,
@@ -77,7 +78,7 @@ export const reviewType = defineType({
       name: "authProviderId",
       title: "ID dostawcy (unikalny)",
       type: "string",
-      description: "Unikalny identyfikator użytkownika z social providera",
+      description: "Unikalny identyfikator użytkownika (social provider ID lub email)",
       hidden: true,
       readOnly: true,
     }),

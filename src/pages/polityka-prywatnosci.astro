@@ -1,0 +1,223 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+import PolicyPolitykaPrywatnosci from '../components/PolicyPolitykaPrywatnosci.astro';
+import PolicyRegulaminSerwisu from '../components/PolicyRegulaminSerwisu.astro';
+import PolicyRegulaminTestowania from '../components/PolicyRegulaminTestowania.astro';
+
+/**
+ * Podstrona /polityka-prywatnosci
+ * Zawiera 3 rozdziały:
+ *  1. Polityka Prywatności
+ *  2. Regulamin Serwisu Internetowego
+ *  3. Regulamin Programu Testowania
+ */
+---
+
+<Layout
+  title="Polityka Prywatności — IANA"
+  description="Polityka prywatności, regulamin serwisu internetowego oraz regulamin programu testowania produktów IANA."
+>
+  <Navbar currentPath="/polityka-prywatnosci" fixed={true} />
+
+  <main class="policy">
+    <!-- ===== Header ===== -->
+    <header class="policy__header">
+      <h1 class="policy__heading">Polityka Prywatności & Regulaminy</h1>
+      <p class="policy__sub">
+        Poniżej znajdziesz wszystkie informacje dotyczące przetwarzania danych osobowych, zasad korzystania z serwisu oraz regulaminu programu testowania produktów IANA.
+      </p>
+    </header>
+
+    <!-- ===== Spis treści ===== -->
+    <nav class="policy__toc" aria-label="Spis treści dokumentów">
+      <h2 class="policy__toc-title">Spis treści</h2>
+      <ol class="policy__toc-list">
+        <li><a href="#polityka-prywatnosci" class="policy__toc-link">Polityka Prywatności</a></li>
+        <li><a href="#regulamin-serwisu" class="policy__toc-link">Regulamin Serwisu Internetowego</a></li>
+        <li><a href="#regulamin-testowania" class="policy__toc-link">Regulamin Programu Testowania</a></li>
+      </ol>
+    </nav>
+
+    <PolicyPolitykaPrywatnosci />
+    <PolicyRegulaminSerwisu />
+    <PolicyRegulaminTestowania />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* ===========================
+     Polityka Prywatności — Styles
+     =========================== */
+
+  .policy {
+    background-color: var(--color-white);
+    color: var(--color-dark-green);
+    padding-bottom: 80px;
+  }
+
+  /* --- Header --- */
+  .policy__header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 140px 24px 40px;
+    text-align: center;
+  }
+
+  .policy__heading {
+    font-size: var(--text-extra-large);
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 16px;
+  }
+
+  .policy__sub {
+    font-size: 1.125rem;
+    color: var(--color-dark-green);
+    opacity: 0.8;
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* --- Spis treści (TOC) --- */
+  .policy__toc {
+    max-width: var(--max-width);
+    margin: 0 auto 48px;
+    padding: 0 24px;
+  }
+
+  .policy__toc-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 12px;
+  }
+
+  .policy__toc-list {
+    list-style: decimal;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .policy__toc-link {
+    font-size: 1.125rem;
+    color: var(--color-dark-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  .policy__toc-link:hover {
+    color: var(--color-light-green);
+  }
+
+  /* --- Rozdział (Chapter) --- */
+  .policy__chapter {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+    scroll-margin-top: 120px;
+  }
+
+  .policy__chapter + .policy__chapter {
+    margin-top: 64px;
+    padding-top: 64px;
+    border-top: 1px solid var(--color-ultra-light-green);
+  }
+
+  .policy__chapter-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 16px;
+  }
+
+  .policy__chapter-intro {
+    font-size: 1.125rem;
+    color: var(--color-dark-green);
+    opacity: 0.85;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 860px;
+  }
+
+  /* --- Paragraf (Section §) --- */
+  .policy__section {
+    margin-bottom: 36px;
+  }
+
+  .policy__section-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 12px;
+  }
+
+  .policy__section-body {
+    font-size: 1rem;
+    color: var(--color-black);
+    line-height: 1.7;
+  }
+
+  .policy__section-body p {
+    margin-bottom: 12px;
+  }
+
+  .policy__section-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- Listy --- */
+  .policy__list {
+    padding-left: 24px;
+    margin: 12px 0;
+    list-style: disc;
+    color: var(--color-black);
+    line-height: 1.7;
+  }
+
+  .policy__list li {
+    margin-bottom: 6px;
+  }
+
+  .policy__list--ordered {
+    list-style: decimal;
+  }
+
+  /* --- Mobile --- */
+  @media screen and (max-width: 768px) {
+    .policy__header {
+      padding: 120px 16px 32px;
+    }
+
+    .policy__heading {
+      font-size: 1.75rem;
+    }
+
+    .policy__toc {
+      padding: 0 16px;
+      margin-bottom: 36px;
+    }
+
+    .policy__chapter {
+      padding: 0 16px;
+    }
+
+    .policy__chapter + .policy__chapter {
+      margin-top: 48px;
+      padding-top: 48px;
+    }
+
+    .policy__chapter-title {
+      font-size: 1.375rem;
+    }
+  }
+</style>

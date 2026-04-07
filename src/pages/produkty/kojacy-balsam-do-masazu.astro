@@ -3,8 +3,8 @@ import ProductTemplate from "../../components/ProductTemplate.astro";
 import { Image } from "astro:assets";
 
 // Obrazy Galerii
-import img1 from "../../assets/banner-balsam/Baner_balsam_1.png";
-import img2 from "../../assets/banner-balsam/Baner_balsam_2.png";
+import img1 from "../../assets/banner-balsam/Baner_balsam_2.png";
+import img2 from "../../assets/banner-balsam/Baner_balsam_1.png";
 import img3 from "../../assets/banner-balsam/Baner_balsam_3.png";
 import img4 from "../../assets/banner-balsam/Baner_balsam_4.png";
 import img5 from "../../assets/banner-balsam/Baner_balsam_5.png";
@@ -115,7 +115,7 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="attributes">
-    <li>Poprawia mobilność</li>
+    <li>Poprawia komfort</li>
     <li>Łagodzi uczucie napięcia</li>
   </Fragment>
 
@@ -163,6 +163,19 @@ const routineItems = [
       składników. Unikać kontaktu z oczami i błonami śluzowymi. W przypadku
       kontaktu przemyć olejem roślinnym. Po każdym użyciu umyć ręce.
     </p>
+    <p>
+      Składniki: <br />
+      Aqua (Water), Helianthus Annuus (Sunflower) Seed Oil¹, Glycerin², Polyglyceryl-3
+      Distearate, Cetyl Alcohol, Propanediol, Butyrospermum Parkii (Shea) Butter¹,
+      Sodium Stearoyl Glutamate, Glyceryl Stearate Citrate, Sclerotium Gum, Caprylyl
+      Glycol, Citric Acid, Sodium Benzoate, Lavandula Latifolia (Lavender) Herb Oil¹,
+      Xanthan Gum, Linalool, Tocopherol, Arnica Montana Flower Extract¹, Camphor,
+      Ocimum Sanctum Leaf Extract, Salix Alba (Willow) Bark Extract¹, Potassium Sorbate,
+      Pinene, Limonene, Beta-Caryophyllene, Terpineol, Linalyl Acetate, Terpinolene.<br
+      />
+      ¹ Składniki z upraw ekologicznych. <br />
+      ² Wyprodukowane przy użyciu składników organicznych i nieorganicznych.
+    </p>
   </Fragment>
 
   <Fragment slot="studies-intro">
@@ -196,8 +209,8 @@ const routineItems = [
         standardem COSMOS.</strong
       >
     </p>
-    <img
-      src={bioBadge.src}
+    <Image
+      src={bioBadge}
       alt="Certyfikat Ecocert COSMOS"
       style="margin-top: 24px; max-width: 130px; display: block;"
     />
@@ -218,8 +231,8 @@ const routineItems = [
     <div
       style="color: var(--color-yellowish); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
     >
-      <img
-        src={iconZegar.src}
+      <Image
+        src={iconZegar}
         alt="Zegar ikona"
         style="height: 58px; margin-bottom: 6px;"
       />
@@ -232,9 +245,9 @@ const routineItems = [
   </Fragment>
 
   <Fragment slot="body-icons">
-    <img src={iconKolana.src} alt="Kolana" />
-    <img src={iconPlecy.src} alt="Plecy" />
-    <img src={iconRece.src} alt="Ręce" />
+    <Image src={iconKolana} alt="Kolana" />
+    <Image src={iconPlecy} alt="Plecy" />
+    <Image src={iconRece} alt="Ręce" />
   </Fragment>
 
   <IngredientsCarousel
@@ -246,8 +259,8 @@ const routineItems = [
     <p>
       <strong>Spokój zaczyna się od chwili dla siebie.</strong> Napięcie mięśni i
       zmęczenie ciała mogą pojawiać się po intensywnym dniu lub wysiłku. Dlatego stworzyliśmy
-      <strong>Kojący balsam do masażu iana</strong>, który pomaga rozluźnić
-      ciało i przywrócić uczucie komfortu.
+      <strong>iana Stawy Kojący balsam do masażu</strong>, który pomaga
+      rozluźnić ciało i przywrócić uczucie komfortu.
     </p>
     <p>
       Formuła oparta na starannie dobranych składnikach roślinnych – m.in.

@@ -12,10 +12,9 @@ import ytIconAlt from "../assets/youtube-icon-alt.svg";
 import webIconAlt from "../assets/website-icon-alt.svg";
 
 const links = [
-  { label: "Produkty", href: "/produkty" },
-  { label: "Kontakt", href: "/kontakt" },
+  { label: "Produkty", href: "/#karty-rutyn" },
   { label: "Polityka prywatności", href: "/polityka-prywatnosci" },
-  { label: "Testowanie", href: "/testowanie" },
+  { label: "Testowanie", href: "/#form-section" },
 ];
 
 const socialLinks = [
@@ -51,7 +50,8 @@ const socialLinks = [
         <hr class="footer__divider" />
         <p class="footer__text">
           Produkty opracowane przez francuskie laboratorium Laboratoires
-          Expanscience - ekspertów w dziedzinie ekstrakcji i artykulacji roślin.
+          Expanscience - ekspertów w dziedzinie ekstrakcji i wsparcia funkcji
+          stawów.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ const socialLinks = [
       <!-- Kolumna 3 -->
       <div class="footer__column">
         <div class="footer__col-head">
-          <h3 class="footer__heading">O nas</h3>
+          <h3 class="footer__heading">Kontakt</h3>
         </div>
         <hr class="footer__divider" />
         <div class="footer__socials">
@@ -97,6 +97,20 @@ const socialLinks = [
               </a>
             ))
           }
+        </div>
+
+        <div class="footer__contact-info">
+          <p>
+            LABORATOIRES EXPANSCIENCE POLSKA SP. Z O.O.<br />
+            Ul. Żelazna 67/78<br />
+            00-871 Warszawa
+          </p>
+          <p>
+            Telefon: <a href="tel:+48224034152">+48 22 403 41 52</a><br />
+            E-mail: <a href="mailto:iana-polska@expanscience.com"
+              >iana-polska@expanscience.com</a
+            >
+          </p>
         </div>
       </div>
     </div>
@@ -205,6 +219,30 @@ const socialLinks = [
   .footer__social-icon {
     width: 44px;
     height: 44px;
+  }
+
+  .footer__contact-info {
+    margin-top: 32px;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .footer__contact-info p {
+    margin-bottom: 8px;
+  }
+
+  .footer__contact-info p:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer__contact-info a {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer__contact-info a:hover {
+    opacity: 0.8;
   }
 
   /* --- Mobile --- */

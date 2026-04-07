@@ -19,6 +19,12 @@ interface UserInfo {
   avatar: string;
 }
 
+interface AnonymousUserInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 interface Props {
   productSlug: string;
 }
@@ -27,6 +33,7 @@ interface Props {
 const REVIEWS_PER_PAGE = 5;
 const MAX_CONTENT_LENGTH = 500;
 const MIN_CONTENT_LENGTH = 10;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* ─── Star SVG ─── */
 function StarIcon({
@@ -107,6 +114,16 @@ function CloseIcon() {
   );
 }
 
+/* ─── User Icon ─── */
+function UserIcon() {
+  return (
+    <svg className="auth-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
+
 /* ─── Date formatter ─── */
 function formatDate(isoString: string): string {
   const date = new Date(isoString);
@@ -140,16 +157,28 @@ function AuthModal({
   onClose,
   onGoogleCredential,
   onFacebookLogin,
+  onAnonymousSubmit,
   loading,
   googleClientId,
 }: {
   onClose: () => void;
   onGoogleCredential: (credential: string) => void;
   onFacebookLogin: () => void;
+  onAnonymousSubmit: (info: AnonymousUserInfo) => void;
   loading: boolean;
   googleClientId: string;
 }) {
   const googleBtnRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<"social" | "anonymous">("social");
+
+  // Anonymous form fields
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const isAnonymousValid =
+    firstName.trim().length >= 1 &&
+    EMAIL_REGEX.test(email.trim());
 
   // Close on Escape
   useEffect(() => {
@@ -162,6 +191,8 @@ function AuthModal({
 
   // Render Google Sign-In button
   useEffect(() => {
+    if (activeTab !== "social") return;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const googleApi = (window as any).google;
     if (!googleApi || !googleBtnRef.current || !googleClientId) return;
@@ -182,31 +213,123 @@ function AuthModal({
       width: 360,
       locale: "pl",
     });
-  }, [googleClientId, onGoogleCredential]);
+  }, [googleClientId, onGoogleCredential, activeTab]);
+
+  const handleAnonymousSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAnonymousValid) return;
+    onAnonymousSubmit({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.trim(),
+    });
+  };
 
   return (
     <div className="auth-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="auth-modal" role="dialog" aria-label="Zaloguj się, aby dodać opinię">
+      <div className="auth-modal" role="dialog" aria-label="Dodaj opinię">
         <button className="auth-modal-close" onClick={onClose} aria-label="Zamknij">
           <CloseIcon />
         </button>
         <h3 className="auth-modal-title">Dodaj opinię</h3>
         <p className="auth-modal-subtitle">
-          Zaloguj się, aby podzielić się swoją opinią o produkcie
+          Wybierz sposób dodania opinii o produkcie
         </p>
-        <div className="auth-buttons">
-          {googleClientId ? (
-            <div ref={googleBtnRef} className="google-btn-container" />
-          ) : null}
+
+        {/* Tabs */}
+        <div className="auth-tabs">
           <button
-            className="auth-btn auth-btn-facebook"
-            onClick={onFacebookLogin}
-            disabled={loading}
+            className={`auth-tab ${activeTab === "social" ? "active" : ""}`}
+            onClick={() => setActiveTab("social")}
+            type="button"
           >
-            <FacebookIcon />
-            Kontynuuj z Facebook
+            Social Login
+          </button>
+          <button
+            className={`auth-tab ${activeTab === "anonymous" ? "active" : ""}`}
+            onClick={() => setActiveTab("anonymous")}
+            type="button"
+          >
+            Bez logowania
           </button>
         </div>
+
+        {activeTab === "social" ? (
+          <div className="auth-buttons">
+            {googleClientId ? (
+              <div ref={googleBtnRef} className="google-btn-container" />
+            ) : null}
+            <button
+              className="auth-btn auth-btn-facebook"
+              onClick={onFacebookLogin}
+              disabled={loading}
+            >
+              <FacebookIcon />
+              Kontynuuj z Facebook
+            </button>
+          </div>
+        ) : (
+          <form className="anonymous-form" onSubmit={handleAnonymousSubmit} noValidate>
+            <div className="anonymous-field">
+              <label htmlFor="anon-first-name" className="anonymous-label">
+                Imię <span className="anonymous-required">*</span>
+              </label>
+              <input
+                id="anon-first-name"
+                type="text"
+                className="anonymous-input"
+                placeholder="Jan"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                maxLength={50}
+                required
+                autoComplete="given-name"
+              />
+            </div>
+
+            <div className="anonymous-field">
+              <label htmlFor="anon-last-name" className="anonymous-label">
+                Nazwisko <span className="anonymous-optional">(opcjonalne)</span>
+              </label>
+              <input
+                id="anon-last-name"
+                type="text"
+                className="anonymous-input"
+                placeholder="Kowalski"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                maxLength={50}
+                autoComplete="family-name"
+              />
+            </div>
+
+            <div className="anonymous-field">
+              <label htmlFor="anon-email" className="anonymous-label">
+                Adres e-mail <span className="anonymous-required">*</span>
+              </label>
+              <input
+                id="anon-email"
+                type="email"
+                className="anonymous-input"
+                placeholder="jan@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+              />
+              <p className="anonymous-hint">Nie będzie wyświetlany publicznie</p>
+            </div>
+
+            <button
+              type="submit"
+              className="auth-btn auth-btn-anonymous"
+              disabled={!isAnonymousValid || loading}
+            >
+              <UserIcon />
+              Przejdź do opinii
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
@@ -215,11 +338,13 @@ function AuthModal({
 /* ─── Review Form ─── */
 function ReviewForm({
   user,
+  anonymousUser,
   onSubmit,
   onCancel,
   submitting,
 }: {
-  user: UserInfo;
+  user: UserInfo | null;
+  anonymousUser: AnonymousUserInfo | null;
   onSubmit: (rating: number, content: string) => void;
   onCancel: () => void;
   submitting: boolean;
@@ -230,16 +355,26 @@ function ReviewForm({
 
   const isValid = rating >= 1 && content.trim().length >= MIN_CONTENT_LENGTH && content.length <= MAX_CONTENT_LENGTH;
 
+  const displayName = user
+    ? user.name
+    : anonymousUser
+      ? anonymousUser.lastName
+        ? `${anonymousUser.firstName} ${anonymousUser.lastName}`
+        : anonymousUser.firstName
+      : "";
+
+  const displayAvatar = user?.avatar || null;
+
   return (
     <div className="review-form-section">
       <div className="review-form-header">
         <div className="review-form-user">
-          {user.avatar ? (
-            <img src={user.avatar} alt="" className="review-form-user-avatar" referrerPolicy="no-referrer" />
+          {displayAvatar ? (
+            <img src={displayAvatar} alt="" className="review-form-user-avatar" referrerPolicy="no-referrer" />
           ) : (
-            <div className="review-avatar-placeholder">{user.name.charAt(0).toUpperCase()}</div>
+            <div className="review-avatar-placeholder">{displayName.charAt(0).toUpperCase()}</div>
           )}
-          <span className="review-form-user-name">{user.name}</span>
+          <span className="review-form-user-name">{displayName}</span>
         </div>
         <button className="review-form-logout" onClick={onCancel}>
           Anuluj
@@ -306,6 +441,7 @@ export default function ProductReviews({ productSlug }: Props) {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [user, setUser] = useState<UserInfo | null>(null);
+  const [anonymousUser, setAnonymousUser] = useState<AnonymousUserInfo | null>(null);
 
   // Form state
   const [showForm, setShowForm] = useState(false);
@@ -344,6 +480,7 @@ export default function ProductReviews({ productSlug }: Props) {
         name: payload.name || payload.given_name || "Użytkownik",
         avatar: payload.picture || "",
       });
+      setAnonymousUser(null);
       setShowAuthModal(false);
       setShowForm(true);
     } catch {
@@ -380,6 +517,7 @@ export default function ProductReviews({ productSlug }: Props) {
                 name: userResponse.name || "Użytkownik",
                 avatar: userResponse.picture?.data?.url || "",
               });
+              setAnonymousUser(null);
               setShowAuthModal(false);
               setShowForm(true);
               setAuthLoading(false);
@@ -393,27 +531,52 @@ export default function ProductReviews({ productSlug }: Props) {
     );
   }, []);
 
-
+  /* ─── Anonymous Login ─── */
+  const handleAnonymousSubmit = useCallback((info: AnonymousUserInfo) => {
+    setAnonymousUser(info);
+    setUser(null);
+    setShowAuthModal(false);
+    setShowForm(true);
+  }, []);
 
   /* ─── Submit Review ─── */
   const handleSubmit = useCallback(
     async (rating: number, content: string) => {
-      if (!user) return;
+      if (!user && !anonymousUser) return;
 
       setSubmitting(true);
       setMessage(null);
 
       try {
-        const res = await fetch("/api/submit-review", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        let bodyPayload: Record<string, unknown>;
+
+        if (user) {
+          bodyPayload = {
+            mode: "social",
             token: user.token,
             provider: user.provider,
             productSlug,
             rating,
             content,
-          }),
+          };
+        } else if (anonymousUser) {
+          bodyPayload = {
+            mode: "anonymous",
+            firstName: anonymousUser.firstName,
+            lastName: anonymousUser.lastName,
+            email: anonymousUser.email,
+            productSlug,
+            rating,
+            content,
+          };
+        } else {
+          return;
+        }
+
+        const res = await fetch("/api/submit-review", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyPayload),
         });
 
         const data = await res.json();
@@ -425,7 +588,7 @@ export default function ProductReviews({ productSlug }: Props) {
           });
           setShowForm(false);
           setUser(null);
-          // Don't refetch — pending reviews won't show up anyway
+          setAnonymousUser(null);
         } else if (res.status === 409) {
           setMessage({
             type: "info",
@@ -433,6 +596,7 @@ export default function ProductReviews({ productSlug }: Props) {
           });
           setShowForm(false);
           setUser(null);
+          setAnonymousUser(null);
         } else {
           setMessage({
             type: "error",
@@ -448,13 +612,14 @@ export default function ProductReviews({ productSlug }: Props) {
         setSubmitting(false);
       }
     },
-    [user, productSlug],
+    [user, anonymousUser, productSlug],
   );
 
   /* ─── Cancel form ─── */
   const handleCancel = useCallback(() => {
     setShowForm(false);
     setUser(null);
+    setAnonymousUser(null);
     setMessage(null);
   }, []);
 
@@ -544,10 +709,11 @@ export default function ProductReviews({ productSlug }: Props) {
         </div>
       )}
 
-      {/* Review Form (logged in) */}
-      {showForm && user && (
+      {/* Review Form (logged in or anonymous) */}
+      {showForm && (user || anonymousUser) && (
         <ReviewForm
           user={user}
+          anonymousUser={anonymousUser}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           submitting={submitting}
@@ -575,6 +741,7 @@ export default function ProductReviews({ productSlug }: Props) {
             setMessage(null);
             handleFacebookLogin();
           }}
+          onAnonymousSubmit={handleAnonymousSubmit}
           loading={authLoading}
           googleClientId={googleClientId}
         />
