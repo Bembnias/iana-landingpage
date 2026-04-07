@@ -1,20 +1,12 @@
 ---
 export const prerender = true;
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
 
-import PolicyPolitykaPrywatnosci from '../components/PolicyPolitykaPrywatnosci.astro';
-import PolicyRegulaminSerwisu from '../components/PolicyRegulaminSerwisu.astro';
-import PolicyRegulaminTestowania from '../components/PolicyRegulaminTestowania.astro';
-
-/**
- * Podstrona /polityka-prywatnosci
- * Zawiera 3 rozdziały:
- *  1. Polityka Prywatności
- *  2. Regulamin Serwisu Internetowego
- *  3. Regulamin Programu Testowania
- */
+import PolicyPolitykaPrywatnosci from "../components/PolicyPolitykaPrywatnosci.astro";
+import PolicyRegulaminSerwisu from "../components/PolicyRegulaminSerwisu.astro";
+import PolicyRegulaminTestowania from "../components/PolicyRegulaminTestowania.astro";
 ---
 
 <Layout
@@ -28,7 +20,9 @@ import PolicyRegulaminTestowania from '../components/PolicyRegulaminTestowania.a
     <header class="policy__header">
       <h1 class="policy__heading">Polityka Prywatności & Regulaminy</h1>
       <p class="policy__sub">
-        Poniżej znajdziesz wszystkie informacje dotyczące przetwarzania danych osobowych, zasad korzystania z serwisu oraz regulaminu programu testowania produktów IANA.
+        Poniżej znajdziesz wszystkie informacje dotyczące przetwarzania danych
+        osobowych, zasad korzystania z serwisu oraz regulaminu programu
+        testowania produktów IANA.
       </p>
     </header>
 
@@ -36,9 +30,18 @@ import PolicyRegulaminTestowania from '../components/PolicyRegulaminTestowania.a
     <nav class="policy__toc" aria-label="Spis treści dokumentów">
       <h2 class="policy__toc-title">Spis treści</h2>
       <ol class="policy__toc-list">
-        <li><a href="#polityka-prywatnosci" class="policy__toc-link">Polityka Prywatności</a></li>
-        <li><a href="#regulamin-serwisu" class="policy__toc-link">Regulamin Serwisu Internetowego</a></li>
-        <li><a href="#regulamin-testowania" class="policy__toc-link">Regulamin Programu Testowania</a></li>
+        <li>
+          <a href="#polityka-prywatnosci" class="policy__toc-link"
+            >Polityka Prywatności</a>
+        </li>
+        <li>
+          <a href="#regulamin-serwisu" class="policy__toc-link"
+            >Regulamin Serwisu Internetowego</a>
+        </li>
+        <li>
+          <a href="#regulamin-testowania" class="policy__toc-link"
+            >Regulamin Programu Testowania</a>
+        </li>
       </ol>
     </nav>
 

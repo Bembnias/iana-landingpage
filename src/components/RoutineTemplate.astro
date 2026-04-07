@@ -41,7 +41,12 @@ const {
       <div class="routine-hero__inner">
         {/* Lewa kolumna: Karta Wizualna */}
         <div class="hero-left">
-          <div class="visual-card">
+          <div
+            class="visual-card zoomable-img"
+            role="button"
+            tabindex="0"
+            aria-label="Powiększ zdjęcie rutyny"
+          >
             <Image
               src={heroLifestyleImage}
               alt="Karta wizualna rutyny"
@@ -158,7 +163,12 @@ const {
               crossSells.map((item) => (
                 <div class="cross-sell-card">
                   <h3 class="cross-sell-card__title">{item.title}</h3>
-                  <div class="cross-sell-card__img-wrapper">
+                  <div
+                    class="cross-sell-card__img-wrapper zoomable-img"
+                    role="button"
+                    tabindex="0"
+                    aria-label={`Powiększ zdjęcie ${item.title}`}
+                  >
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -176,6 +186,22 @@ const {
       </div>
     </section>
   </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="routineLightbox" aria-hidden="true">
+    <div class="lightbox__backdrop"></div>
+    <button class="lightbox__close" aria-label="Zamknij podgląd">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M18 6L6 18M6 6l12 12"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+    <img class="lightbox__img" src="" alt="Powiększone zdjęcie" />
+  </div>
 
   <Footer />
 </Layout>
@@ -221,6 +247,7 @@ const {
     width: 100%;
     border-radius: 20px;
     overflow: hidden;
+    cursor: zoom-in;
   }
 
   .visual-card__bg {
@@ -457,6 +484,7 @@ const {
   .cross-sell-card__img-wrapper {
     width: 100%;
     margin-bottom: 24px;
+    cursor: zoom-in;
   }
 
   .cross-sell-card__img {
@@ -501,6 +529,10 @@ const {
   }
 
   @media screen and (max-width: 768px) {
+    .visual-card {
+      border-radius: 0;
+    }
+
     .routine-hero {
       padding: 0 20px;
     }
@@ -519,4 +551,141 @@ const {
       flex-direction: column;
     }
   }
+
+  /* --- LIGHTBOX --- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .lightbox__img {
+    position: relative;
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 16px;
+    transform: scale(0.92);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .lightbox.is-open .lightbox__img {
+    transform: scale(1);
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 </style>
+
+<script>
+  function initRoutineLightbox() {
+    const lightbox = document.getElementById("routineLightbox");
+    const lightboxImg = lightbox?.querySelector(
+      ".lightbox__img",
+    ) as HTMLImageElement;
+    const lightboxClose = lightbox?.querySelector(".lightbox__close");
+    const lightboxBackdrop = lightbox?.querySelector(".lightbox__backdrop");
+
+    if (!lightbox || !lightboxImg) return;
+
+    function openLightbox(src: string) {
+      if (!lightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Bind clicks
+    const zoomables = document.querySelectorAll(".zoomable-img");
+
+    zoomables.forEach((node) => {
+      node.addEventListener("click", (e) => {
+        const imgTarget =
+          (e.currentTarget as HTMLElement).querySelector("img") ||
+          (e.currentTarget as HTMLImageElement);
+        if (imgTarget && imgTarget.src) {
+          openLightbox(imgTarget.src);
+        }
+      });
+
+      // Keyboard support
+      node.addEventListener("keydown", (e) => {
+        const keyEvent = e as KeyboardEvent;
+        if (keyEvent.key === "Enter" || keyEvent.key === " ") {
+          e.preventDefault();
+          const imgTarget =
+            (e.currentTarget as HTMLElement).querySelector("img") ||
+            (e.currentTarget as HTMLImageElement);
+          if (imgTarget && imgTarget.src) {
+            openLightbox(imgTarget.src);
+          }
+        }
+      });
+    });
+
+    // Close events
+    lightboxClose?.addEventListener("click", closeLightbox);
+    lightboxBackdrop?.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("is-open")) {
+        closeLightbox();
+      }
+    });
+  }
+
+  document.addEventListener("astro:page-load", initRoutineLightbox);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initRoutineLightbox);
+  } else {
+    initRoutineLightbox();
+  }
+</script>

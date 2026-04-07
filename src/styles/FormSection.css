@@ -473,6 +473,8 @@
 
 /* --- Mobile --- */
 @media screen and (max-width: 900px) {
+
+
   .form-section__intro {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -493,31 +495,98 @@
     text-align: center;
   }
 
+  .form-section__banner {
+    padding: 16px 24px;
+    margin: 24px 0;
+  }
+
+  .form-section__banner__inner {
+    gap: 12px;
+  }
+
+  .form-section__banner-step {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-dark-green);
+    letter-spacing: 0.01em;
+  }
+
+  .form-section__banner-leaf {
+    width: 16px;
+    height: 16px;
+  }
+
+  .form-section__banner-chevron {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+    margin-top: -12px;
+    margin-bottom: 12px;
+  }
+
+  .form-section__banner-chevron img {
+    width: 32px;
+  }
+
   .form-section__card {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
   .form-section__product {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+      "image info"
+      "image link";
+    column-gap: 16px;
+    row-gap: 6px;
+    text-align: left;
     margin-bottom: 24px;
   }
 
-  .form-section__product-image,
+  .form-section__product-image {
+    grid-area: image;
+    width: 65px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    object-fit: contain;
+    align-self: center; /* Wyrównanie miniatury na środku jej kolumny */
+  }
+
   .form-section__product:nth-child(2) .form-section__product-image {
-    order: 1;
+    width: 65px !important;
+    height: 100px !important;
     margin: 0 auto !important;
   }
 
   .form-section__product-info {
-    order: 2;
+    grid-area: info;
+    align-self: end; /* Dociska teksty w dół celi */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .form-section__product-title {
+    font-size: 1.125rem;
+    line-height: 1.2;
+  }
+
+  .form-section__product-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.2;
   }
 
   .form-section__product-link {
-    order: 3;
-    margin: 0 auto !important;
+    grid-area: link;
+    align-self: start;
+    justify-self: flex-start;
+    margin: 0 !important;
+    padding-right: 16px !important;
+    font-size: 1rem;
   }
 
   .form-section__card-action {

@@ -194,62 +194,66 @@ const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() 
         {/* PRAWA KOLUMNA: Wprowadzenie + Highlights + CTA */}
         <div class="col-right">
           <div class="right-sticky-wrapper">
-            <p class="product-category">{productCategory || "Produkt do stosowania miejscowego"}</p>
-            <h1 class="main-title">
-              <span class="iana-text"
-                ><span class="iana-logo-inline"></span> STAWY</span
-              >
-              <span class="product-name" style={`color: ${themeColor}`}
-                >{productTitle}</span
-              >
-            </h1>
-            <h2 class="sub-title" style={`color: ${themeColor}`}>
-              {productSubtitle}
-            </h2>
+            <div class="product-info">
+              <p class="product-category">{productCategory || "Produkt do stosowania miejscowego"}</p>
+              <h1 class="main-title">
+                <span class="iana-text"
+                  ><span class="iana-logo-inline"></span> STAWY</span
+                >
+                <span class="product-name" style={`color: ${themeColor}`}
+                  >{productTitle}</span
+                >
+              </h1>
+              <h2 class="sub-title" style={`color: ${themeColor}`}>
+                {productSubtitle}
+              </h2>
 
-            <div class="short-desc">
-              <slot name="short-desc" />
+              <div class="short-desc">
+                <slot name="short-desc" />
+              </div>
+
+              <ul class="details-list attributes-list">
+                <slot name="attributes" />
+              </ul>
+
+              {Astro.slots.has('usage-heading') ? <slot name="usage-heading" /> : <h3 class="usage-heading">STOSOWANIE:</h3>}
+              <div class="usage-short-desc">
+                <slot name="usage-short" />
+              </div>
             </div>
 
-            <ul class="details-list attributes-list">
-              <slot name="attributes" />
-            </ul>
-
-            {Astro.slots.has('usage-heading') ? <slot name="usage-heading" /> : <h3 class="usage-heading">STOSOWANIE:</h3>}
-            <div class="usage-short-desc">
-              <slot name="usage-short" />
-            </div>
-
-            <!-- Kafelki Atutów -->
-            {Astro.slots.has('custom-highlights') ? (
-              <slot name="custom-highlights" />
-            ) : (
-              <Fragment>
-                <div class="highlights-grid">
-                  <div class="highlight-card">
-                    <slot name="highlight-left" />
+            <div class="product-actions">
+              <!-- Kafelki Atutów -->
+              {Astro.slots.has('custom-highlights') ? (
+                <slot name="custom-highlights" />
+              ) : (
+                <Fragment>
+                  <div class="highlights-grid">
+                    <div class="highlight-card">
+                      <slot name="highlight-left" />
+                    </div>
+                    <div class="highlight-card custom-highlight">
+                      <slot name="highlight-right" />
+                    </div>
                   </div>
-                  <div class="highlight-card custom-highlight">
-                    <slot name="highlight-right" />
+
+                  <!-- Ikony Obszarów Stosowania -->
+                  <div class="body-icons-container">
+                    <slot name="body-icons" />
                   </div>
-                </div>
+                </Fragment>
+              )}
 
-                <!-- Ikony Obszarów Stosowania -->
-                <div class="body-icons-container">
-                  <slot name="body-icons" />
-                </div>
-              </Fragment>
-            )}
-
-            <!-- CTA -->
-            <div class="cta-actions">
-              <a href="/#form-section" class="btn btn-primary">PRZETESTUJ</a>
-              <a
-                href="#"
-                class="btn btn-secondary"
-                style={`background-color: ${ctaColor || themeColor}; border-color: ${ctaColor || themeColor};`}
-                >KUP TERAZ</a
-              >
+              <!-- CTA -->
+              <div class="cta-actions">
+                <a href="/#form-section" class="btn btn-primary">PRZETESTUJ</a>
+                <a
+                  href="#"
+                  class="btn btn-secondary"
+                  style={`background-color: ${ctaColor || themeColor}; border-color: ${ctaColor || themeColor};`}
+                  >KUP TERAZ</a
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -690,11 +694,29 @@ const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() 
       flex-direction: column;
       gap: 40px;
     }
+
+    /* display:contents dissolves the wrapper so children
+       become direct flex items of .product-layout */
+    .col-left,
+    .col-right,
     .right-sticky-wrapper {
-      position: static;
+      display: contents;
     }
+
+    /* Desired mobile order:
+       1. Gallery  2. Product Info  3. Product Details  4. Highlights+CTA */
     .product-gallery {
+      order: 1;
       height: 480px;
+    }
+    .product-info {
+      order: 2;
+    }
+    .product-details {
+      order: 3;
+    }
+    .product-actions {
+      order: 4;
     }
   }
 

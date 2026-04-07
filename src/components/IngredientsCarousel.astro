@@ -120,6 +120,7 @@ const { heading, ingredients } = Astro.props;
     padding: 0 12px;
     box-sizing: border-box;
     position: relative;
+    z-index: 0; /* Creates local stacking context for absolute background */
     border-radius: 24px;
     display: flex;
     flex-direction: column;
@@ -190,26 +191,42 @@ const { heading, ingredients } = Astro.props;
 
   @media (max-width: 768px) {
     .ingredients-carousel-wrapper {
-      padding: 0 12px;
-      gap: 8px;
+      padding: 0 20px;
+      gap: 0;
+      display: block; /* Disable flex wrapper */
+    }
+    .carousel-nav {
+      display: none !important;
+    }
+    .carousel-viewport {
+      overflow: visible;
+    }
+    .carousel-track {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transform: none !important; /* Force disable logic */
+      width: 100%;
     }
     .ingredient-card {
-      flex: 0 0 100%;
-      padding: 0 8px;
-    }
-    .card-bg-wrapper {
-      left: 8px;
-      right: 8px;
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 0;
+      height: auto; /* Natural height */
     }
     .card-content {
-      padding: 20px 24px 24px;
+      /* Pushes the text nicely and forces the background to stretch */
+      padding-bottom: 24px;
+      height: auto;
+    }
+    .card-bg-wrapper {
+      left: 0;
+      right: 0;
     }
     .card-ingredient-img-wrapper {
       height: 200px;
-    }
-    .chevron-left,
-    .chevron-right {
-      width: 24px;
+      border-radius: 24px 24px 0 0;
+      margin-bottom: 24px;
     }
   }
 </style>
@@ -227,7 +244,17 @@ const { heading, ingredients } = Astro.props;
 
       function update() {
         const isMobile = window.innerWidth <= 768;
-        const visibleCards = isMobile ? 1 : 2;
+        if (isMobile) {
+          track.style.transform = "none";
+          if (prev) prev.style.display = "none";
+          if (next) next.style.display = "none";
+          return;
+        } else {
+          if (prev) prev.style.display = "";
+          if (next) next.style.display = "";
+        }
+
+        const visibleCards = 2; // Always 2 on desktop
         const maxIndex = cards.length - visibleCards;
 
         if (currentIndex > maxIndex) currentIndex = maxIndex;
@@ -236,11 +263,14 @@ const { heading, ingredients } = Astro.props;
         const cardWidth = track.clientWidth / visibleCards;
         track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
 
-        prev.disabled = currentIndex === 0;
-        next.disabled = currentIndex >= maxIndex;
-
-        prev.style.opacity = prev.disabled ? "0.3" : "1";
-        next.style.opacity = next.disabled ? "0.3" : "1";
+        if (prev) {
+          prev.disabled = currentIndex === 0;
+          prev.style.opacity = prev.disabled ? "0.3" : "1";
+        }
+        if (next) {
+          next.disabled = currentIndex >= maxIndex;
+          next.style.opacity = next.disabled ? "0.3" : "1";
+        }
       }
 
       if (prev) {

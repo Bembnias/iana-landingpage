@@ -255,9 +255,7 @@ const socialLinks = [
                 }
               >
                 {link.label === "Produkty" ? (
-                  <span
-                    class="navbar__sidebar-link navbar__sidebar-link--span"
-                  >
+                  <span class="navbar__sidebar-link navbar__sidebar-link--span">
                     {link.label}
                   </span>
                 ) : (
@@ -336,6 +334,12 @@ const socialLinks = [
   .navbar--fixed {
     position: fixed;
     top: 0;
+  }
+
+  .navbar--scrolled {
+    position: fixed;
+    top: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 
   .navbar__inner {
@@ -492,6 +496,7 @@ const socialLinks = [
   }
 
   .navbar__cta {
+    font-family: var(--font-primary) !important;
     display: inline-block;
     padding: 10px 20px;
     background-color: var(--color-light-green);
@@ -703,13 +708,31 @@ const socialLinks = [
   }
 
   @media screen and (max-width: 1020px) {
+    .navbar__hamburger-icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    .navbar__hamburger {
+      padding: 6px;
+    }
+
+    .navbar__logo-img {
+      height: 26px;
+    }
+
+    .navbar__sidebar-header {
+      margin-bottom: 24px;
+    }
+
     .navbar__links {
       display: none;
     }
 
     .navbar__cta {
-      font-size: 0.75rem;
+      letter-spacing: 0.02em;
       padding: 8px 14px;
+      font-size: 0.75rem;
     }
 
     /* --- Mobile Sidebar Dropdown --- */
@@ -726,16 +749,35 @@ const socialLinks = [
     }
 
     .navbar__sidebar-links {
-      gap: 18px;
+      gap: 12px;
     }
 
     .navbar__sidebar-link {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    .navbar__sidebar-footer {
+      margin-top: 24px;
     }
   }
 </style>
 
 <script>
+  // Sticky Navbar Logic
+  const mainNavbar = document.getElementById("main-navbar");
+  if (mainNavbar && !mainNavbar.classList.contains("navbar--fixed")) {
+    const handleScroll = () => {
+      if (window.scrollY >= 38) {
+        mainNavbar.classList.add("navbar--scrolled");
+      } else {
+        mainNavbar.classList.remove("navbar--scrolled");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Init
+  }
+
   const trigger = document.getElementById("popover-trigger");
   const popover = document.getElementById("navbar-popover");
 

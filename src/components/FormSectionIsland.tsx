@@ -691,9 +691,8 @@ export default function FormSectionIsland({ images }: Props) {
                 {...register("consentRequired")}
               />
               <span>
-                Wyrażam zgodę na przetwarzanie moich danych osobowych przez
-                Laboratoires Expanscience Sp. z o.o. w celu udziału w Programie
-                Testowania IANA zgodnie z Polityką prywatności.{" "}
+                Wyrażam zgodę na <a href="/polityka-prywatnosci/#polityka-prywatnosci" target="_blank"><u>przetwarzanie moich danych osobowych</u></a> przez
+                Laboratoires Expanscience Sp. z o.o. w celu udziału w <a href="/polityka-prywatnosci/#regulamin-testowania" target="_blank"><u>Programie Testowania IANA</u></a> zgodnie z <a href="/polityka-prywatnosci" target="_blank"><u>Polityką prywatności</u></a>.{" "}
                 <span className="form-section__consent-required">*</span>
               </span>
             </label>
