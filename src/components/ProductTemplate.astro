@@ -14,9 +14,10 @@ export interface Props {
   productSubtitle: string;
   images: ImageMetadata[];
   productSlug?: string;
+  buyNowUrl?: string;
 }
 
-const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images, productSlug } = Astro.props;
+const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images, productSlug, buyNowUrl } = Astro.props;
 
 // Derive slug from URL path if not explicitly provided
 const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() || '';
@@ -248,7 +249,8 @@ const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() 
               <div class="cta-actions">
                 <a href="/#form-section" class="btn btn-primary">PRZETESTUJ</a>
                 <a
-                  href="#"
+                  href={buyNowUrl || "#"}
+                  target="_blank"
                   class="btn btn-secondary"
                   style={`background-color: ${ctaColor || themeColor}; border-color: ${ctaColor || themeColor};`}
                   >KUP TERAZ</a
