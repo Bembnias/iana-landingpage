@@ -278,7 +278,7 @@ export default function FormSectionIsland({ images }: Props) {
   }
 
   return (
-    <section className="form-section" id="form-section">
+    <section className="form-section" id="testowanie">
       <div className="form-section__container">
         {/* --- 1. Intro --- */}
         <div className="form-section__intro">
