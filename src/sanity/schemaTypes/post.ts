@@ -2,14 +2,19 @@ import { defineField, defineType } from "sanity";
 
 export const postType = defineType({
   name: "post",
+  title: "Blog - Artykuły",
   type: "document",
   fields: [
     defineField({
       name: "title",
+      title: "Tytuł",
+      description: "Tytuł artykułu",
       type: "string",
     }),
     defineField({
       name: "slug",
+      title: "Slug",
+      description: "Unikalny identyfikator artykułu używany w URL - naciśnij 'Generate' aby automatycznie wygenerować slug na podstawie tytułu",
       type: "slug",
       options: {
         source: "title",
@@ -17,31 +22,9 @@ export const postType = defineType({
       },
     }),
     defineField({
-      name: "author",
-      type: "reference",
-      to: { type: "author" },
-    }),
-    defineField({
-      name: "mainImage",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-        },
-      ],
-    }),
-    defineField({
-      name: "categories",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }],
-    }),
-    defineField({
       name: "publishedAt",
+      title: "Data publikacji",
+      description: "Data publikacji artykułu",
       type: "datetime",
     }),
     defineField({
@@ -57,6 +40,7 @@ export const postType = defineType({
           name: "alt",
           type: "string",
           title: "Alternative Text",
+          description: "Tekst alternatywny dla obrazka",
         },
       ],
     }),
@@ -69,18 +53,14 @@ export const postType = defineType({
     }),
     defineField({
       name: "body",
+      title: "Treść artykułu",
+      description: "Główna treść artykułu",
       type: "blockContent",
     }),
   ],
   preview: {
     select: {
       title: "title",
-      author: "author.name",
-      media: "mainImage",
-    },
-    prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
     },
   },
 });

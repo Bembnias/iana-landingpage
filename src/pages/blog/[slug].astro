@@ -23,9 +23,7 @@ const { data: post } = await loadQuery<any>({
     slug,
     publishedAt,
     teaser,
-    body,
-    "authorName": author->name,
-    "categories": categories[]->title
+    body
   }`,
   params,
 });
@@ -52,21 +50,7 @@ const { data: post } = await loadQuery<any>({
               </time>
             )
           }
-          {
-            post.authorName && (
-              <span class="post-author">Autor: {post.authorName}</span>
-            )
-          }
         </div>
-        {
-          post.categories && post.categories.length > 0 && (
-            <div class="post-categories">
-              {post.categories.map((category: string) => (
-                <span class="category-tag">{category}</span>
-              ))}
-            </div>
-          )
-        }
       </header>
 
       <div class="post-body">
@@ -113,28 +97,6 @@ const { data: post } = await loadQuery<any>({
     color: var(--color-dark-green);
     opacity: 0.7;
     margin-bottom: 0.75rem;
-  }
-
-  .post-author {
-    font-weight: 700;
-    color: var(--color-light-green);
-    opacity: 1;
-  }
-
-  .post-categories {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .category-tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: var(--color-background-green);
-    color: var(--color-dark-green);
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
   }
 
   .post-body {
