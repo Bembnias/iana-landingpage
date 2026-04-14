@@ -15,15 +15,24 @@ export interface Props {
   images: ImageMetadata[];
   productSlug?: string;
   buyNowUrl?: string;
+  description?: string;
 }
 
-const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images, productSlug, buyNowUrl } = Astro.props;
+const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, images, productSlug, buyNowUrl, description } = Astro.props;
 
 // Derive slug from URL path if not explicitly provided
 const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() || '';
+
+const fullProductName = [productTitle, productSubtitle].filter((s) => s.trim()).join(' ');
+const ogImageUrl = new URL(images[0].src, Astro.url.origin).href;
+const resolvedDescription = description || `Odkryj ${fullProductName} od IANA — naturalny ${productCategory?.toLowerCase() || 'produkt'} oparty na roślinnych składnikach aktywnych wspierających Twoje stawy.`;
 ---
 
-<Layout title={`IANA STAWY - ${productTitle}`}>
+<Layout
+  title={`IANA STAWY — ${fullProductName}`}
+  description={resolvedDescription}
+  ogImage={ogImageUrl}
+>
   <Navbar currentPath="/produkty" fixed={true} />
 
   <main class="product-page" style={`--theme-color: ${themeColor};`}>

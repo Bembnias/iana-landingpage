@@ -4,12 +4,20 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title = 'IANA — Kosmetyki i Suplementy',
   description = 'IANA — polska marka kosmetyków i suplementów. Dołącz do grona testerów i odkryj nasze produkty.',
+  ogImage,
+  ogType = 'website',
 } = Astro.props;
+
+const canonicalUrl = Astro.url.href;
+const defaultOgImage = new URL('/og-default.jpg', Astro.url.origin).href;
+const resolvedOgImage = ogImage || defaultOgImage;
 
 const googleClientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
 const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
@@ -54,10 +62,28 @@ const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="IANA" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
     <!-- Google Identity Services -->
     {googleClientId && (

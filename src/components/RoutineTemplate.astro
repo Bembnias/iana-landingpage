@@ -20,6 +20,7 @@ export interface Props {
   crossSells: CrossSellItem[];
   /** Index of the routine card in the form section (0, 1, or 2) */
   routineIndex: number;
+  description?: string;
 }
 
 const {
@@ -29,10 +30,18 @@ const {
   showEvening = false,
   crossSells,
   routineIndex,
+  description,
 } = Astro.props;
+
+const ogImageUrl = new URL(heroLifestyleImage.src, Astro.url.origin).href;
+const resolvedDescription = description || `Poznaj rutynę "${title}" od IANA — naturalne wsparcie dla Twoich stawów i dobrego samopoczucia.`;
 ---
 
-<Layout title={`IANA - Rutyna - ${title}`}>
+<Layout
+  title={`IANA — Rutyna — ${title}`}
+  description={resolvedDescription}
+  ogImage={ogImageUrl}
+>
   <Navbar currentPath="/rutyna" fixed={true} />
 
   <main class="routine-page">

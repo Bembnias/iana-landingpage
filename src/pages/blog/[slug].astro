@@ -23,15 +23,23 @@ const { data: post } = await loadQuery<any>({
     slug,
     publishedAt,
     teaser,
-    body
+    body,
+    thumbnail,
+    "thumbnailUrl": thumbnail.asset->url
   }`,
   params,
 });
+
+const ogImage = post.thumbnailUrl
+  ? `${post.thumbnailUrl}?w=1200&h=630&fit=crop&auto=format`
+  : undefined;
 ---
 
 <Layout
   title={`${post.title} — Blog IANA`}
   description={post.teaser || `Artykuł: ${post.title} — Blog IANA`}
+  ogImage={ogImage}
+  ogType="article"
 >
   <Navbar currentPath="/blog" fixed={true} />
   <main class="blog-post">
