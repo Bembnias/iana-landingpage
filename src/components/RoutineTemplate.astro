@@ -5,6 +5,8 @@ import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
 import sunIcon from "../assets/sun-icon.svg";
 import moonIcon from "../assets/moon-icon.svg";
+import { loadQuery } from "../sanity/lib/load-query";
+import { PortableText } from "astro-portabletext";
 
 export interface CrossSellItem {
   title: string;
@@ -33,14 +35,67 @@ const {
   description,
 } = Astro.props;
 
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop() || '';
+
+const { data: routinePage } = await loadQuery<any>({
+  query: `*[_type == "routinePage" && routineSlug == $slug][0] {
+    title,
+    intro,
+    usageShort,
+    description,
+    benefits,
+    usageFull,
+    tips,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+  params: { slug },
+});
+
+const { data: routineSeoPage } = await loadQuery<any>({
+  query: `*[_type == "seoRoutinePage" && routineSlug == $slug][0] {
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+  params: { slug },
+});
+
+const seoData = routinePage?.seo || routineSeoPage?.seo;
+const resolvedRoutineTitle = routinePage?.title || title;
+const cmsBenefits = routinePage?.benefits || [];
+const cmsTips = routinePage?.tips || [];
+
 const ogImageUrl = new URL(heroLifestyleImage.src, Astro.url.origin).href;
-const resolvedDescription = description || `Poznaj rutynę "${title}" od IANA — naturalne wsparcie dla Twoich stawów i dobrego samopoczucia.`;
+const seoOgImage = seoData?.ogImageUrl
+  ? `${seoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : undefined;
+const resolvedDescription = seoData?.metaDescription || description || `Poznaj rutynę "${resolvedRoutineTitle}" od IANA — naturalne wsparcie dla Twoich stawów i dobrego samopoczucia.`;
+const resolvedTitle = seoData?.metaTitle || `IANA — Rutyna — ${resolvedRoutineTitle}`;
+const resolvedOgImage = seoOgImage || ogImageUrl;
 ---
 
 <Layout
-  title={`IANA — Rutyna — ${title}`}
+  title={resolvedTitle}
   description={resolvedDescription}
-  ogImage={ogImageUrl}
+  ogTitle={seoData?.ogTitle}
+  ogDescription={seoData?.ogDescription}
+  ogImage={resolvedOgImage}
+  canonicalUrl={seoData?.canonicalUrl}
+  robots={seoData?.robots}
 >
   <Navbar currentPath="/rutyna" fixed={true} />
 
@@ -69,28 +124,32 @@ const resolvedDescription = description || `Poznaj rutynę "${title}" od IANA �
             <div class="routine-details__inner">
               <h3 class="details-heading">OPIS:</h3>
               <div class="details-text">
-                <slot name="description" />
+                {routinePage?.description ? <PortableText value={routinePage.description} /> : <slot name="description" />}
               </div>
 
               <h3 class="details-heading-dark">
                 To Twój codzienny rytuał dla:
               </h3>
               <ul class="details-list">
-                <slot name="benefits-list" />
+                {cmsBenefits.length > 0
+                  ? cmsBenefits.map((benefit: string) => <li>{benefit}</li>)
+                  : <slot name="benefits-list" />}
               </ul>
 
               <h3 class="details-heading details-heading--margin">
                 WSKAZÓWKI DOTYCZĄCE STOSOWANIA:
               </h3>
               <div class="details-usage-full">
-                <slot name="usage-full" />
+                {routinePage?.usageFull ? <PortableText value={routinePage.usageFull} /> : <slot name="usage-full" />}
               </div>
 
               <h3 class="details-heading details-heading--margin">
                 NASZE PORADY:
               </h3>
               <ul class="details-list">
-                <slot name="tips-list" />
+                {cmsTips.length > 0
+                  ? cmsTips.map((tip: string) => <li>{tip}</li>)
+                  : <slot name="tips-list" />}
               </ul>
 
               <p class="details-disclaimer">
@@ -105,15 +164,15 @@ const resolvedDescription = description || `Poznaj rutynę "${title}" od IANA �
           <h2 class="hero-info__pretitle">
             Stwórz rutynę dopasowaną do Twoich<br />potrzeb i preferencji:
           </h2>
-          <h1 class="hero-info__title">{title}</h1>
+          <h1 class="hero-info__title">{resolvedRoutineTitle}</h1>
 
           <div class="hero-info__intro">
-            <slot name="intro" />
+            {routinePage?.intro ? <PortableText value={routinePage.intro} /> : <slot name="intro" />}
           </div>
 
           <h3 class="hero-info__usage-heading">STOSOWANIE:</h3>
           <div class="hero-info__usage-text">
-            <slot name="usage-short" />
+            {routinePage?.usageShort ? <PortableText value={routinePage.usageShort} /> : <slot name="usage-short" />}
           </div>
 
           <div class="hero-info__pills">

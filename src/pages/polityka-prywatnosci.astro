@@ -7,11 +7,36 @@ import Footer from "../components/Footer.astro";
 import PolicyPolitykaPrywatnosci from "../components/PolicyPolitykaPrywatnosci.astro";
 import PolicyRegulaminSerwisu from "../components/PolicyRegulaminSerwisu.astro";
 import PolicyRegulaminTestowania from "../components/PolicyRegulaminTestowania.astro";
+import { loadQuery } from "../sanity/lib/load-query";
+
+const { data: policySeo } = await loadQuery<any>({
+  query: `*[_type == "seoPolicyPage"][0] {
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+});
+
+const policySeoData = policySeo?.seo;
+const policyOgImage = policySeoData?.ogImageUrl
+  ? `${policySeoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : undefined;
 ---
 
 <Layout
-  title="Polityka Prywatności — IANA"
-  description="Polityka prywatności, regulamin serwisu internetowego oraz regulamin programu testowania produktów IANA."
+  title={policySeoData?.metaTitle || "Polityka Prywatności — IANA"}
+  description={policySeoData?.metaDescription || "Polityka prywatności, regulamin serwisu internetowego oraz regulamin programu testowania produktów IANA."}
+  ogTitle={policySeoData?.ogTitle}
+  ogDescription={policySeoData?.ogDescription}
+  ogImage={policyOgImage}
+  canonicalUrl={policySeoData?.canonicalUrl}
+  robots={policySeoData?.robots}
 >
   <Navbar currentPath="/polityka-prywatnosci" fixed={true} />
 

@@ -5,6 +5,8 @@ import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
 import ProductReviews from "./ProductReviews";
 import logoSvg from "../assets/logo.svg";
+import { loadQuery } from "../sanity/lib/load-query";
+import { PortableText } from "astro-portabletext";
 
 export interface Props {
   themeColor: string;
@@ -23,15 +25,75 @@ const { themeColor, ctaColor, productCategory, productTitle, productSubtitle, im
 // Derive slug from URL path if not explicitly provided
 const slug = productSlug || Astro.url.pathname.split('/').filter(Boolean).pop() || '';
 
-const fullProductName = [productTitle, productSubtitle].filter((s) => s.trim()).join(' ');
+const { data: productPage } = await loadQuery<any>({
+  query: `*[_type == "productPage" && productSlug == $slug][0] {
+    productCategory,
+    productTitle,
+    productSubtitle,
+    shortDesc,
+    attributes,
+    usageHeading,
+    usageShort,
+    description,
+    usageTips,
+    precautions,
+    originHeading,
+    originBody,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+  params: { slug },
+});
+
+const { data: productSeoPage } = await loadQuery<any>({
+  query: `*[_type == "seoProductPage" && productSlug == $slug][0] {
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+  params: { slug },
+});
+
+const seoData = productPage?.seo || productSeoPage?.seo;
+const resolvedProductCategory = productPage?.productCategory || productCategory || "Produkt do stosowania miejscowego";
+const resolvedProductTitle = productPage?.productTitle ?? productTitle;
+const resolvedProductSubtitle = productPage?.productSubtitle ?? productSubtitle;
+const cmsAttributes = productPage?.attributes || [];
+const cmsUsageHeading = productPage?.usageHeading;
+
+const fullProductName = [resolvedProductTitle, resolvedProductSubtitle]
+  .filter((s) => (s || "").trim())
+  .join(' ');
 const ogImageUrl = new URL(images[0].src, Astro.url.origin).href;
-const resolvedDescription = description || `Odkryj ${fullProductName} od IANA — naturalny ${productCategory?.toLowerCase() || 'produkt'} oparty na roślinnych składnikach aktywnych wspierających Twoje stawy.`;
+const seoOgImage = seoData?.ogImageUrl
+  ? `${seoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : undefined;
+const resolvedDescription = seoData?.metaDescription || description || `Odkryj ${fullProductName} od IANA — naturalny ${resolvedProductCategory.toLowerCase()} oparty na roślinnych składnikach aktywnych wspierających Twoje stawy.`;
+const resolvedTitle = seoData?.metaTitle || `IANA STAWY — ${fullProductName}`;
+const resolvedOgImage = seoOgImage || ogImageUrl;
 ---
 
 <Layout
-  title={`IANA STAWY — ${fullProductName}`}
+  title={resolvedTitle}
   description={resolvedDescription}
-  ogImage={ogImageUrl}
+  ogTitle={seoData?.ogTitle}
+  ogDescription={seoData?.ogDescription}
+  ogImage={resolvedOgImage}
+  canonicalUrl={seoData?.canonicalUrl}
+  robots={seoData?.robots}
 >
   <Navbar currentPath="/produkty" fixed={true} />
 
@@ -168,20 +230,27 @@ const resolvedDescription = description || `Odkryj ${fullProductName} od IANA �
           <div class="product-details">
             <h3 class="details-heading">OPIS PRODUKTU:</h3>
             <div class="details-content">
-              <slot name="description" />
+              {productPage?.description ? <PortableText value={productPage.description} /> : <slot name="description" />}
             </div>
 
             <h3 class="details-heading">WSKAZÓWKI DOTYCZĄCE STOSOWANIA:</h3>
             <div class="details-content">
-              <slot name="usage-tips" />
+              {productPage?.usageTips ? <PortableText value={productPage.usageTips} /> : <slot name="usage-tips" />}
             </div>
 
             <h3 class="details-heading">ŚRODKI OSTROŻNOŚCI:</h3>
             <div class="details-content">
-              <slot name="precautions" />
+              {productPage?.precautions ? <PortableText value={productPage.precautions} /> : <slot name="precautions" />}
             </div>
 
-            {Astro.slots.has('origin-section') ? (
+            {productPage?.originBody ? (
+              <div class="details-studies">
+                <h3 class="details-heading inline-heading">{productPage.originHeading || "POCHODZENIE SKŁADNIKÓW:"}</h3>
+                <div class="studies-intro">
+                  <PortableText value={productPage.originBody} />
+                </div>
+              </div>
+            ) : Astro.slots.has('origin-section') ? (
               <slot name="origin-section" />
             ) : (
               <div class="details-studies">
@@ -205,30 +274,38 @@ const resolvedDescription = description || `Odkryj ${fullProductName} od IANA �
         <div class="col-right">
           <div class="right-sticky-wrapper">
             <div class="product-info">
-              <p class="product-category">{productCategory || "Produkt do stosowania miejscowego"}</p>
+              <p class="product-category">{resolvedProductCategory}</p>
               <h1 class="main-title">
                 <span class="iana-text"
                   ><span class="iana-logo-inline"></span> STAWY</span
                 >
                 <span class="product-name" style={`color: ${themeColor}`}
-                  >{productTitle}</span
+                  >{resolvedProductTitle}</span
                 >
               </h1>
               <h2 class="sub-title" style={`color: ${themeColor}`}>
-                {productSubtitle}
+                {resolvedProductSubtitle}
               </h2>
 
               <div class="short-desc">
-                <slot name="short-desc" />
+                {productPage?.shortDesc ? <PortableText value={productPage.shortDesc} /> : <slot name="short-desc" />}
               </div>
 
               <ul class="details-list attributes-list">
-                <slot name="attributes" />
+                {cmsAttributes.length > 0
+                  ? cmsAttributes.map((attribute: string) => <li>{attribute}</li>)
+                  : <slot name="attributes" />}
               </ul>
 
-              {Astro.slots.has('usage-heading') ? <slot name="usage-heading" /> : <h3 class="usage-heading">STOSOWANIE:</h3>}
+              {cmsUsageHeading ? (
+                <h3 class="usage-heading">{cmsUsageHeading}</h3>
+              ) : Astro.slots.has('usage-heading') ? (
+                <slot name="usage-heading" />
+              ) : (
+                <h3 class="usage-heading">STOSOWANIE:</h3>
+              )}
               <div class="usage-short-desc">
-                <slot name="usage-short" />
+                {productPage?.usageShort ? <PortableText value={productPage.usageShort} /> : <slot name="usage-short" />}
               </div>
             </div>
 

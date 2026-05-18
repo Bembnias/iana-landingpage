@@ -25,20 +25,36 @@ const { data: post } = await loadQuery<any>({
     teaser,
     body,
     thumbnail,
-    "thumbnailUrl": thumbnail.asset->url
+    "thumbnailUrl": thumbnail.asset->url,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
   }`,
   params,
 });
 
-const ogImage = post.thumbnailUrl
+const seoData = post?.seo;
+const ogImage = seoData?.ogImageUrl
+  ? `${seoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : post.thumbnailUrl
   ? `${post.thumbnailUrl}?w=1200&h=630&fit=crop&auto=format`
   : undefined;
 ---
 
 <Layout
-  title={`${post.title} — Blog IANA`}
-  description={post.teaser || `Artykuł: ${post.title} — Blog IANA`}
+  title={seoData?.metaTitle || `${post.title} — Blog IANA`}
+  description={seoData?.metaDescription || post.teaser || `Artykuł: ${post.title} — Blog IANA`}
+  ogTitle={seoData?.ogTitle}
+  ogDescription={seoData?.ogDescription}
   ogImage={ogImage}
+  canonicalUrl={seoData?.canonicalUrl}
+  robots={seoData?.robots}
   ogType="article"
 >
   <Navbar currentPath="/blog" fixed={true} />

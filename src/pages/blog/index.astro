@@ -5,6 +5,25 @@ import Footer from '../../components/Footer.astro';
 import Image from 'astro/components/Image.astro';
 import { loadQuery } from '../../sanity/lib/load-query';
 
+const { data: blogListingSeo } = await loadQuery<any>({
+  query: `*[_type == "seoBlogListingPage"][0] {
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      "ogImageUrl": ogImage.asset->url,
+      canonicalUrl,
+      robots
+    }
+  }`,
+});
+
+const blogListingSeoData = blogListingSeo?.seo;
+const blogListingOgImage = blogListingSeoData?.ogImageUrl
+  ? `${blogListingSeoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : undefined;
+
 const { data: posts } = await loadQuery<any[]>({
   query: `*[_type == "post"] | order(publishedAt desc) {
     title,
@@ -17,8 +36,13 @@ const { data: posts } = await loadQuery<any[]>({
 ---
 
 <Layout
-  title="Blog — IANA"
-  description="Blog IANA — artykuły o zdrowiu, wellbeingu i świadomym starzeniu się po 40. roku życia."
+  title={blogListingSeoData?.metaTitle || "Blog — IANA"}
+  description={blogListingSeoData?.metaDescription || "Blog IANA — artykuły o zdrowiu, wellbeingu i świadomym starzeniu się po 40. roku życia."}
+  ogTitle={blogListingSeoData?.ogTitle}
+  ogDescription={blogListingSeoData?.ogDescription}
+  ogImage={blogListingOgImage}
+  canonicalUrl={blogListingSeoData?.canonicalUrl}
+  robots={blogListingSeoData?.robots}
 >
   <Navbar currentPath="/blog" fixed={true} />
   <main class="blog-listing">

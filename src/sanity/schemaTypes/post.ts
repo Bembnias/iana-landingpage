@@ -41,8 +41,21 @@ export const postType = defineType({
           type: "string",
           title: "Alternative Text",
           description: "Tekst alternatywny dla obrazka",
+          validation: (rule) => rule.required(),
         },
       ],
+      validation: (rule) =>
+        rule.custom((value) => {
+          if (!value?.asset) {
+            return true;
+          }
+
+          if (!value?.alt) {
+            return "Uzupełnij ALT dla miniatury artykułu";
+          }
+
+          return true;
+        }),
     }),
     defineField({
       name: "teaser",
@@ -56,6 +69,12 @@ export const postType = defineType({
       title: "Treść artykułu",
       description: "Główna treść artykułu",
       type: "blockContent",
+    }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seoFields",
+      description: "Opcjonalne ustawienia meta tagów dla strony artykułu",
     }),
   ],
   preview: {
