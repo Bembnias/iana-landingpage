@@ -1,6 +1,22 @@
 {
     "rewrites": [
         {
+            "source": "/Raport-Obserwatorium",
+            "destination": "/documents/Raport_Obserwatorium.pdf"
+        },
+        {
+            "source": "/raport-obserwatorium",
+            "destination": "/documents/Raport_Obserwatorium.pdf"
+        },
+        {
+            "source": "/raport-obserwatorium-az-tyle",
+            "destination": "/documents/Raport_Obserwatorium.pdf"
+        },
+        {
+            "source": "/raport-uzytkownikow",
+            "destination": "/documents/Raport_Obserwatorium.pdf"
+        },
+        {
             "source": "/studio/:path*",
             "destination": "/studio"
         }

@@ -9,7 +9,7 @@ import { loadQuery } from "../sanity/lib/load-query";
 // Pobieranie wpisów na bloga
 // Zakładamy, że najnowsze posty będą jako pierwsze
 const { data: posts } = await loadQuery<any[]>({
-  query: `*[_type == "post"] | order(publishedAt desc)[0...3] {
+  query: `*[_type == "post" && defined(slug.current)] | order(publishedAt desc)[0...3] {
     title,
     slug,
     teaser,
@@ -17,6 +17,8 @@ const { data: posts } = await loadQuery<any[]>({
     "thumbnailAlt": thumbnail.alt
   }`,
 });
+
+const postsWithSlug = (posts ?? []).filter((post) => Boolean(post?.slug?.current));
 ---
 
 <section class="blog" id="blog-section">
@@ -34,8 +36,7 @@ const { data: posts } = await loadQuery<any[]>({
 
     <div class="blog__grid">
       {
-        posts &&
-          posts.map((post) => (
+        postsWithSlug.map((post) => (
             <article class="blog__card">
               {post.thumbnailUrl && (
                 <a

@@ -10,6 +10,7 @@ const staticPaths = [
   "/",
   "/blog",
   "/polityka-prywatnosci",
+  "/Raport-Obserwatorium",
   "/produkty/elastycznosc-i-energia",
   "/produkty/intensywnie-chlodzacy-zel",
   "/produkty/kojacy-balsam-do-masazu",
