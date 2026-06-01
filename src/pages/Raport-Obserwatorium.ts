@@ -7,7 +7,7 @@ export const GET = async ({ request }: { request: Request }) => {
   headers.set("content-type", "application/pdf");
   headers.set(
     "content-disposition",
-    "inline; filename=\"Raport_Obserwatorium_Az_Tyle.pdf\"; filename*=UTF-8''Raport%20Obserwatorium%20A%C5%BC%20Tyle.pdf",
+    "inline; filename=\"Raport_Obserwatorium.pdf\"; filename*=UTF-8''Raport%20Obserwatorium.pdf",
   );
 
   return new Response(pdfResponse.body, {
