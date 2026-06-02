@@ -54,7 +54,167 @@ const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
         wait_for_update: 500
       });
       gtag("set", "ads_data_redaction", true);
-      gtag("set", "url_passthrough", true);
+      gtag("set", "url_passthrough", false);
+    </script>
+    <script is:inline>
+      const trackingParamPatterns = [
+        /^_gl$/,
+        /^_ga(?:_.+)?$/,
+        /^_gcl(?:_.+)?$/,
+        /^gclid$/,
+        /^gbraid$/,
+        /^wbraid$/,
+        /^fbclid$/,
+        /^msclkid$/,
+      ];
+      const reportPaths = new Set([
+        "/Raport-Obserwatorium",
+        "/raport-obserwatorium",
+        "/raport-obserwatorium-az-tyle",
+        "/raport-uzytkownikow",
+      ]);
+
+      const stripTrackingParams = (url) => {
+        let hasTrackingParams = false;
+
+        for (const paramName of Array.from(url.searchParams.keys())) {
+          if (trackingParamPatterns.some((pattern) => pattern.test(paramName))) {
+            url.searchParams.delete(paramName);
+            hasTrackingParams = true;
+          }
+        }
+
+        return hasTrackingParams;
+      };
+
+      const toRelativeUrl = (url) => `${url.pathname}${url.search}${url.hash}`;
+
+      const cleanCurrentUrl = () => {
+        const url = new URL(window.location.href);
+        if (!stripTrackingParams(url)) {
+          return;
+        }
+
+        const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+        window.history.replaceState(null, "", cleanUrl);
+      };
+
+      const getCleanInternalUrl = (href) => {
+        const url = new URL(href, window.location.href);
+
+        if (url.origin !== window.location.origin) {
+          return { isInternal: false, url, wasCleaned: false };
+        }
+
+        const wasCleaned = stripTrackingParams(url);
+
+        return { isInternal: true, url, wasCleaned };
+      };
+
+      const cleanAnchorHref = (anchor) => {
+        const href = anchor.getAttribute("href");
+
+        if (!href) {
+          return false;
+        }
+
+        try {
+          const { isInternal, url, wasCleaned } = getCleanInternalUrl(anchor.href);
+
+          if (!isInternal || !wasCleaned) {
+            return false;
+          }
+
+          anchor.setAttribute("href", toRelativeUrl(url));
+          return true;
+        } catch {
+          return false;
+        }
+      };
+
+      const cleanInternalLinks = (root = document) => {
+        if (root instanceof Element && root.matches("a[href]")) {
+          cleanAnchorHref(root);
+        }
+
+        root.querySelectorAll?.("a[href]").forEach(cleanAnchorHref);
+      };
+
+      cleanCurrentUrl();
+
+      document.addEventListener(
+        "click",
+        (event) => {
+          if (!(event.target instanceof Element) || event.defaultPrevented) {
+            return;
+          }
+
+          const anchor = event.target.closest("a[href]");
+
+          if (!anchor) {
+            return;
+          }
+
+          try {
+            const { isInternal, url, wasCleaned } = getCleanInternalUrl(anchor.href);
+            const isReportLink = reportPaths.has(url.pathname);
+
+            if (!isInternal || (!wasCleaned && !isReportLink)) {
+              return;
+            }
+
+            const cleanHref = toRelativeUrl(url);
+            anchor.setAttribute("href", cleanHref);
+
+            if (anchor.hasAttribute("download") && !wasCleaned) {
+              return;
+            }
+
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            const opensNewTab = anchor.target && anchor.target !== "_self";
+
+            if (opensNewTab) {
+              window.open(cleanHref, anchor.target, "noopener,noreferrer");
+              return;
+            }
+
+            window.location.assign(cleanHref);
+          } catch {
+            return;
+          }
+        },
+        true,
+      );
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => cleanInternalLinks());
+      } else {
+        cleanInternalLinks();
+      }
+
+      const linkCleanerObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.type === "attributes" && mutation.target instanceof HTMLAnchorElement) {
+            cleanAnchorHref(mutation.target);
+            continue;
+          }
+
+          for (const node of mutation.addedNodes) {
+            if (node instanceof Element) {
+              cleanInternalLinks(node);
+            }
+          }
+        }
+      });
+
+      linkCleanerObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["href"],
+        childList: true,
+        subtree: true,
+      });
     </script>
     <!-- End Google Consent Mode-->
 
@@ -134,4 +294,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     )}
   </body>
 </html>
-

@@ -12,7 +12,7 @@ import ytIconAlt from "../assets/youtube-icon-alt.svg";
 import webIconAlt from "../assets/website-icon-alt.svg";
 
 const links = [
-  { label: "Raport Obserwatorium", href: "/Raport-Obserwatorium", target: '__blank'},
+  { label: "Raport Obserwatorium", href: "/Raport-Obserwatorium", target: "_blank" },
   { label: "Produkty", href: "/#karty-rutyn" },
   { label: "Polityka prywatności", href: "/polityka-prywatnosci" },
   { label: "Testowanie", href: "/#testowanie" },
@@ -66,7 +66,12 @@ const socialLinks = [
           {
             links.map((link) => (
               <li>
-                <a href={link.href} class="footer__link" target={link?.target ?? ''}>
+                <a
+                  href={link.href}
+                  class="footer__link"
+                  target={link.target}
+                  rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+                >
                   {link.label}
                 </a>
               </li>
