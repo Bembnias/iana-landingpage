@@ -25,6 +25,15 @@ import heroBackground from "../assets/hero-background.png";
       według czyichś zasad.<br />
       Dojrzałość piszemy <strong class="hero__highlight">po swojemu</strong>.
     </h1>
+
+    <aside class="hero__report" aria-labelledby="hero-report-heading">
+      <h2 class="hero__report-heading" id="hero-report-heading">
+        Sprawdź, jak starzeją się Polacy
+      </h2>
+      <a class="hero__report-cta" href="/Raport-Obserwatorium" target="_blank">
+        PRZECZYTAJ RAPORT
+      </a>
+    </aside>
   </div>
 </section>
 
@@ -62,11 +71,12 @@ import heroBackground from "../assets/hero-background.png";
   }
 
   .hero__heading {
+    flex: 1;
     color: var(--color-white);
     font-size: clamp(1.75rem, 4vw, 2.25rem);
     font-weight: 400;
     line-height: 1.4;
-    max-width: 800px;
+    max-width: 700px;
   }
 
   .hero__highlight {
@@ -77,13 +87,48 @@ import heroBackground from "../assets/hero-background.png";
     white-space: nowrap;
   }
 
-  .hero__subheading {
+  .hero__report {
+    flex: 0 1 390px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 32px;
+    background-color: var(--color-dark-green);
+    border-radius: 24px;
+    text-align: center;
+  }
+
+  .hero__report-heading {
     color: var(--color-white);
-    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-size: clamp(1.05rem, 1.55vw, 1.25rem);
     font-weight: 700;
-    letter-spacing: 0.05em;
+    line-height: 1.2;
     white-space: nowrap;
-    text-align: right;
+  }
+
+  .hero__report-cta {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-light-green);
+    color: var(--color-white);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 50px;
+    transition:
+      background-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .hero__report-cta:hover {
+    background-color: #23900a;
+    transform: translateY(-1px);
+  }
+
+  .hero__report-cta:focus-visible {
+    outline: 3px solid var(--color-white);
+    outline-offset: 3px;
   }
 
   /* --- Mobile --- */
@@ -99,11 +144,30 @@ import heroBackground from "../assets/hero-background.png";
       flex-direction: column;
       align-items: center;
       padding-top: calc(var(--navbar-height) + 48px + 24px);
+      padding-bottom: 48px;
     }
 
     .hero__heading {
       text-align: center;
       font-size: clamp(1.5rem, 6vw, 2.25rem);
+    }
+
+    .hero__report {
+      flex-basis: auto;
+      width: min(100%, 420px);
+      align-items: center;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .hero__report-heading {
+      white-space: normal;
+    }
+
+    .hero__report-cta {
+      padding: 8px 14px;
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
     }
   }
 </style>

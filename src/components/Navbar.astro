@@ -17,13 +17,29 @@ interface Props {
   fixed?: boolean;
 }
 
+interface NavLink {
+  label: string;
+  href: string;
+  target?: "_blank";
+}
+
 const { currentPath = "/", fixed = false } = Astro.props;
 
-const navLinks = [
+const navLinks: NavLink[] = [
   { label: "Produkty", href: "#" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq-section" },
   { label: "Kontakt", href: "/#stopka" },
+];
+
+const sidebarLinks: NavLink[] = [
+  navLinks[0],
+  {
+    label: "Raport Obserwatorium",
+    href: "/Raport-Obserwatorium",
+    target: "_blank",
+  },
+  ...navLinks.slice(1),
 ];
 
 const productLinks = [
@@ -246,7 +262,7 @@ const socialLinks = [
       <nav class="navbar__sidebar-nav">
         <ul class="navbar__sidebar-links">
           {
-            navLinks.map((link) => (
+            sidebarLinks.map((link) => (
               <li
                 class={
                   link.label === "Produkty"
@@ -263,6 +279,8 @@ const socialLinks = [
                     class="navbar__sidebar-link"
                     href={link.href}
                     aria-label={link.label}
+                    target={link.target}
+                    rel={link.target === "_blank" ? "noopener" : undefined}
                   >
                     {link.label}
                   </a>
@@ -627,7 +645,7 @@ const socialLinks = [
   .navbar__sidebar-links {
     display: flex;
     flex-direction: column;
-    gap: 42px;
+    gap: 22px;
   }
 
   .navbar__sidebar-link {
@@ -749,7 +767,7 @@ const socialLinks = [
     }
 
     .navbar__sidebar-links {
-      gap: 12px;
+      gap: 9px;
     }
 
     .navbar__sidebar-link {
