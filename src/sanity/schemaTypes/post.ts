@@ -28,6 +28,12 @@ export const postType = defineType({
       type: "datetime",
     }),
     defineField({
+      name: "author",
+      title: "Autor",
+      description: "Imię i nazwisko autora artykułu",
+      type: "string",
+    }),
+    defineField({
       name: "thumbnail",
       title: "Thumbnail",
       description: "Obrazek wyświetlany na listingu artykułów",
@@ -80,6 +86,7 @@ export const postType = defineType({
   preview: {
     select: {
       title: "title",
+      subtitle: "author",
     },
   },
 });

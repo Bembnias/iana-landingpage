@@ -67,13 +67,6 @@ const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
         /^fbclid$/,
         /^msclkid$/,
       ];
-      const reportPaths = new Set([
-        "/Raport-Obserwatorium",
-        "/raport-obserwatorium",
-        "/raport-obserwatorium-az-tyle",
-        "/raport-uzytkownikow",
-      ]);
-
       const stripTrackingParams = (url) => {
         let hasTrackingParams = false;
 
@@ -157,16 +150,15 @@ const facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID || '';
 
           try {
             const { isInternal, url, wasCleaned } = getCleanInternalUrl(anchor.href);
-            const isReportLink = reportPaths.has(url.pathname);
 
-            if (!isInternal || (!wasCleaned && !isReportLink)) {
+            if (!isInternal || !wasCleaned) {
               return;
             }
 
             const cleanHref = toRelativeUrl(url);
             anchor.setAttribute("href", cleanHref);
 
-            if (anchor.hasAttribute("download") && !wasCleaned) {
+            if (anchor.hasAttribute("download")) {
               return;
             }
 

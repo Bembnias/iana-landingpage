@@ -1,0 +1,24 @@
+---
+interface Props {
+  node: {
+    url?: string;
+    alt?: string;
+    dimensions?: { width: number; height: number };
+  };
+}
+
+const { node } = Astro.props;
+const { url, alt = "", dimensions } = node;
+---
+
+{
+  url && (
+    <img
+      src={`${url}?w=1200&auto=format`}
+      alt={alt}
+      width={dimensions?.width}
+      height={dimensions?.height}
+      loading="lazy"
+    />
+  )
+}
