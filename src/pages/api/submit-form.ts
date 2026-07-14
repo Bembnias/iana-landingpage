@@ -9,7 +9,10 @@ const schema = z.object({
     lastName: z.string().min(2),
     email: z.email(),
     phone: z.string().min(9),
-    street: z.string().min(3),
+    street: z.string().min(2),
+    houseNumber: z.string().min(1),
+    apartmentNumber: z.string().optional().default(""),
+    city: z.string().min(2),
     postalCode: z.string().regex(/^\d{2}-\d{3}$/),
     selectedRoutine: z.string().min(1),
     followers: z.string().optional().default(""),
@@ -46,11 +49,27 @@ export const POST: APIRoute = async ({ request }) => {
         });
     }
 
-    await fetch(sheetsUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(result.data),
-    });
+    try {
+        const sheetsRes = await fetch(sheetsUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(result.data),
+            redirect: "follow",
+        });
+
+        const text = await sheetsRes.text();
+        if (!sheetsRes.ok || !text.includes("OK")) {
+            console.error("Google Sheets error:", sheetsRes.status, text.slice(0, 500));
+            return new Response(JSON.stringify({ error: "Zapis do arkusza nie powiódł się" }), {
+                status: 502,
+            });
+        }
+    } catch (err) {
+        console.error("Google Sheets fetch failed:", err);
+        return new Response(JSON.stringify({ error: "Brak połączenia z arkuszem" }), {
+            status: 502,
+        });
+    }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
 };

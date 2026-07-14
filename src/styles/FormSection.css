@@ -79,6 +79,13 @@
   grid-column: 1 / -1;
 }
 
+/* Two inputs side by side inside a single grid cell (nr budynku / nr lokalu) */
+.form-section__field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 .form-section__label {
   font-size: 1.25rem;
   font-weight: 400;

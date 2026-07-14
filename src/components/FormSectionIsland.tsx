@@ -15,7 +15,10 @@ const formSchema = z
     lastName: z.string().min(2, "Nazwisko jest wymagane"),
     email: z.email("Podaj poprawny adres e-mail"),
     phone: z.string().min(9, "Podaj poprawny numer telefonu"),
-    street: z.string().min(3, "Podaj ulicę i numer"),
+    street: z.string().min(2, "Podaj nazwę ulicy"),
+    houseNumber: z.string().min(1, "Podaj numer budynku"),
+    apartmentNumber: z.string().optional(),
+    city: z.string().min(2, "Podaj miejscowość"),
     postalCode: z.string().regex(/^\d{2}-\d{3}$/, "Format: XX-XXX"),
     followers: z.string().optional(),
     socialLink: z.string().optional(),
@@ -152,6 +155,9 @@ export default function FormSectionIsland({ images }: Props) {
       email: "",
       phone: "",
       street: "",
+      houseNumber: "",
+      apartmentNumber: "",
+      city: "",
       postalCode: "",
       followers: "",
       socialLink: "",
@@ -249,6 +255,9 @@ export default function FormSectionIsland({ images }: Props) {
       email: data.email,
       phone: data.phone,
       street: data.street,
+      houseNumber: data.houseNumber,
+      apartmentNumber: data.apartmentNumber || "",
+      city: data.city,
       postalCode: data.postalCode,
       followers: data.role === "Influencer" ? data.followers || "" : "",
       socialLink: data.socialLink || "",
@@ -419,20 +428,61 @@ export default function FormSectionIsland({ images }: Props) {
               </span>
             </div>
 
-            {/* Row 4 */}
+            {/* Row 4 — Ulica | Nr budynku + Nr lokalu */}
             <div className="form-section__field">
               <label className="form-section__label" htmlFor="field-street">
-                Ulica, numer i miejscowość
+                Ulica
               </label>
               <input
                 id="field-street"
                 type="text"
                 className="form-section__input"
-                placeholder="Ulica, numer i miejscowość"
+                placeholder="Ulica"
                 {...register("street")}
               />
               <span className="form-section__error">
                 {errors.street?.message}
+              </span>
+            </div>
+            <div className="form-section__field">
+              <label className="form-section__label" htmlFor="field-houseNumber">
+                Nr budynku / lokalu
+              </label>
+              <div className="form-section__field-row">
+                <input
+                  id="field-houseNumber"
+                  type="text"
+                  className="form-section__input"
+                  placeholder="Nr budynku"
+                  {...register("houseNumber")}
+                />
+                <input
+                  id="field-apartmentNumber"
+                  type="text"
+                  className="form-section__input"
+                  placeholder="Nr lokalu (opcj.)"
+                  {...register("apartmentNumber")}
+                />
+              </div>
+              <span className="form-section__error">
+                {errors.houseNumber?.message}
+              </span>
+            </div>
+
+            {/* Row 5 — Miejscowość | Kod pocztowy */}
+            <div className="form-section__field">
+              <label className="form-section__label" htmlFor="field-city">
+                Miejscowość
+              </label>
+              <input
+                id="field-city"
+                type="text"
+                className="form-section__input"
+                placeholder="Miejscowość"
+                {...register("city")}
+              />
+              <span className="form-section__error">
+                {errors.city?.message}
               </span>
             </div>
             <div className="form-section__field">
@@ -454,7 +504,7 @@ export default function FormSectionIsland({ images }: Props) {
               </span>
             </div>
 
-            {/* Row 5 — Conditional fields */}
+            {/* Row 6 — Conditional fields */}
             {selectedRole === "Influencer" && (
               <>
                 <div className="form-section__field">
