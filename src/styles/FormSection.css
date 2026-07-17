@@ -100,6 +100,8 @@
 
 .form-section__input,
 .form-section__select {
+  width: 100%;
+  min-width: 0;
   padding: 12px 20px;
   border-radius: 999px;
   border: 1.5px solid var(--color-dark-green);
@@ -481,6 +483,9 @@
 /* --- Mobile --- */
 @media screen and (max-width: 900px) {
 
+  .form-section {
+    padding: 48px 16px 0 16px;
+  }
 
   .form-section__intro {
     grid-template-columns: 1fr;
@@ -492,8 +497,34 @@
     margin: 0 auto;
   }
 
+  .form-section__intro-heading {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+
+  .form-section__intro-text,
+  .form-section__intro-cta {
+    font-size: 1.125rem;
+  }
+
   .form-section__form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .form-section__label {
+    font-size: 1rem;
+    padding-left: 16px;
+  }
+
+  .form-section__input,
+  .form-section__select {
+    font-size: 1rem;
+    padding: 11px 16px;
+  }
+
+  .form-section__error {
+    font-size: 0.95rem;
+    padding-left: 16px;
   }
 
   .form-section__banner {
@@ -539,6 +570,12 @@
   .form-section__card {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: 28px 20px;
+    border-radius: 24px;
+  }
+
+  .form-section__field-row {
+    gap: 8px;
   }
 
   .form-section__product {
