@@ -6,10 +6,13 @@
 import Image from "astro/components/Image.astro";
 import { loadQuery } from "../sanity/lib/load-query";
 
-// Pobieranie wpisów na bloga
-// Zakładamy, że najnowsze posty będą jako pierwsze
+// Sortowanie i ograniczenie wykonujemy po stronie Sanity, zanim wpisy trafią
+// do komponentu. _createdAt rozstrzyga remis, gdy wpisy mają tę samą datę.
 const { data: posts } = await loadQuery<any[]>({
-  query: `*[_type == "post" && defined(slug.current)] | order(publishedAt desc)[0...3] {
+  query: `*[
+    _type == "post" &&
+    defined(slug.current)
+  ] | order(publishedAt desc, _createdAt desc)[0...3] {
     title,
     slug,
     teaser,

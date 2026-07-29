@@ -1,5 +1,8 @@
 ---
-export const prerender = true;
+// Strona główna pobiera treści z Sanity, dlatego nie może być zamrożona
+// podczas buildu. SSR sprawia, że BlogSection dostaje aktualne wpisy także
+// po opublikowaniu artykułu, bez konieczności ponownego deployu.
+export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import HeroSection from '../components/HeroSection.astro';
