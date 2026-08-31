@@ -24,8 +24,14 @@ const blogListingOgImage = blogListingSeoData?.ogImageUrl
   ? `${blogListingSeoData.ogImageUrl}?w=1200&h=630&fit=crop&auto=format`
   : undefined;
 
+// Sortowanie wykonujemy po stronie Sanity, tak samo jak w BlogSection.
+// _createdAt rozstrzyga remis, gdy wpisy mają tę samą datę publikacji,
+// dzięki czemu kolejność jest stabilna i najnowsze wpisy zawsze są pierwsze.
 const { data: posts } = await loadQuery<any[]>({
-  query: `*[_type == "post"] | order(publishedAt desc) {
+  query: `*[
+    _type == "post" &&
+    defined(slug.current)
+  ] | order(publishedAt desc, _createdAt desc) {
     title,
     slug,
     teaser,
